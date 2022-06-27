@@ -53,4 +53,5 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['api/v1/tugas-pokok'] = 'TugasPokokController';
+$route['api/v1/tugas-pokok'] = 'api/TugasPokokController';
+$route['api/v1/tugas-tambahan'] = 'api/TugasTambahanController';

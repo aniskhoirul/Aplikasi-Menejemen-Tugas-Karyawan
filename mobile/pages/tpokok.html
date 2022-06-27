@@ -1,37 +1,28 @@
 <template>
-    <div class="page page-home">
-        <div class="navbar" style="background-color: #2079cc; color: white">
-            <div class="navbar-inner sliding">
-              <div class="margin-left">
-                <a href="#" class="link back" style="color: white">
-                  <i class="icon icon-back"></i>
-                  <span class="if-not-md"></span>
-                </a>
-              </div>
-              <div class="title">DARTAR TUGAS 1</div>
-            </div>
-          </div>
-            
-            
-          <div style="background: url('img/bg.png'); margin-top: 40px; height: 3798px;"></div>
-          <div class="page-content" id="tugas_pokok" style="margin-top: -3830px;"> 
+  <div class="page page-home">
+    <div class="navbar" style="background-color: #2079cc; color: white">
+      <div class="navbar-inner sliding">
+        <div class="margin-left">
+          <a href="#" class="link back" style="color: white">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md"></span>
+          </a>
         </div>
-              
-
-       
-      
-
-
-                
+        <div class="title">DARTAR TUGAS 1</div>
+      </div>
     </div>
-   </template>
-   <script>
-     export default function (props, ctx) {
-        var $on = ctx.$on;
-        $on('pageInit', () => {
-          tugas_pokok();
-        })
+    <div style="background: url('img/bg.png'); margin-top: 40px; height: 3798px;"></div>
+    <div class="page-content" id="tugas_pokok" style="margin-top: -3830px;">
+      
+    </div>
+  </div>
+</template>
+<script>
+  export default function (props, ctx) {
+    var $on = ctx.$on;
+    $on('pageInit', () => {
+      tugas_pokok();
+    })
     return $render;
-    }
-   </script>
-  
+  }
+</script>

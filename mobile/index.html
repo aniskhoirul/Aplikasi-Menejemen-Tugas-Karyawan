@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, userscalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#fff">
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:">
+    <title>Annisa</title>
+    <link rel="stylesheet" href="core/framework7-bundle.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+    <div id="app">
+<div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/"></div>
+    </div>
+    <script src="core/framework7-bundle.min.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>    
+    <script>  
+    tugas_pokok();
+         function tugas_pokok() {
+             app.request.json("http://localhost/simkampus/Api_android1", function (data) {
+                  console.log(data);
+                 var jlh = data.length;
+                 var i = "";
+                 var tugas_pokok = "";
+                 for (i = 0; i < jlh; i++) {
+                     tugas_pokok += `                    
+                     <div class="card demo-card">
+                         <div class="list">
+                         <ul>
+                         <li>
+                            <a href="#" class="item-link item-content">
+                                 <div class="item-media"><img src="img/gtugas1.png"
+                                 width="44" /></div>
+                                 <div class="item-inner">
+                                 <div class="item-title" style="font-size: 110%;">`+ data[i].list_job + `</div>
+                                 <div class="item-after" style="font-size: 70%; color: blue;">`+ data[i].tgl + `</div>
+                                 </div>
+                            </a>
+                         </li>
+                         </ul>
+                         </div>
+                    </div>                         
+                     `
+                 }
+                 $("#tugas_pokok").html(tugas_pokok);                 
+             })
+         }
+    </script>
+   
+</body>
+</html>
+

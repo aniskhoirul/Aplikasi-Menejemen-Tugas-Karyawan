@@ -1,0 +1,46 @@
+<template>
+    <div class="page page-home">
+        <div class="navbar" style="background-color: #16a085; color: white">
+            <div class="navbar-inner">
+                <div class="title sliding">Praktikum 2</div>
+            </div>
+        </div>
+        <div class="page-content">
+            <p class="row" id="tugas_pokok"></p>
+            <div class="sheet-modal" id="cc" style="height: auto;">
+                <div class="sheet-modal-inner">
+                    <div class="swipe-handler"></div>
+                    <div class="page-content">
+                        <div class="block-title block-title-large">Detail Film</div>
+                        <div class="block">
+                            <div class="chip" style="margin-right: 3px;">
+                                <div class="chip-media bg-color-blue">
+                                    <i class="icon f7-icons">bubble_left</i>
+                                </div>
+                                <div class="chip-label" id="listjob">?????</div>
+                            </div>
+                            <div class="chip" style="margin-right: 3px;">
+                                <div class="chip-media bg-color-green">
+                                    <i class="icon f7-icons">person_alt</i>
+                                </div>
+                                <div class="chip-label" id="tgl">?????</div>
+                            </div>
+                        
+                            <p class="row" id="bloksinopsis" style="text-align: justify;"></p>
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    export default function (props, ctx) {
+        var $on = ctx.$on;
+        $on('pageInit', () => {
+            tugas_pokok();
+        })
+        return $render;
+    }
+</script>

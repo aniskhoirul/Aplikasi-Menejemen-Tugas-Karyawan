@@ -1,79 +1,77 @@
 <template>
-    <div class="page page-home">
-        <div class="navbar" style="background-color: #2079cc; color: white">
-            <div class="navbar-inner">
-                <div class="title sliding">UNWAHA</div>
-            </div>
-        </div>
-        <div style="background: url('img/layar.png'); margin-top: 40px; height: 3798px;"></div>
-        <div class="page-content" style="margin-top: -3830px;">
-
-            <div class="card card-outline radius10" style="margin-left: 8%; margin-right: 8%; margin-top: 15%;" >  
-                <div class="list media-list">
-                  <ul>
-                    <li>
-                      <div class="item-content">
-                        <div class="item-media"><img src="img/unwaha.jpg"
-                            width="44" /></div>
-                          <div class="item-inner">
-                            <div class="item-title-row">
-                             <div class="item-title">DUTY MANAGEMENT</div>
-                            </div>
-                          <div class="item-subtitle">Universitas KH. Wahab Hasbullah </div>
-                        </div>
-                      </div>           
-                    </li>
-                  </ul>
-                </div>
-            </div>
-
-            <div class="card card-outline radius10" style="margin-left: 8%; margin-right: 8%; margin-top: 10%;" >          
-            <div class="row" style="margin-left: 6%; margin-right: 6%; margin-top: 10%;">
-                <div class="col" style="text-align: center;">                   
-                    <div class="row" style="margin-bottom: 6%;">
-                        <a href="/tugas/" class="col text-align-center">
-                         <img src="img/tugas.jpg" class="besar-icon radius10"/>
-                       
-                        </a>
-                        <a href="/revisi/" class="col text-align-center">
-                            <img src="img/revisi.jpg" class="besar-icon radius10"/>
-                         </a>
-                        <a href="/histori/" class="col text-align-center">
-                            <img src="img/histori.jpg" class="besar-icon radius10"/>
-                         </a>                  
-                    </div>
-                    <div class="row" style="margin-bottom: 6%;">
-                        <a href="/profil/" class="col text-align-center">
-                            <img src="img/profil.jpg" class="besar-icon radius10"/>
-                        </a>
-                        <a href="/belajar/" class="col text-align-center">
-                            <img src="img/belajar.jpg" class="besar-icon radius10"/>
-                         </a>
-                        <a href="/aplikasi/" class="col text-align-center">
-                            <img src="img/aplikasi.jpg" class="besar-icon radius10"/>
-                        </a>                      
-                    </div>               
-            
-                </div>
-            </div>
-            </div>
-
-            
-              <div class="row" style="margin-left: 8%; margin-right: 8%; margin-top: 5%;">
-                <button class="col button button-raised button-round button button-fill color-white text-color-blue">LOGIN</button>        
-              </div>
-              <div class="row" style="margin-left: 8%; margin-right: 8%; margin-top: 5%;">
-                <button class="col button button-raised button-round button button-fill color-white text-color-blue">LOG OUT</button>        
-              </div>
-            
-
-        </div>
+  <div class="page page-home">
+    <div class="navbar" style="background-color: #2079cc; color: white">
+      <div class="navbar-inner">
+        <div class="title sliding">UNWAHA</div>
+      </div>
     </div>
-   </template>
+    <div style="background: url('img/layar.png'); margin-top: 40px; height: 3798px;"></div>
+    <div class="page-content" style="margin-top: -3830px;">
 
-   <script>
-    export default function (props, ctx) {
+      <div class="card card-outline radius10" style="margin-left: 8%; margin-right: 8%; margin-top: 15%;">
+        <div class="list media-list">
+          <ul>
+            <li>
+              <div class="item-content">
+                <div class="item-media"><img src="img/unwaha.jpg" width="44" /></div>
+                <div class="item-inner">
+                  <div class="item-title-row">
+                    <div class="item-title">DUTY MANAGEMENT</div>
+                  </div>
+                  <div class="item-subtitle">Universitas KH. Wahab Hasbullah </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card card-outline radius10" style="margin-left: 8%; margin-right: 8%; margin-top: 10%;">
+        <div class="row" style="margin-left: 6%; margin-right: 6%; margin-top: 10%;">
+          <div class="col" style="text-align: center;">
+            <div class="row" style="margin-bottom: 6%;">
+              <a href="/tugas/" class="col text-align-center">
+                <img src="img/tugas.jpg" class="besar-icon radius10" />
+
+              </a>
+              <a href="/revisi/" class="col text-align-center">
+                <img src="img/revisi.jpg" class="besar-icon radius10" />
+              </a>
+              <a href="/histori/" class="col text-align-center">
+                <img src="img/histori.jpg" class="besar-icon radius10" />
+              </a>
+            </div>
+            <div class="row" style="margin-bottom: 6%;">
+              <a href="/profil/" class="col text-align-center">
+                <img src="img/profil.jpg" class="besar-icon radius10" />
+              </a>
+              <a href="/belajar/" class="col text-align-center">
+                <img src="img/belajar.jpg" class="besar-icon radius10" />
+              </a>
+              <a href="/aplikasi/" class="col text-align-center">
+                <img src="img/aplikasi.jpg" class="besar-icon radius10" />
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- <div class="row" style="margin-left: 8%; margin-right: 8%; margin-top: 5%;">
+        <button class="col button button-raised button-round button button-fill color-white text-color-blue">LOGIN</button>
+      </div> -->
+      <div class="row" style="margin-left: 8%; margin-right: 8%; margin-top: 5%;">
+        <button class="col button button-raised button-round button button-fill color-white text-color-blue" @click="${ () => logout() }">LOG OUT</button>
+      </div>
+
+
+    </div>
+  </div>
+</template>
+
+<script>
+  export default function (props, ctx) {
     return $render;
-    }
-   </script>
-   
+  }
+</script>

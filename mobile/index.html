@@ -27,40 +27,110 @@
     <script>
         // var url = 'http://localhost/simkampus/';
         var url = 'http://localhost/Aplikasi-Menejemen-Tugas-Karyawan/web/';
-        tugas_pokok();
+        cek_login();
+        function cek_login() {
+            if (localStorage.getItem("no_id") != null && localStorage.getItem("email") != null) {
+                $("#nama_karyawan").html(localStorage.getItem("nama_karyawan"));
+                $("#tgl_lahir").html(localStorage.getItem("tgl_lahir"));
+                $("#jabatan").html(localStorage.getItem("jabatan"));
+                $("#tempat_lahir").html(localStorage.getItem("tempat_lahir"));
+                app.views.main.router.navigate('/home/');
+            } else {
+                app.views.main.router.navigate('/login/');
+            }
+        }
+
+        function logout() {
+			app.dialog.alert("Apakah ingin keluar?", "Peringatan", function () {
+				localStorage.removeItem("no_id");
+				localStorage.removeItem("email");
+				localStorage.removeItem("tgl_lahir");
+				localStorage.removeItem("jabatan");
+				localStorage.removeItem("tempat_lahir");
+				location.reload(true);
+			});
+		}
+
+
+        function login() {
+            let email = $('#email').val();
+            let password = $('#password').val();
+            // console.log(email)
+            $.ajax({
+                url: url + "api/v1/login",
+                method: "POST",
+                data: {
+                    email: email,
+                    password: password
+                },
+                cache: false,
+                success: function (data) {
+                    if (data.status == 'success') { 
+                        localStorage.setItem("no_id", data.data.no_id);
+                        localStorage.setItem("email", data.data.email);
+                        localStorage.setItem("nama_karyawan", data.data.nama_karyawan);
+                        localStorage.setItem("tgl_lahir", data.data.tgl_lahir);
+                        localStorage.setItem("jabatan", data.data.jabatan);
+                        localStorage.setItem("tempat_lahir", data.data.tempat_lahir);
+                        location.reload(true);
+                        app.views.main.router.navigate('/home/');
+                    }else{
+                        $('#password').val("");
+                        app.dialog.alert(data.message, "Peringatan");
+                    }
+                }
+            });
+
+        }
+
         function tugas_pokok() {
-            app.request.json(url + "api/v1/tugas-pokok", function (data) {
-                console.log(data);
+            app.request.json(url + "api/v1/tugas-pokok", {no_id : localStorage.getItem("no_id")}, function (data) {
                 var jlh = data.length;
                 var i = "";
                 var tugas_pokok = "";
                 for (i = 0; i < jlh; i++) {
                     tugas_pokok += `                    
-                     <div class="card demo-card">
-                         <div class="list">
-                         <ul>
-                         <li>
-                            <a href="#" class="item-link item-content">
-                                 <div class="item-media"><img src="img/gtugas1.png"
-                                 width="44" /></div>
-                                 <div class="item-inner">
-                                 <div class="item-title" style="font-size: 110%;">`+ data[i].list_job + `</div>
-                                 <div class="item-after" style="font-size: 70%; color: blue;">`+ data[i].tgl + `</div>
-                                 </div>
-                            </a>
-                         </li>
-                         </ul>
-                         </div>
-                    </div>                         
-                     `
+                        <div class="card demo-card" >
+                            <div class="list" >
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0)" onclick="detail_tugas_pokok(`+data[i].id_detail+`)" class="item-link item-content">
+                                            <div class="item-media"><img src="img/gtugas1.png" width="44" /></div>
+                                            <div class="item-inner">
+                                                <div class="item-title" style="font-size: 110%;">`+ data[i].list_job + `</div>
+                                                <div class="item-after" style="font-size: 70%; color: blue;">`+ data[i].waktu_mulai + `</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>`;
                 }
                 $("#tugas_pokok").html(tugas_pokok);
             })
         }
-        tugas_tambahan();
+
+        function detail_tugas_pokok(id) {
+            app.views.main.router.navigate('/detail-tugas-pokok/');
+            app.request.json(url + "api/v1/tugas-detail", {id : id}, function (data) {
+                var detail_tugas_pokok = "";
+                    detail_tugas_pokok += `                    
+                    <div class="card">
+                        <div class="card-header">`+data.list_job+`</div>
+                        <div class="card-content card-content-padding">
+                            <p> Data Job : `+data.data_job+` </p>
+                            <p> Waktu mulai : `+data.waktu_mulai+` </p>
+                            <p> Waktu akhir : `+data.waktu_akhir+` </p>
+                        </div>
+                        <div class="card-footer">Card Footer</div>
+                    </div>`;
+                $("#detail_tugas_pokok").html(detail_tugas_pokok);
+                $("#title_detail_pokok").html(data.list_job);
+            })
+        }
+        
         function tugas_tambahan() {
-            app.request.json(url + "api/v1/tugas-tambahan", function (data) {
-                console.log(data);
+            app.request.json(url + "api/v1/tugas-tambahan", {no_id : localStorage.getItem("no_id")}, function (data) {
                 var jlh = data.length;
                 var i = "";
                 var tugas_tambahan = "";
@@ -70,23 +140,45 @@
                          <div class="list">
                          <ul>
                          <li>
-                            <a href="#" class="item-link item-content">
+                            <a href="javascript:void(0)" onclick="detail_tugas_tambahan(`+data[i].id_detail+`)" class="item-link item-content">
                                  <div class="item-media"><img src="img/gtugas1.png"
                                  width="44" /></div>
                                  <div class="item-inner">
                                  <div class="item-title" style="font-size: 110%;">`+ data[i].list_job + `</div>
-                                 <div class="item-after" style="font-size: 70%; color: blue;">`+ data[i].tgl + `</div>
+                                 <div class="item-after" style="font-size: 70%; color: blue;">`+ data[i].waktu_mulai + `</div>
                                  </div>
                             </a>
                          </li>
                          </ul>
                          </div>
                     </div>                         
-                     `
+                     `;
                 }
                 $("#tugas_tambahan").html(tugas_tambahan);
             })
         }
+
+        function detail_tugas_tambahan(id) {
+            app.views.main.router.navigate('/detail-tugas-tambahan/');
+            app.request.json(url + "api/v1/tugas-detail", {id : id}, function (data) {
+                var detail_tugas_tambahan = "";
+                    detail_tugas_tambahan += `                    
+                    <div class="card">
+                        <div class="card-header">`+data.list_job+`</div>
+                        <div class="card-content card-content-padding">
+                            <p> Data Job : `+data.data_job+` </p>
+                            <p> Waktu mulai : `+data.waktu_mulai+` </p>
+                            <p> Waktu akhir : `+data.waktu_akhir+` </p>
+                        </div>
+                        <div class="card-footer">Card Footer</div>
+                    </div>`;
+                $("#detail_tugas_tambahan").html(detail_tugas_tambahan);
+                $("#title_detail_tambahan").html(data.list_job);
+            })
+        }
+
+
+
     </script>
 
 </body>

@@ -1,0 +1,51 @@
+<template>
+    <div class="page login-screen-page">
+        <!-- page-content has additional login-screen content -->
+        <div class="page-content login-screen-content">
+            <div class="login-screen-title">DUTY MANAGEMENT</div>
+            <!-- Login form -->
+            <form>
+                <div class="list">
+                    <ul>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Email</div>
+                                <div class="item-input-wrap">
+                                    <input type="email" name="email" id="email" placeholder="Email" />
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content item-input">
+                            <div class="item-inner">
+                                <div class="item-title item-label">Password</div>
+                                <div class="item-input-wrap">
+                                    <input type="password" name="password" id="password" placeholder="Password" />
+                                    <span class="input-clear-button"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="list">
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0)" @click="${ () => login() }" class="list-button">MASUK</a>
+                        </li>
+                    </ul>
+                    <div class="block-footer">Silahkan login untuk menggunakan aplikasi ini.</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default function (props, ctx) {
+        var $on = ctx.$on;
+        $on('pageInit', () => {
+            // login();
+        });
+        return $render;
+    }
+</script>

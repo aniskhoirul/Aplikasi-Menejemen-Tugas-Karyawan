@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Jun 2022 pada 10.52
--- Versi server: 10.4.19-MariaDB
--- Versi PHP: 7.4.20
+-- Generation Time: Jul 12, 2022 at 01:58 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.4.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_absensi`
+-- Table structure for table `tb_absensi`
 --
 
 CREATE TABLE `tb_absensi` (
@@ -36,7 +36,7 @@ CREATE TABLE `tb_absensi` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_detail_job`
+-- Table structure for table `tb_detail_job`
 --
 
 CREATE TABLE `tb_detail_job` (
@@ -52,7 +52,7 @@ CREATE TABLE `tb_detail_job` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_dosen`
+-- Table structure for table `tb_dosen`
 --
 
 CREATE TABLE `tb_dosen` (
@@ -68,7 +68,7 @@ CREATE TABLE `tb_dosen` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_dt_absensi`
+-- Table structure for table `tb_dt_absensi`
 --
 
 CREATE TABLE `tb_dt_absensi` (
@@ -81,7 +81,7 @@ CREATE TABLE `tb_dt_absensi` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_dt_gaji`
+-- Table structure for table `tb_dt_gaji`
 --
 
 CREATE TABLE `tb_dt_gaji` (
@@ -94,7 +94,7 @@ CREATE TABLE `tb_dt_gaji` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_dt_surat`
+-- Table structure for table `tb_dt_surat`
 --
 
 CREATE TABLE `tb_dt_surat` (
@@ -107,7 +107,7 @@ CREATE TABLE `tb_dt_surat` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_fakultas`
+-- Table structure for table `tb_fakultas`
 --
 
 CREATE TABLE `tb_fakultas` (
@@ -118,7 +118,7 @@ CREATE TABLE `tb_fakultas` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_jabatan`
+-- Table structure for table `tb_jabatan`
 --
 
 CREATE TABLE `tb_jabatan` (
@@ -127,7 +127,7 @@ CREATE TABLE `tb_jabatan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tb_jabatan`
+-- Dumping data for table `tb_jabatan`
 --
 
 INSERT INTO `tb_jabatan` (`id_jabatan`, `jabatan`) VALUES
@@ -137,7 +137,7 @@ INSERT INTO `tb_jabatan` (`id_jabatan`, `jabatan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_jn_gaji`
+-- Table structure for table `tb_jn_gaji`
 --
 
 CREATE TABLE `tb_jn_gaji` (
@@ -148,7 +148,7 @@ CREATE TABLE `tb_jn_gaji` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_jn_job`
+-- Table structure for table `tb_jn_job`
 --
 
 CREATE TABLE `tb_jn_job` (
@@ -157,7 +157,7 @@ CREATE TABLE `tb_jn_job` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tb_jn_job`
+-- Dumping data for table `tb_jn_job`
 --
 
 INSERT INTO `tb_jn_job` (`id_jn_job`, `nama_jn_job`) VALUES
@@ -167,7 +167,7 @@ INSERT INTO `tb_jn_job` (`id_jn_job`, `nama_jn_job`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_jn_surat`
+-- Table structure for table `tb_jn_surat`
 --
 
 CREATE TABLE `tb_jn_surat` (
@@ -178,28 +178,29 @@ CREATE TABLE `tb_jn_surat` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_job`
+-- Table structure for table `tb_job`
 --
 
 CREATE TABLE `tb_job` (
   `id_job` int(11) NOT NULL,
-  `id_jabatan` int(11) NOT NULL,
+  `no_id` int(11) NOT NULL,
   `id_jn_job` int(11) NOT NULL,
   `list_job` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `tb_job`
+-- Dumping data for table `tb_job`
 --
 
-INSERT INTO `tb_job` (`id_job`, `id_jabatan`, `id_jn_job`, `list_job`) VALUES
+INSERT INTO `tb_job` (`id_job`, `no_id`, `id_jn_job`, `list_job`) VALUES
 (1, 1, 1, 'List Job'),
-(2, 2, 2, 'List Job Staff');
+(2, 2, 2, 'List Job Staff'),
+(3, 2, 2, 'adfgh');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_karyawan`
+-- Table structure for table `tb_karyawan`
 --
 
 CREATE TABLE `tb_karyawan` (
@@ -208,13 +209,22 @@ CREATE TABLE `tb_karyawan` (
   `id_jabatan` int(11) NOT NULL,
   `tgl_lahir` date NOT NULL,
   `tempat_lahir` varchar(30) NOT NULL,
-  `pasword` int(11) NOT NULL
+  `pasword` varchar(225) NOT NULL,
+  `email` varchar(225) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tb_karyawan`
+--
+
+INSERT INTO `tb_karyawan` (`no_id`, `nama_karyawan`, `id_jabatan`, `tgl_lahir`, `tempat_lahir`, `pasword`, `email`) VALUES
+(1, 'Ima Tri Wa', 1, '0000-00-00', 'Jombang', '81dc9bdb52d04dc20036dbd8313ed055', 'ima@gmail.com'),
+(2, 'Novia Angg', 2, '0000-00-00', 'Jombang', '81dc9bdb52d04dc20036dbd8313ed055', 'novia@gmail.com');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_mahasiswa`
+-- Table structure for table `tb_mahasiswa`
 --
 
 CREATE TABLE `tb_mahasiswa` (
@@ -228,7 +238,7 @@ CREATE TABLE `tb_mahasiswa` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_prodi`
+-- Table structure for table `tb_prodi`
 --
 
 CREATE TABLE `tb_prodi` (
@@ -240,7 +250,7 @@ CREATE TABLE `tb_prodi` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_thn_masuk`
+-- Table structure for table `tb_thn_masuk`
 --
 
 CREATE TABLE `tb_thn_masuk` (
@@ -253,128 +263,134 @@ CREATE TABLE `tb_thn_masuk` (
 --
 
 --
--- Indeks untuk tabel `tb_absensi`
+-- Indexes for table `tb_absensi`
 --
 ALTER TABLE `tb_absensi`
   ADD PRIMARY KEY (`id_absensi`);
 
 --
--- Indeks untuk tabel `tb_detail_job`
+-- Indexes for table `tb_detail_job`
 --
 ALTER TABLE `tb_detail_job`
   ADD PRIMARY KEY (`id_detail`);
 
 --
--- Indeks untuk tabel `tb_dosen`
+-- Indexes for table `tb_dosen`
 --
 ALTER TABLE `tb_dosen`
   ADD PRIMARY KEY (`no_id`);
 
 --
--- Indeks untuk tabel `tb_dt_absensi`
+-- Indexes for table `tb_dt_absensi`
 --
 ALTER TABLE `tb_dt_absensi`
   ADD PRIMARY KEY (`id_dt_absen`);
 
 --
--- Indeks untuk tabel `tb_dt_gaji`
+-- Indexes for table `tb_dt_gaji`
 --
 ALTER TABLE `tb_dt_gaji`
   ADD PRIMARY KEY (`id_dt_gaji`);
 
 --
--- Indeks untuk tabel `tb_dt_surat`
+-- Indexes for table `tb_dt_surat`
 --
 ALTER TABLE `tb_dt_surat`
   ADD PRIMARY KEY (`id_dt_surat`);
 
 --
--- Indeks untuk tabel `tb_fakultas`
+-- Indexes for table `tb_fakultas`
 --
 ALTER TABLE `tb_fakultas`
   ADD PRIMARY KEY (`id_fakultas`);
 
 --
--- Indeks untuk tabel `tb_jabatan`
+-- Indexes for table `tb_jabatan`
 --
 ALTER TABLE `tb_jabatan`
   ADD PRIMARY KEY (`id_jabatan`);
 
 --
--- Indeks untuk tabel `tb_jn_gaji`
+-- Indexes for table `tb_jn_gaji`
 --
 ALTER TABLE `tb_jn_gaji`
   ADD PRIMARY KEY (`id_jn_gaji`);
 
 --
--- Indeks untuk tabel `tb_jn_job`
+-- Indexes for table `tb_jn_job`
 --
 ALTER TABLE `tb_jn_job`
   ADD PRIMARY KEY (`id_jn_job`);
 
 --
--- Indeks untuk tabel `tb_jn_surat`
+-- Indexes for table `tb_jn_surat`
 --
 ALTER TABLE `tb_jn_surat`
   ADD PRIMARY KEY (`id_jn_surat`);
 
 --
--- Indeks untuk tabel `tb_job`
+-- Indexes for table `tb_job`
 --
 ALTER TABLE `tb_job`
   ADD PRIMARY KEY (`id_job`);
 
 --
--- Indeks untuk tabel `tb_karyawan`
+-- Indexes for table `tb_karyawan`
 --
 ALTER TABLE `tb_karyawan`
   ADD PRIMARY KEY (`no_id`);
 
 --
--- Indeks untuk tabel `tb_mahasiswa`
+-- Indexes for table `tb_mahasiswa`
 --
 ALTER TABLE `tb_mahasiswa`
   ADD PRIMARY KEY (`nim`);
 
 --
--- Indeks untuk tabel `tb_prodi`
+-- Indexes for table `tb_prodi`
 --
 ALTER TABLE `tb_prodi`
   ADD PRIMARY KEY (`id_prodi`);
 
 --
--- Indeks untuk tabel `tb_thn_masuk`
+-- Indexes for table `tb_thn_masuk`
 --
 ALTER TABLE `tb_thn_masuk`
   ADD PRIMARY KEY (`id_thn_masuk`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `tb_dt_absensi`
+-- AUTO_INCREMENT for table `tb_dt_absensi`
 --
 ALTER TABLE `tb_dt_absensi`
   MODIFY `id_dt_absen` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_jabatan`
+-- AUTO_INCREMENT for table `tb_jabatan`
 --
 ALTER TABLE `tb_jabatan`
   MODIFY `id_jabatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_jn_job`
+-- AUTO_INCREMENT for table `tb_jn_job`
 --
 ALTER TABLE `tb_jn_job`
   MODIFY `id_jn_job` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_job`
+-- AUTO_INCREMENT for table `tb_job`
 --
 ALTER TABLE `tb_job`
-  MODIFY `id_job` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_job` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tb_karyawan`
+--
+ALTER TABLE `tb_karyawan`
+  MODIFY `no_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

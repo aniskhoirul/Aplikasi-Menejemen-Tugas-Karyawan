@@ -18,10 +18,10 @@
           <div class="item-media text-align-center margin-top: 10%;"><img src="img/foto.png"
             width="100" /></div>
           <div class="card-content card-content-padding">
-            <p class="text-align-center" style="font-size: 130%";>Badriyyatul Mu'awanah, S.Kom.</p>
-            <p class="text-color-red">20 juni 1980</p>
-            <p class="text-color-blue">STAF ADMIN TERPADU</p>
-            <p>JOMBANG</p>
+            <p class="text-align-center" style="font-size: 130%"; id="nama_karyawan"></p>
+            <p>Tanggal lahir : <span class="text-color-red" id="tgl_lahir"></span></p>
+            <p>Jabatan : <span class="text-color-blue" id="jabatan"></span></p>
+            <p>Tempan lahir : <span id="tempat_lahir"></span></p>
           </div>
         </div>
       </div>  
@@ -30,6 +30,10 @@
    </template>
    <script>
     export default function (props, ctx) {
-    return $render;
+      var $on = ctx.$on;
+      $on('pageInit', () => {
+          cek_login();
+      });
+      return $render;
     }
    </script>

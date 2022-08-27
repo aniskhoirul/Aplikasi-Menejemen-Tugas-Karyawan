@@ -1,29 +1,81 @@
 <template>
-    <div class="page page-home">
-      <div class="navbar" style="background-color: #2079cc; color: white">
-        <div class="navbar-inner sliding">
-          <div class="margin-left">
-            <a href="#" class="link back" style="color: white">
-              <i class="icon icon-back"></i>
-              <span class="if-not-md"></span>
-            </a>
-          </div>
-          <div class="title" id="title_detail_pokok"></div>
+  <div class="page page-home">
+    <div class="navbar" style="background-color: #2079cc; color: white">
+      <div class="navbar-inner sliding">
+        <div class="margin-left">
+          <a href="#" class="link back" style="color: white">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md"></span>
+          </a>
         </div>
-      </div>
-      <div style="background: url('img/bg.png'); margin-top: 40px; height: 3798px;"></div>
-      <div class="page-content" id="detail_tugas_pokok" style="margin-top: -3830px;">
-        
-        
+        <div class="title" id="title_detail_pokok"></div>
       </div>
     </div>
-  </template>
-  <script>
-    export default function (props, ctx) {
-      var $on = ctx.$on;
-      $on('pageInit', () => {
-        
+    <div style="background: url('img/bg.png'); margin-top: 40px; height: 3798px;"></div>
+    <div class="page-content" style="margin-top: -3830px;">
+      <span id="detail_tugas_pokok"></span>
+      <div class="card" id="upload-tugas-pokok" style="display: none;">
+        <div class="card-content card-content-padding">
+          <form method="post" enctype="multipart/form-data" id="kirim_tugas_pokok">
+            <div class="list no-hairlines-md">
+              <ul>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">Tanggal</div>
+                    <div class="item-input-wrap">
+                      <input type="hidden" name="id-tugas-pokok" id="id-tugas-pokok" />
+                      <input type="date" name="tgl-tugas-pokok" placeholder="Tanggal" id="tgl-tugas-pokok" />
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">File</div>
+                    <div class="item-input-wrap">
+                      <input type="file" name="file_tugas_pokok" placeholder="Your name" id="file-tugas-pokok"
+                        accept=".pdf" />
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+              <button type="submit" class="col button button-raised button-fill color-red">KIRIM</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  export default function (props, ctx) {
+    var $on = ctx.$on;
+    $on('pageInit', () => {
+      var url = 'http://localhost/simkampus/';
+      $('#kirim_tugas_pokok').submit(function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+          type: 'POST',
+          url: url + "api/v1/tugas-pokok/store",
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: (response) => {
+            app.dialog.alert(response.message, "Berhasil", function () {
+              location.reload(true);
+            });
+          },
+          error: (response) => {
+            app.dialog.alert(response.message, "Gagal");
+          }
+        });
       })
-      return $render;
-    }
-  </script>
+    })
+    return $render;
+  }
+</script>

@@ -8,21 +8,37 @@
             <span class="if-not-md"></span>
           </a>
         </div>
-        <div class="title">DARTAR TUGAS 1</div>
+        <div class="title">DARTAR TUGAS POKOK</div>
+        <div class="right">
+          <button type="button" class="button sheet-open" style="color: white;" data-sheet="#fp">
+            <i class="icon f7-icons">search</i>
+          </button>
+        </div>
+
       </div>
     </div>
+    
+         
+
+
     <div style="background: url('img/bg.png'); margin-top: 40px; height: 3798px;"></div>
     <div class="page-content" id="tugas_pokok" style="margin-top: -3830px;">
-      
-      
+        
+        
+    
     </div>
+    
+  
+
+
   </div>
+
 </template>
 <script>
   export default function (props, ctx) {
     var $on = ctx.$on;
     $on('pageInit', () => {
-      tugas_pokok();
+      // tugas_pokok();
     })
     return $render;
   }

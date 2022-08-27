@@ -1,11 +1,18 @@
 <template>
+    
+       
     <div class="page login-screen-page">
+       
+        
         <!-- page-content has additional login-screen content -->
         <div class="page-content login-screen-content">
-            <div class="login-screen-title">DUTY MANAGEMENT</div>
+            <div class="login-screen-title" >
+                <img src="img/unwaha.jpg" width="100" />
+                <P>DUTY MANAGEMENT</P>
+            </div>
             <!-- Login form -->
             <form>
-                <div class="list">
+                <div class="list" style="margin-left: 8%; margin-right: 8%;">
                     <ul>
                         <li class="item-content item-input">
                             <div class="item-inner">
@@ -30,7 +37,7 @@
                 <div class="list">
                     <ul>
                         <li>
-                            <a href="javascript:void(0)" @click="${ () => login() }" class="list-button">MASUK</a>
+                            <a href="javascript:void(0)" @click="${ () => login() }" class="col button button-raised button-fill color-blue" style="margin-left: 15%; margin-right: 15%; margin-top: 5%;">MASUK</a>
                         </li>
                     </ul>
                     <div class="block-footer">Silahkan login untuk menggunakan aplikasi ini.</div>
@@ -38,6 +45,7 @@
             </form>
         </div>
     </div>
+
 </template>
 
 <script>

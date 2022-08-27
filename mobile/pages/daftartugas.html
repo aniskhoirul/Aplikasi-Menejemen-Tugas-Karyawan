@@ -13,20 +13,54 @@
           </div>
           <div style="background: url('img/bg.png'); margin-top: 40px; height: 3798px;"></div>
           <div class="page-content" style="margin-top: -3830px;"> 
-                    
-            <div class="row" style="margin-left: 15%; margin-right: 15%; margin-top: 10%; ">
-                <div class="col" style="text-align: center;">                   
-                    <div class="row" style="margin-bottom: 6%;" >
-                        <a href="/tugaspokok/" class="col text-align-center">
-                         <img src="img/pokok.jpg" class="besar-icon radius5"/>
-                       
-                        </a>
-                        <a href="/tambahan1/" class="col text-align-center">
-                            <img src="img/tambahan.jpg" class="besar-icon radius5"/>
-                         </a>                 
-                    </div>
-                </div>            
+
+           
+            
+            <div class="row"style="margin-left: 6%; margin-right: 6%; margin-top: 6%;">                     
+                  <a href="#" class="link popover-open" data-popover="#popover-pokok" style="color: white;">
+                   <img src="img/daftar-tambah.png" width="150" />
+                  </a>
+                   
+            </div>                   
+            <div class="row" style="margin-left: 6%; margin-right: 6%; margin-top: 6%;"> 
+                <a href="#" class="link popover-open" data-popover="#popover-tambahan" style="color: white;">
+                <img src="img/daftar-pokok.png" width="150" /></a>
+                
+            
+            </div>
+          <div class="popover" id="popover-pokok">
+            <div class="popover-angle"></div>
+            <div class="popover-inner" id="tugas_pokok">
+                <div class="list">
+                    <ul>
+                        <li>
+                            <a href="javascript:void(0)" @click="${ () => tugas_pokok(2022) }" class="list-button popover-close font-hitam">2022</a>
+                            <a href="javascript:void(0)" @click="${ () => tugas_pokok(2021) }" class="list-button popover-close font-hitam">2021</a>
+                            <a href="javascript:void(0)" @click="${ () => tugas_pokok(2020) }" class="list-button popover-close font-hitam">2020</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="popover" id="popover-tambahan">
+          <div class="popover-angle"></div>
+          <div class="popover-inner">
+              <div class="list">
+                  <ul>
+                      <li>
+                        <a href="javascript:void(0)" @click="${ () => tugas_pokok(2022) }" class="list-button popover-close font-hitam">2022</a>
+                        <a href="javascript:void(0)" @click="${ () => tugas_pokok(2021) }" class="list-button popover-close font-hitam">2021</a>
+                        <a href="javascript:void(0)" @click="${ () => tugas_pokok(2020) }" class="list-button popover-close font-hitam">2020</a>
+                      </li>
+                  </ul>
+              </div>
           </div>
+      </div>
+
+
+    
+        
                 
         </div>
     </div>

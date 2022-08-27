@@ -12,9 +12,28 @@
         </div>
       </div>
       <div style="background: url('img/bg.png'); margin-top: 40px; height: 3798px;"></div>
-      <div class="page-content" id="detail_tugas_tambahan" style="margin-top: -3830px;">
-        
-        
+      <div class="page-content" style="margin-top: -3830px;">
+        <span id="detail_tugas_tambahan"></span>
+        <div class="card" id="upload-tugas-tambahan" style="display: none;">
+          <div class="card-content card-content-padding">
+            <div class="list no-hairlines-md">
+              <ul>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">File</div>
+                    <div class="item-input-wrap">
+                      <input type="file" placeholder="Your name" id="file-tugas-tambahan" accept=".pdf"/>
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+              <button class="col button button-raised button-fill color-red" onclick="kirim_tugas_tambahan()">KIRIM</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </template>

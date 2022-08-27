@@ -17,7 +17,7 @@ var routes = [
     },
     {
         path: '/histori/', 
-        componentUrl: 'pages/histori.html',
+        componentUrl: 'pages/detail-histori.html',
     },
     {
         path: '/profil/', 

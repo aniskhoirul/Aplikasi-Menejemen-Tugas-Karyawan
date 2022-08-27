@@ -25,9 +25,7 @@
     <script src="js/app.js"></script>
     <script src="js/jquery-3.6.0.min.js"></script>
     <script>
-        // var url = 'http://localhost/simkampus/';
-        // var url = 'http://localhost/Aplikasi-Menejemen-Tugas-Karyawan/web/';
-        var url = 'http://localhost/simkampus/';
+        var url = 'http://localhost/Aplikasi-Menejemen-Tugas-Karyawan/web/';
         cek_login();
         function cek_login() {
             if (localStorage.getItem("no_id") != null && localStorage.getItem("email") != null) {
@@ -83,41 +81,6 @@
                 }
             });
 
-        }
-
-        function tugas_pokok(thn) {
-            app.views.main.router.navigate('/tugaspokok/');
-            app.request.json(url + "api/v1/tugas-pokok", { no_id: localStorage.getItem("no_id"), tahun: thn }, function (data) {
-                var tugas_pokok = "";
-                if (data == "") {
-                    tugas_pokok += `<center> Data tidak tersedia </center>`;
-                } else {
-                    var jlh = data.length;
-                    var i = "";
-                    for (i = 0; i < jlh; i++) {
-                        tugas_pokok += `                    
-                        <div class="card" >
-                            <div class="list media-list" >
-                                <ul>
-                                    <li>
-                                        <a href="javascript:void(0)" onclick="detail_tugas_pokok(`+ data[i].id_detail + `)" class="item-link item-content">
-                                            <div class="item-media"><img src="img/gtugas1.png" width="44" /></div>
-                                            <div class="item-inner">
-                                                <div class="item-title" style="font-size: 110%;">`+ data[i].list_job + `</div>
-                                                <div class="item-subtitle" style="font-size: 70%; color: blue;">`+ data[i].waktu_mulai + `</div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        `;
-                    }
-                    tugas_pokok += `<input type="hidden" id="form_tahun_pokok" value="`+thn+`">`;
-                }
-                $("#tugas_pokok").html(tugas_pokok);
-                app.popover.close()
-            })
         }
 
         function filter_bulan_pokok() {

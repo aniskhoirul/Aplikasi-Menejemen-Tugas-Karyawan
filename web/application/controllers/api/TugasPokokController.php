@@ -38,9 +38,9 @@ class TugasPokokController extends CI_Controller {
 		$this->db->join('tb_detail_job', 'tb_job.id_job=tb_detail_job.id_job');
 		$this->db->where('tb_job.no_id', $id_user);
 		$this->db->where('tb_jn_job.nama_jn_job', 'pokok');
-		// $this->db->or_group_start()->where('YEAR(tb_detail_job.waktu_mulai)', $this->input->get('tahun'))->where('MONTH(tb_detail_job.waktu_mulai)', $this->input->get('bulan'))->group_end();
-		$this->db->where('tb_detail_job.waktu_mulai >=', $bulan_tahun . '-01');
-		$this->db->where('tb_detail_job.waktu_mulai <=', $bulan_tahun . '-30');
+		$this->db->where('YEAR(tb_detail_job.waktu_mulai)', $this->input->get('tahun'));
+		$this->db->where('MONTH(tb_detail_job.waktu_mulai)', $this->input->get('bulan'));
+
 		$query = $this->db->get();
 		echo json_encode([
 			'date' => $bulan_tahun,

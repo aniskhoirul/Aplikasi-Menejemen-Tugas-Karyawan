@@ -13,6 +13,9 @@ class TugasPokokController extends CI_Controller {
 	public function index()
 	{
 		$id_user = $this->input->get('no_id');
+		$tahun = $this->input->get('tahun');
+		$bulan = $this->input->get('bulan');
+
 		$this->db->select('*');
 		$this->db->from('tb_job');
 		$this->db->join('tb_karyawan', 'tb_job.no_id=tb_karyawan.no_id');
@@ -20,32 +23,10 @@ class TugasPokokController extends CI_Controller {
 		$this->db->join('tb_detail_job', 'tb_job.id_job=tb_detail_job.id_job');
 		$this->db->where('tb_job.no_id', $id_user);
 		$this->db->where('tb_jn_job.nama_jn_job', 'pokok');
-		$this->db->where('year(tb_detail_job.waktu_mulai)', $this->input->get('tahun'));
 		$query = $this->db->get();
-		echo json_encode($query->result());
-	}
 
-	public function filter()
-	{
-		// echo $this->input->get('tahun').$this->input->get('bulan');
-		// die();
-		$id_user = $this->input->get('no_id');
-		$bulan_tahun = $this->input->get('tahun') .'-'. $this->input->get('bulan');
-		$this->db->select('YEAR(tb_detail_job.waktu_mulai),MONTH(tb_detail_job.waktu_mulai)');
-		$this->db->from('tb_job');
-		$this->db->join('tb_karyawan', 'tb_job.no_id=tb_karyawan.no_id');
-		$this->db->join('tb_jn_job', 'tb_job.id_jn_job=tb_jn_job.id_jn_job');
-		$this->db->join('tb_detail_job', 'tb_job.id_job=tb_detail_job.id_job');
-		$this->db->where('tb_job.no_id', $id_user);
-		$this->db->where('tb_jn_job.nama_jn_job', 'pokok');
-		$this->db->where('YEAR(tb_detail_job.waktu_mulai)', $this->input->get('tahun'));
-		$this->db->where('MONTH(tb_detail_job.waktu_mulai)', $this->input->get('bulan'));
-
-		$query = $this->db->get();
-		echo json_encode([
-			'date' => $bulan_tahun,
-			'data' => $query->result(),
-		]);
+		$detail = $this->db->query('SELECT * FROM `tb_job` INNER JOIN `tb_karyawan` ON tb_karyawan.no_id=tb_job.no_id INNER JOIN `tb_detail_job` ON tb_job.id_job=tb_detail_job.id_job WHERE YEAR(waktu_mulai) = '.$tahun.' AND MONTH(waktu_mulai) = '.$bulan.'')->result();
+		echo json_encode($detail);
 	}
 
 	public function show()

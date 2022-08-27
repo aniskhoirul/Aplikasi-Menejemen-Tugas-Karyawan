@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, userscalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#fff">
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, userscalable=no, viewport-fit=cover"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="theme-color" content="#fff" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:"
+    />
     <title>Annisa</title>
-    <link rel="stylesheet" href="core/framework7-bundle.min.css">
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/custom.css">
-</head>
+    <link rel="stylesheet" href="core/framework7-bundle.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+  </head>
 
-<body>
+  <body>
     <div id="app">
-        <div class="view view-main view-init safe-areas" data-master-detail-breakpoint="768" data-url="/"></div>
+      <div
+        class="view view-main view-init safe-areas"
+        data-master-detail-breakpoint="768"
+        data-url="/"
+      ></div>
     </div>
     <script src="core/framework7-bundle.min.js"></script>
     <script src="js/routes.js"></script>
@@ -25,85 +36,110 @@
     <script src="js/app.js"></script>
     <script src="js/jquery-3.6.0.min.js"></script>
     <script>
-        var url = 'http://localhost/Aplikasi-Menejemen-Tugas-Karyawan/web/';
-        cek_login();
-        function cek_login() {
-            if (localStorage.getItem("no_id") != null && localStorage.getItem("email") != null) {
-                $("#nama_karyawan").html(localStorage.getItem("nama_karyawan"));
-                $("#karyawan").html(localStorage.getItem("nama_karyawan"));
-                $("#tgl_lahir").html(localStorage.getItem("tgl_lahir"));
-                $("#jabatan").html(localStorage.getItem("jabatan"));
-                $("#tempat_lahir").html(localStorage.getItem("tempat_lahir"));
-                app.views.main.router.navigate('/home/');
+      var url = "http://localhost/Aplikasi-Menejemen-Tugas-Karyawan/web/";
+      cek_login();
+      function cek_login() {
+        if (
+          localStorage.getItem("no_id") != null &&
+          localStorage.getItem("email") != null
+        ) {
+          $("#nama_karyawan").html(localStorage.getItem("nama_karyawan"));
+          $("#karyawan").html(localStorage.getItem("nama_karyawan"));
+          $("#tgl_lahir").html(localStorage.getItem("tgl_lahir"));
+          $("#jabatan").html(localStorage.getItem("jabatan"));
+          $("#tempat_lahir").html(localStorage.getItem("tempat_lahir"));
+          app.views.main.router.navigate("/home/");
+        } else {
+          app.views.main.router.navigate("/login/");
+        }
+      }
+
+      function logout() {
+        app.dialog.confirm("Apakah ingin keluar?", "Peringatan", function () {
+          localStorage.removeItem("no_id");
+          localStorage.removeItem("email");
+          localStorage.removeItem("tgl_lahir");
+          localStorage.removeItem("jabatan");
+          localStorage.removeItem("tempat_lahir");
+          location.reload(true);
+        });
+      }
+
+      function login() {
+        let email = $("#email").val();
+        let password = $("#password").val();
+        // console.log(email)
+        $.ajax({
+          url: url + "api/v1/login",
+          method: "POST",
+          data: {
+            email: email,
+            password: password,
+          },
+          cache: false,
+          success: function (data) {
+            if (data.status == "success") {
+              localStorage.setItem("no_id", data.data.no_id);
+              localStorage.setItem("email", data.data.email);
+              localStorage.setItem("nama_karyawan", data.data.nama_karyawan);
+              localStorage.setItem("tgl_lahir", data.data.tgl_lahir);
+              localStorage.setItem("jabatan", data.data.jabatan);
+              localStorage.setItem("tempat_lahir", data.data.tempat_lahir);
+              location.reload(true);
+              app.views.main.router.navigate("/home/");
             } else {
-                app.views.main.router.navigate('/login/');
+              $("#password").val("");
+              app.dialog.alert(data.message, "Peringatan");
             }
-        }
+          },
+        });
+      }
 
-        function logout() {
-            app.dialog.alert("Apakah ingin keluar?", "Peringatan", function () {
-                localStorage.removeItem("no_id");
-                localStorage.removeItem("email");
-                localStorage.removeItem("tgl_lahir");
-                localStorage.removeItem("jabatan");
-                localStorage.removeItem("tempat_lahir");
-                location.reload(true);
-            });
-        }
-
-
-        function login() {
-            let email = $('#email').val();
-            let password = $('#password').val();
-            // console.log(email)
-            $.ajax({
-                url: url + "api/v1/login",
-                method: "POST",
-                data: {
-                    email: email,
-                    password: password
-                },
-                cache: false,
-                success: function (data) {
-                    if (data.status == 'success') {
-                        localStorage.setItem("no_id", data.data.no_id);
-                        localStorage.setItem("email", data.data.email);
-                        localStorage.setItem("nama_karyawan", data.data.nama_karyawan);
-                        localStorage.setItem("tgl_lahir", data.data.tgl_lahir);
-                        localStorage.setItem("jabatan", data.data.jabatan);
-                        localStorage.setItem("tempat_lahir", data.data.tempat_lahir);
-                        location.reload(true);
-                        app.views.main.router.navigate('/home/');
-                    } else {
-                        $('#password').val("");
-                        app.dialog.alert(data.message, "Peringatan");
-                    }
-                }
-            });
-
-        }
-
-        function filter_bulan_pokok() {
-            app.views.main.router.navigate('/tugaspokok/');
-            let thn = $('#form_tahun_pokok').val();
-            app.request.json(url + "api/v1/tugas-pokok/filter/", { no_id: localStorage.getItem("no_id"), tahun: thn, bulan: $('#bulan_pokok').val() }, function (data) {
-                var tugas_pokok = "";
-                if (data == "") {
-                    tugas_pokok += `<center> Data tidak tersedia </center>`;
+      function tugas_pokok() {
+        var thn = $("#tahun").val();
+        var bln = $("#bulan").val();
+        app.request.json(
+          url + "api/v1/tugas-pokok",
+          { no_id: localStorage.getItem("no_id"), tahun: thn, bulan: bln },
+          function (data) {
+            var tugas_pokok = "";
+            if (data == "") {
+              tugas_pokok += `<center> Data tidak tersedia </center>`;
+            } else {
+              var jlh = data.length;
+              var i = "";
+              for (i = 0; i < jlh; i++) {
+                if (data[i].upload != null) {
+                  var status_upload = "Selesai";
                 } else {
-                    var jlh = data.length;
-                    var i = "";
-                    for (i = 0; i < jlh; i++) {
-                        tugas_pokok += `                    
-                        <div class="card" >
+                  var status_upload = "Belum Selesai";
+                }
+
+                if (data[i].status == "true") {
+                  tugas_pokok += `                    
+                                <div class="card" style="background-color: #ffeb3b;">`;
+                } else {
+                  tugas_pokok += `<div class="card"> `;
+                }
+
+                tugas_pokok +=
+                  `
                             <div class="list media-list" >
                                 <ul>
                                     <li>
-                                        <a href="javascript:void(0)" onclick="detail_tugas_pokok(`+ data[i].id_detail + `)" class="item-link item-content">
-                                            <div class="item-media"><img src="img/daftar-pokok.png" width="44" /></div>
+                                        <a href="javascript:void(0)" onclick="detail_tugas_pokok(` +
+                  data[i].id_detail +
+                  `)" class="item-link item-content">
+                                            <div class="item-media"><img src="img/gtugas1.png" width="44" /></div>
                                             <div class="item-inner">
-                                                <div class="item-title" style="font-size: 110%;">`+ data[i].list_job + `</div>
-                                                <div class="item-subtitle" style="font-size: 70%; color: blue;">`+ data[i].waktu_mulai + `</div>
+                                                <div class="item-title" style="font-size: 110%;">` +
+                  data[i].list_job +
+                  `</div>
+                                                <div class="item-subtitle" style="font-size: 70%; color: blue;">` +
+                  data[i].waktu_mulai +
+                  ` - ` +
+                  status_upload +
+                  `</div>
                                             </div>
                                         </a>
                                     </li>
@@ -111,63 +147,97 @@
                             </div>
                         </div>
                         `;
-                    }
-                }
-                $("#tugas_pokok").html(tugas_pokok);
-                // app.popover.close()
-            })
-        }
+              }
+            }
+            $("#pokoke").html(tugas_pokok);
+            app.sheet.close();
+          }
+        );
+      }
 
-        function detail_tugas_pokok(id) {
-            app.views.main.router.navigate('/detail-tugas-pokok/');
-            app.request.json(url + "api/v1/tugas-detail", { id: id }, function (data) {
-                var detail_tugas_pokok = "";
-                detail_tugas_pokok += `                    
-                    <div class="card">
-                        <div class="card-header">`+ data.list_job + `</div>
+      function detail_tugas_pokok(id) {
+        app.views.main.router.navigate("/detail-tugas-pokok/");
+        app.request.json(
+          url + "api/v1/tugas-detail",
+          { id: id },
+          function (data) {
+            var detail_tugas_pokok = "";
+            if (data.upload != null) {
+              detail_tugas_pokok += `                    
+                    <div class="card" style="background-color: #7ecdf1;">`;
+            } else {
+              detail_tugas_pokok += `                    
+                        <div class="card">`;
+            }
+
+            detail_tugas_pokok +=
+              `
+                        <div class="card-header">` +
+              data.list_job +
+              `</div>
                         <div class="card-content card-content-padding">
-                            <p> Data Job : `+ data.data_job + ` </p>
-                            <p> Waktu mulai : `+ data.waktu_mulai + ` </p>
-                            <p> Waktu akhir : `+ data.waktu_akhir + ` </p>                          
+                            <p> Data Job : ` +
+              data.data_job +
+              ` </p>
+                            <p> Waktu mulai : ` +
+              data.waktu_mulai +
+              ` </p>
+                            <p> Waktu akhir : ` +
+              data.waktu_akhir +
+              ` </p>                          
                             <div class="row">    
                             `;
-                if (data.status == "false") {
-                    detail_tugas_pokok += `
-                                    <button class="col button button-raised button-fill color-green" data-id="`+ data.id_detail + `" onclick="download_tugas_pokok(this)">DOWNLOAD</button>
+            if (data.status == "false") {
+              detail_tugas_pokok +=
+                `
+                                    <button class="col button button-raised button-fill color-green" data-id="` +
+                data.id_detail +
+                `" onclick="download_tugas_pokok(this)">DOWNLOAD</button>
                                 `;
-                }
-                detail_tugas_pokok += `
+            }
+            detail_tugas_pokok += `
                                 <button class="col button button-raised button-fill color-red" onclick="show_uplaod_tugas_pokok()">UPLOAD</button>  
                             </div>
                         </div>
                     </div>`;
-                $("#detail_tugas_pokok").html(detail_tugas_pokok);
-                $("#title_detail_pokok").html(data.list_job);
-                $("#id-tugas-pokok").val(data.id_detail);
-            })
-        }
+            $("#detail_tugas_pokok").html(detail_tugas_pokok);
+            $("#title_detail_pokok").html(data.list_job);
+            $("#id-tugas-pokok").val(data.id_detail);
+          }
+        );
+      }
 
-        function tugas_tambahan(thn) {
-            app.views.main.router.navigate('/tambahan1/');
-            app.request.json(url + "api/v1/tugas-tambahan", { no_id: localStorage.getItem("no_id"), tahun: thn }, function (data) {
-                var tugas_tambahan = "";
+      function tugas_tambahan(thn) {
+        app.views.main.router.navigate("/tambahan1/");
+        app.request.json(
+          url + "api/v1/tugas-tambahan",
+          { no_id: localStorage.getItem("no_id"), tahun: thn },
+          function (data) {
+            var tugas_tambahan = "";
 
-                if (data == "") {
-                    tugas_tambahan += `<center>Data tidak tersedia</center>`;
-                } else {
-                    var jlh = data.length;
-                    var i = "";
-                    for (i = 0; i < jlh; i++) {
-                        tugas_tambahan += `                    
+            if (data == "") {
+              tugas_tambahan += `<center>Data tidak tersedia</center>`;
+            } else {
+              var jlh = data.length;
+              var i = "";
+              for (i = 0; i < jlh; i++) {
+                tugas_tambahan +=
+                  `                    
                         <div class="card" >
                             <div class="list media-list" >
                                 <ul>
                                     <li>
-                                        <a href="javascript:void(0)" onclick="detail_tugas_pokok(`+ data[i].id_detail + `)" class="item-link item-content">
+                                        <a href="javascript:void(0)" onclick="detail_tugas_pokok(` +
+                  data[i].id_detail +
+                  `)" class="item-link item-content">
                                             <div class="item-media"><img src="img/daftar-pokok.png" width="44" /></div>
                                             <div class="item-inner">
-                                                <div class="item-title" style="font-size: 110%;">`+ data[i].list_job + `</div>
-                                                <div class="item-subtitle" style="font-size: 70%; color: blue;">`+ data[i].waktu_mulai + `</div>
+                                                <div class="item-title" style="font-size: 110%;">` +
+                  data[i].list_job +
+                  `</div>
+                                                <div class="item-subtitle" style="font-size: 70%; color: blue;">` +
+                  data[i].waktu_mulai +
+                  `</div>
                                             </div>
                                         </a>
                                     </li>
@@ -175,100 +245,134 @@
                             </div>
                         </div>                   
                      `;
-                    }
-                }
+              }
+            }
 
-                $("#tugas_tambahan").html(tugas_tambahan);
-                app.popover.close()
-            })
-        }
+            $("#tugas_tambahan").html(tugas_tambahan);
+            app.popover.close();
+          }
+        );
+      }
 
-        function detail_tugas_tambahan(id) {
-            app.views.main.router.navigate('/detail-tugas-tambahan/');
-            app.request.json(url + "api/v1/tugas-detail", { id: id }, function (data) {
-                var detail_tugas_tambahan = "";
-                detail_tugas_tambahan += `                    
+      function detail_tugas_tambahan(id) {
+        app.views.main.router.navigate("/detail-tugas-tambahan/");
+        app.request.json(
+          url + "api/v1/tugas-detail",
+          { id: id },
+          function (data) {
+            var detail_tugas_tambahan = "";
+            detail_tugas_tambahan +=
+              `                    
                     <div class="card">
-                        <div class="card-header">`+ data.list_job + `</div>
+                        <div class="card-header">` +
+              data.list_job +
+              `</div>
                         <div class="card-content card-content-padding">
-                            <p> Data Job : `+ data.data_job + ` </p>
-                            <p> Waktu mulai : `+ data.waktu_mulai + ` </p>
-                            <p> Waktu akhir : `+ data.waktu_akhir + ` </p>
+                            <p> Data Job : ` +
+              data.data_job +
+              ` </p>
+                            <p> Waktu mulai : ` +
+              data.waktu_mulai +
+              ` </p>
+                            <p> Waktu akhir : ` +
+              data.waktu_akhir +
+              ` </p>
                             <div class="row">    
                             `;
-                if (data.status == "false") {
-                    detail_tugas_tambahan += `
-                                    <button class="col button button-raised button-fill color-green" data-id="`+ data.id_detail + `" onclick="download_tugas_tambahan(this)">DOWNLOAD</button>
+            if (data.status == "false") {
+              detail_tugas_tambahan +=
+                `
+                                    <button class="col button button-raised button-fill color-green" data-id="` +
+                data.id_detail +
+                `" onclick="download_tugas_tambahan(this)">DOWNLOAD</button>
                                 `;
-                }
-                detail_tugas_tambahan += `
+            }
+            detail_tugas_tambahan += `
                                 <button class="col button button-raised button-fill color-red" onclick="show_uplaod_tugas_tambahan()">UPLOAD</button>  
                             </div>
                         </div>
                     </div>`;
-                $("#detail_tugas_tambahan").html(detail_tugas_tambahan);
-                $("#title_detail_tambahan").html(data.list_job);
-            })
-        }
+            $("#detail_tugas_tambahan").html(detail_tugas_tambahan);
+            $("#title_detail_tambahan").html(data.list_job);
+          }
+        );
+      }
 
-        function download_tugas_pokok(el) {
-            let id = $(el).data("id");
-            app.dialog.alert("Download file?", "Peringatan", function () {
-                app.request.json(url + "api/v1/download-tugas-pokok", { id: id }, function (data) {
-                    if (data.status == "success") {
-                        app.dialog.alert("Data berhasil di download", "Berhasil")
-                        location.reload(true);
-                    } else {
-                        app.dialog.alert("Data gagal di download", "Error")
-                    }
-                })
-            });
-        }
+      function download_tugas_pokok(el) {
+        let id = $(el).data("id");
+        app.dialog.alert("Download file?", "Peringatan", function () {
+          app.request.json(
+            url + "api/v1/download-tugas-pokok",
+            { id: id },
+            function (data) {
+              if (data.status == "success") {
+                app.dialog.alert("Data berhasil di download", "Berhasil");
+                location.reload(true);
+              } else {
+                app.dialog.alert("Data gagal di download", "Error");
+              }
+            }
+          );
+        });
+      }
 
-        function download_tugas_tambahan(el) {
-            let id = $(el).data("id");
-            app.dialog.alert("Download file?", "Peringatan", function () {
-                app.request.json(url + "api/v1/download-tugas-pokok", { id: id }, function (data) {
-                    if (data.status == "success") {
-                        app.dialog.alert("Data berhasil di download", "Berhasil")
-                        location.reload(true);
-                    } else {
-                        app.dialog.alert("Data gagal di download", "Error")
-                    }
-                })
-            });
-        }
+      function download_tugas_tambahan(el) {
+        let id = $(el).data("id");
+        app.dialog.alert("Download file?", "Peringatan", function () {
+          app.request.json(
+            url + "api/v1/download-tugas-pokok",
+            { id: id },
+            function (data) {
+              if (data.status == "success") {
+                app.dialog.alert("Data berhasil di download", "Berhasil");
+                location.reload(true);
+              } else {
+                app.dialog.alert("Data gagal di download", "Error");
+              }
+            }
+          );
+        });
+      }
 
-        function show_uplaod_tugas_pokok() {
-            $("#upload-tugas-pokok").show()
-        }
+      function show_uplaod_tugas_pokok() {
+        $("#upload-tugas-pokok").show();
+      }
 
-        function show_uplaod_tugas_tambahan() {
-            $("#upload-tugas-tambahan").show()
-        }
+      function show_uplaod_tugas_tambahan() {
+        $("#upload-tugas-tambahan").show();
+      }
 
+      function kirim_tugas_tambahan() {
+        let file = $("#file-tugas-tambahan").val();
+      }
 
-        function kirim_tugas_tambahan() {
-            let file = $('#file-tugas-tambahan').val();
-        }
-
-        function tugas_revisi() {
-            app.request.json(url + "api/v1/tugas-revisi", { no_id: localStorage.getItem("no_id") }, function (data) {
-                var jlh = data.length;
-                var i = "";
-                var tugas_revisi = "";
-                for (i = 0; i < jlh; i++) {
-                    tugas_revisi += `                    
+      function tugas_revisi() {
+        app.request.json(
+          url + "api/v1/tugas-revisi",
+          { no_id: localStorage.getItem("no_id") },
+          function (data) {
+            var jlh = data.length;
+            var i = "";
+            var tugas_revisi = "";
+            for (i = 0; i < jlh; i++) {
+              tugas_revisi +=
+                `                    
                      <div class="card demo-card">
                          <div class="list">
                          <ul>
                          <li>
-                            <a href="javascript:void(0)" onclick="detail_tugas_tambahan(`+ data[i].id_detail + `)" class="item-link item-content">
+                            <a href="javascript:void(0)" onclick="detail_tugas_tambahan(` +
+                data[i].id_detail +
+                `)" class="item-link item-content">
                                  <div class="item-media"><img src="img/daftar-revisi.png"
                                  width="44" /></div>
                                  <div class="item-inner">
-                                 <div class="item-title" style="font-size: 110%;">`+ data[i].list_job + `</div>
-                                 <div class="item-after" style="font-size: 70%; color: blue;">`+ data[i].waktu_mulai + `</div>
+                                 <div class="item-title" style="font-size: 110%;">` +
+                data[i].list_job +
+                `</div>
+                                 <div class="item-after" style="font-size: 70%; color: blue;">` +
+                data[i].waktu_mulai +
+                `</div>
                                  </div>
                             </a>
                          </li>
@@ -276,14 +380,11 @@
                          </div>
                     </div>                         
                      `;
-                }
-                $("#tugas_revisi").html(tugas_revisi);
-            })
-        }
-
-
+            }
+            $("#tugas_revisi").html(tugas_revisi);
+          }
+        );
+      }
     </script>
-
-</body>
-
+  </body>
 </html>

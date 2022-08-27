@@ -172,7 +172,6 @@ $route['ub_tm'] = 'Master/ubah_tm';
 $route['api/v1/login'] = 'api/Login';
 
 $route['api/v1/tugas-pokok'] = 'api/TugasPokokController';
-$route['api/v1/tugas-pokok/filter'] = 'api/TugasPokokController/filter';
 $route['api/v1/tugas-pokok/store'] = 'api/TugasPokokController/store';
 $route['api/v1/tugas-tambahan'] = 'api/TugasTambahanController';
 $route['api/v1/tugas-detail'] = 'api/TugasPokokController/show';

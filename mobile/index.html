@@ -207,53 +207,65 @@
         );
       }
 
-      function tugas_tambahan(thn) {
-        app.views.main.router.navigate("/tambahan1/");
+      function tugas_tambahan() {
+        var thn = $("#tahun").val();
+        var bln = $("#bulan").val();
         app.request.json(
           url + "api/v1/tugas-tambahan",
-          { no_id: localStorage.getItem("no_id"), tahun: thn },
+          { no_id: localStorage.getItem("no_id"), tahun: thn, bulan: bln },
           function (data) {
             var tugas_tambahan = "";
-
             if (data == "") {
-              tugas_tambahan += `<center>Data tidak tersedia</center>`;
+              tugas_tambahan += `<center> Data tidak tersedia </center>`;
             } else {
               var jlh = data.length;
               var i = "";
               for (i = 0; i < jlh; i++) {
+                if (data[i].upload != null) {
+                  var status_upload = "Selesai";
+                } else {
+                  var status_upload = "Belum Selesai";
+                }
+
+                if (data[i].status == "true") {
+                  tugas_tambahan += `                    
+                                <div class="card" style="background-color: #ffeb3b;">`;
+                } else {
+                  tugas_tambahan += `<div class="card"> `;
+                }
+
                 tugas_tambahan +=
-                  `                    
-                        <div class="card" >
+                  `
                             <div class="list media-list" >
                                 <ul>
                                     <li>
                                         <a href="javascript:void(0)" onclick="detail_tugas_pokok(` +
                   data[i].id_detail +
                   `)" class="item-link item-content">
-                                            <div class="item-media"><img src="img/daftar-pokok.png" width="44" /></div>
+                                            <div class="item-media"><img src="img/gtugas1.png" width="44" /></div>
                                             <div class="item-inner">
                                                 <div class="item-title" style="font-size: 110%;">` +
                   data[i].list_job +
                   `</div>
                                                 <div class="item-subtitle" style="font-size: 70%; color: blue;">` +
                   data[i].waktu_mulai +
+                  ` - ` +
+                  status_upload +
                   `</div>
                                             </div>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
-                        </div>                   
-                     `;
+                        </div>
+                        `;
               }
             }
-
-            $("#tugas_tambahan").html(tugas_tambahan);
-            app.popover.close();
+            $("#tambahan").html(tugas_tambahan);
+            app.sheet.close();
           }
         );
       }
-
       function detail_tugas_tambahan(id) {
         app.views.main.router.navigate("/detail-tugas-tambahan/");
         app.request.json(

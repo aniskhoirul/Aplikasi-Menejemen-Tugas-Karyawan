@@ -40,7 +40,7 @@ var routes = [
         componentUrl: 'pages/tugas-pokok-detail.html',
     },
     {
-        path: '/tambahan1/', 
+        path: '/tugastambahan/', 
         componentUrl: 'pages/tambahan.html',
     },
     {

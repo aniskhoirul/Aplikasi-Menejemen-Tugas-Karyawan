@@ -1,50 +1,59 @@
 <template>
   <div class="page page-home">
-      <div class="navbar" style="background-color: #2079cc; color: white">
-          <div class="navbar-inner sliding">
-            <div class="margin-left">
-              <div class="row" tyle="margin-left: 8%;">
-              <a href="#" class="link back" style="color: white">
-                <i class="icon icon-back"></i>
-                <span class="if-not-md"></span>
-                <span>HISTORI</span>
-              </a>              
-              </div>
-            </div>
-            <div class="right">             
-               <a href="#" class="link popover-open" data-popover="#popover-info" style="color: white;"><i
-                class="icon f7-icons">search</i></a>
-          </div>
-          </div>
+    <div class="navbar" style="background-color: #2079cc; color: white">
+      <div class="navbar-inner sliding">
+        <div class="margin-left">
+          <a href="#" class="link back" style="color: white">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md"></span>
+          </a>
         </div>
-        <div style="background: url('img/bg.png'); margin-top: 40px; height: 3798px;"></div>
-          <div class="page-content" style="margin-top: -3830px;">   
+        <div class="title">DARTAR HISTORY</div>
+      </div>
+    </div>
+    <div style="background: url('img/bg.png'); margin-top: 40px; height: 3798px;"></div>
+    <div class="page-content" style="margin-top: -3868px;">
+      <div class="list">
+        <ul id="history">
 
-            <div class="block-title">DAFTAR BULAN</div>
-            <div class="list links-list" >
-              <ul>
-                <li ><a href="#">JANUARI</a></li>
-                <li><a href="#">FEBRUARI</a></li>
-                <li><a href="#">MARET</a></li>
-                <li><a href="#">APRIL</a></li>
-                <li><a href="#">MEI</a></li>
-                <li><a href="#">JUNI</a></li>
-                <li><a href="#">JULI</a></li>
-                <li><a href="#">AGUSTUS</a></li>
-                <li><a href="#">SEPTEMBER</a></li>
-                <li><a href="#">OKTOBER</a></li>
-              </ul>
-            </div>
-
-           
-
-       </div>
+        </ul>
+      </div>
+    </div>
   </div>
-    
 
- </template>
- <script>
+</template>
+<script>
   export default function (props, ctx) {
-  return $render;
+    var $on = ctx.$on;
+    $on('pageInit', () => {
+      $.getJSON(url + "api/v1/history", {no_id: localStorage.getItem("no_id")}, function (data) {
+        var history = "";
+        let jenis_job = "";
+        $.each(data, function (index, item) {
+          if (item.nama_jn_job == 'pokok') {
+            jenis_job = 'Pokok';
+          }else if(item.nama_jn_job == 'tambahan'){
+            jenis_job = 'Tambahan';
+          }else{
+            jenis_job = 'Revisi';
+          }
+          history += `
+                <li>
+                  <div data-id="`+ item.id_job + `" onclick="detail_history(this)" class="item-link item-content">
+                    <div class="item-inner">
+                      <div class="item-title">
+                          `+ item.list_job + `
+                          <div class="item-header">Jenis job <b>`+ jenis_job + `</b></div>
+                      </div>
+                      <div class="item-after">Detail</div>
+                    </div>
+                  </div>
+                </li>
+                `;
+        });
+        $('#history').html(history);
+      });
+    });
+    return $render;
   }
- </script>
+</script>

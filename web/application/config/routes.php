@@ -171,9 +171,27 @@ $route['ub_tm'] = 'Master/ubah_tm';
 //ANDROID//
 $route['api/v1/login'] = 'api/Login';
 
+// Profil
+$route['api/v1/profil'] = 'api/ProfilController';
+
+// tugas pokok
 $route['api/v1/tugas-pokok'] = 'api/TugasPokokController';
 $route['api/v1/tugas-pokok/store'] = 'api/TugasPokokController/store';
-$route['api/v1/tugas-tambahan'] = 'api/TugasTambahanController';
-$route['api/v1/tugas-detail'] = 'api/TugasPokokController/show';
-$route['api/v1/tugas-revisi'] = 'api/revisi';
 $route['api/v1/download-tugas-pokok'] = 'api/TugasPokokController/download';
+
+// detail semua tugas
+$route['api/v1/tugas-detail'] = 'api/TugasPokokController/show';
+
+// tugas tambahan
+$route['api/v1/tugas-tambahan'] = 'api/TugasTambahanController';
+$route['api/v1/tugas-tambahan/store'] = 'api/TugasTambahanController/store';
+$route['api/v1/download-tugas-tambahan'] = 'api/TugasTambahanController/download';
+
+// tugas revisi
+$route['api/v1/tugas-revisi'] = 'api/RevisiController';
+$route['api/v1/tugas-revisi/store'] = 'api/RevisiController/store';
+$route['api/v1/download-tugas-revisi'] = 'api/RevisiController/download';
+
+// History
+$route['api/v1/history'] = 'api/HistoryController';
+$route['api/v1/history/show'] = 'api/HistoryController/show';

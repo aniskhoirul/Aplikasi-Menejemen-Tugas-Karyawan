@@ -19,20 +19,20 @@
           <form method="post" enctype="multipart/form-data" id="kirim_tugas_pokok">
             <div class="list no-hairlines-md">
               <ul>
-                <li class="item-content item-input">
+                <!-- <li class="item-content item-input">
                   <div class="item-inner">
                     <div class="item-title item-label">Tanggal</div>
                     <div class="item-input-wrap">
-                      <input type="hidden" name="id-tugas-pokok" id="id-tugas-pokok" />
                       <input type="date" name="tgl-tugas-pokok" placeholder="Tanggal" id="tgl-tugas-pokok" />
                       <span class="input-clear-button"></span>
                     </div>
                   </div>
-                </li>
+                </li> -->
                 <li class="item-content item-input">
                   <div class="item-inner">
                     <div class="item-title item-label">File</div>
                     <div class="item-input-wrap">
+                      <input type="hidden" name="id-tugas-pokok" id="id-tugas-pokok" />
                       <input type="file" name="file_tugas_pokok" placeholder="Your name" id="file-tugas-pokok"
                         accept=".pdf" />
                       <span class="input-clear-button"></span>
@@ -54,7 +54,6 @@
   export default function (props, ctx) {
     var $on = ctx.$on;
     $on('pageInit', () => {
-      var url = 'http://localhost/simkampus/';
       $('#kirim_tugas_pokok').submit(function (e) {
         e.preventDefault();
         var formData = new FormData(this);
@@ -71,7 +70,7 @@
             });
           },
           error: (response) => {
-            app.dialog.alert(response.message, "Gagal");
+            app.dialog.alert(response.responseJSON.message, "Gagal");
           }
         });
       })

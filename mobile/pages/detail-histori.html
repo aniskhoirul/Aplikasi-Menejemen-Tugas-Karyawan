@@ -1,34 +1,34 @@
 <template>
-    <div class="page page-home">
-      <div class="navbar" style="background-color: #2079cc; color: white">
-        <div class="navbar-inner sliding">
-          <div class="margin-left">
-            <a href="#" class="link back" style="color: white">
-              <i class="icon icon-back"></i>
-              <span class="if-not-md"></span>
-            </a>
-          </div>
-          <div class="title">DETAIL HISTORI</div>
+  <div class="page page-home">
+    <div class="navbar" style="background-color: #2079cc; color: white">
+      <div class="navbar-inner sliding">
+        <div class="margin-left">
+          <a href="#" class="link back" style="color: white">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md"></span>
+          </a>
+        </div>
+        <div class="title">DETAIL HISTORI</div>
+      </div>
+    </div>
+    <div style="background: url('img/bg.png'); margin-top: 40px; height: 3798px;"></div>
+    <div class="page-content" style="margin-top: -3830px;">
+      <div class="block-title">Daftar Tugas</div>
+      <div class="card">
+        <div class="card-content card-content-padding" width="44">
+          <p> Keterangan : <span id="list_job"></span></p>
+          <p> Data File Tugas : <span id="data_job"></span></p>
+          <p> waktu upload : <span id="created_at"></span></p>
         </div>
       </div>
-      <div style="background: url('img/bg.png'); margin-top: 40px; height: 3798px;"></div>
-      <div class="page-content" style="margin-top: -3830px;">
-        <div class="block-title">Daftar Tugas</div>
-        <div class="card">
-          <div class="card-content card-content-padding"  width="44" >
-            <p> Keterangan : Daftar Mahasiswa Bru</p>
-            <p> Data File Tugas : Tugas.pdf</p>
-            <p> waktu upload : 12-08-2022</p>
-          </div>
-      </div>
-      <div class="row" style="margin-left: 25%; margin-right: 25%; margin-top: 5%; margin-bottom: 6%;">
-        <button class="col button button-raised  button button-fill color-red text-color-white ">Download File</button>
+      <div class="block">
+        <div class="row" id="btn_download"></div>
       </div>
     </div>
-    </div>
-  </template>
-  <script>
-    export default function (props, ctx) {
+  </div>
+</template>
+<script>
+  export default function (props, ctx) {
     return $render;
-    }
-   </script>
+  }
+</script>

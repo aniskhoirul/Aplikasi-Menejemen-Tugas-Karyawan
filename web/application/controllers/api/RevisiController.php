@@ -1,15 +1,13 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') OR exit('No direct script access allowed');
 header("Access-Control-Allow-Origin: *");
 
-class TugasPokokController extends CI_Controller
-{
-	public function __construct()
-	{
-		parent::__construct();
-		// $this->load->library('upload');
-		$this->load->database();
-	}
+class RevisiController extends CI_Controller {
+    public function __construct()
+    {
+        parent::__construct(); 
+        $this->load->database();
+    }
 
 	public function index()
 	{
@@ -24,21 +22,9 @@ class TugasPokokController extends CI_Controller
 									WHERE YEAR(tb_detail_job.waktu_mulai) = '$tahun' 
 									AND MONTH(tb_detail_job.waktu_mulai) = '$bulan' 
 									AND tb_job.no_id='$id_user' 
-									AND tb_jn_job.nama_jn_job='pokok'
+									AND tb_jn_job.nama_jn_job='revisi'
 									")->result();
 		echo json_encode($detail);
-	}
-
-	public function show()
-	{
-		$id = $this->input->get('id');
-
-		$this->db->select('*');
-		$this->db->from('tb_detail_job');
-		$this->db->join('tb_job', 'tb_detail_job.id_job=tb_job.id_job');
-		$this->db->where('tb_detail_job.id_detail', $id);
-		$query = $this->db->get();
-		echo json_encode($query->row());
 	}
 
 	public function download()
@@ -63,17 +49,17 @@ class TugasPokokController extends CI_Controller
 
 	public function store()
 	{
-		$config['upload_path'] = './assets/file_upload/';
+		$config['upload_path'] = './assets/';
 		$config['allowed_types'] = 'gif|jpg|pdf';
 		$config['overwrite'] = TRUE;
 		$this->load->library('upload', $config);
-		if ($this->upload->do_upload("file_tugas_pokok")) {
+		if ($this->upload->do_upload("file_tugas_revisi")) {
 			$data = array('upload_data' => $this->upload->data());
 			$file = $data['upload_data']['file_name'];
 			$data = array(
 				'upload' => $file,
 			);
-			$this->db->where('id_detail', $this->input->post('id-tugas-pokok'));
+			$this->db->where('id_detail', $this->input->post('id-tugas-revisi'));
 			$update = $this->db->update('tb_detail_job', $data);
 			if ($update) {
 				return $this->output->set_content_type('application/json')

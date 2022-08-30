@@ -17,7 +17,7 @@
       <div class="card demo-card">
         <div class="item-media text-align-center margin-top: 10%;"><img src="img/foto.png" width="100" /></div>
         <div class="card-content card-content-padding">
-          <p class="text-align-center" style="font-size: 130%" ; id="profil_karyawan"></p>
+          <p class="text-align-center" style="font-size: 130%" id="profil_karyawan"></p>
           <p>Tanggal lahir : <span class="text-color-red" id="profil_tgl_lahir"></span></p>
           <p>Jabatan : <span class="text-color-blue" id="profil_jabatan"></span></p>
           <p>Tempan lahir : <span id="profil_tempat_lahir"></span></p>
@@ -30,14 +30,9 @@
 <script>
   export default function (props, ctx) {
     var $on = ctx.$on;
-    $on('pageInit', () => {
+    $on('pageAfterIn', () => {
       // cek_login();
-      $.getJSON(url + 'api/v1/profil', { no_id: localStorage.getItem("no_id") }, function (data) {
-        $("#profil_karyawan").html(data.nama_karyawan);
-        $("#profil_tgl_lahir").html(data.tgl_lahir);
-        $("#profil_jabatan").html(data.jabatan);
-        $("#profil_tempat_lahir").html(data.tempat_lahir);
-      });
+      profil();
     });
     return $render;
   }

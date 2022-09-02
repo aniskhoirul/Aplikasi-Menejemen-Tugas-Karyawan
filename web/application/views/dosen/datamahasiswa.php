@@ -36,9 +36,9 @@
                                       <tr>
                                           <th>No</th>
                                           <th>Nama Mahasiswa</th>
-                                          <th>Id Prodi</th>
-                                          <th>Id Tahun Masuk</th>
-                                          <th>Pasword</th>
+                                          <th>Prodi</th>
+                                          <th>Fakultas</th>
+                                          <th>Tahun Masuk</th>
                                           <th>Aksi</th>
                                       </tr>
                                   </thead>
@@ -74,19 +74,22 @@
                               <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="namae" id="namae">
                           </div>
                           <div class="form-group">
-                              <label>Id Prodi</label>
-                              <input type="hidden" name="nime" id="nime">
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="id_pre" id="id_pre">
+                              <label>Prodi</label>
+                              <!-- <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="id_pre" id="id_pre"> -->
+                              <select name="id_pre" id="id_pre" class="form-control">
+                                  <option disabled selected>-- Pilih Jabatan --</option>
+                                  <?php foreach ($prodi as $value) : ?>
+                                      <option value="<?= $value->id_prodi ?>"><?= $value->nama_prodi ?></option>
+                                  <?php endforeach ?>
+                              </select>
                           </div>
                           <div class="form-group">
-                              <label>Id Tahun Masuk</label>
-                              <input type="hidden" name="nime" id="nime">
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="id_tme" id="id_tme">
+                              <label>Tahun Masuk</label>
+                              <input type="text" class="form-control" required placeholder="Masukkan Tahun Masuk" name="id_tme" id="id_tme">
                           </div>
                           <div class="form-group">
                               <label>pasword</label>
-                              <input type="hidden" name="nime" id="nime">
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="passe" id="passe">
+                              <input type="text" class="form-control" required placeholder="Masukkan Password" name="passe" id="passe">
                           </div>
                   </div>
                   <div class="modal-footer">
@@ -117,16 +120,21 @@
                           <input type="text" class="form-control" required placeholder="Masukkan Nama Mahasiswa" name="nama" id="nama">
                       </div>
                       <div class="form-group">
-                          <label>Id Prodi</label>
-                          <input type="text" class="form-control" required placeholder="Masukkan id prodi Mahasiswa" name="id_pr" id="id_pr">
+                          <label>Prodi</label>
+                          <select name="id_pr" id="id_pr" class="form-control">
+                              <option disabled selected>-- Pilih Jabatan --</option>
+                              <?php foreach ($prodi as $value) : ?>
+                                  <option value="<?= $value->id_prodi ?>"><?= $value->nama_prodi ?></option>
+                              <?php endforeach ?>
+                          </select>
                       </div>
                       <div class="form-group">
-                          <label>Id Tahun Masuk</label>
-                          <input type="text" class="form-control" required placeholder="Masukkan id Tahun Masuk" name="id_tm" id="id_tm">
+                          <label>Tahun Masuk</label>
+                          <input type="number" class="form-control" required placeholder="Masukkan id Tahun Masuk" name="id_tm" id="id_tm">
                       </div>
                       <div class="form-group">
                           <label>Password</label>
-                          <input type="text" class="form-control" required placeholder="Masukkan Nama Mahasiswa" name="pass" id="pass">
+                          <input type="password" class="form-control" required placeholder="Masukkan Nama Mahasiswa" name="pass" id="pass">
                       </div>
               </div>
               <div class="modal-footer">
@@ -213,14 +221,14 @@
       var tabel = $("#tbl_mhs").DataTable({
           "responsive": true,
           "autoWidth": false,
-          "ajax": "<?php echo base_url(); ?>json_mh",
+          "ajax": "<?php echo base_url(); ?>dosen/data-mahasiswa/json",
           "fnDrawCallback": function(oSettings) {
               swal.close();
           }
       });
 
       function hapus(el) {
-          var nim = $(el).data("nim");
+          var nim = $(el).data("id");
           // console.log(id);
           swal("Memproses Data.....", {
               button: false,
@@ -246,7 +254,7 @@
           }).then((Hapuss) => {
               if (Hapuss) {
                   $.ajax({
-                      url: "<?php echo base_url(); ?>h_mh",
+                      url: "<?php echo base_url(); ?>dosen/data-mahasiswa/destroy",
                       method: "POST",
                       data: {
                           nim: nim
@@ -316,7 +324,7 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>tbh_mh",
+              url: "<?php echo base_url(); ?>dosen/data-mahasiswa/store",
               method: "POST",
               data: {
                   nama: nama,
@@ -334,6 +342,7 @@
                           text: 'Data Berhasil di Tambahkan',
                           icon: 'success'
                       }).then((Refreshh) => {
+                          $('#md_tbh').modal('hide');
                           refresh();
                           tabel.ajax.reload(null, false);
                       });
@@ -357,14 +366,14 @@
       }
 
       function filter(el) {
-          var nim = $(el).data("nim");
+          var nim = $(el).data("id");
           swal("Memproses Data.....", {
               button: false,
               closeOnClickOutside: false,
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>f_mh",
+              url: "<?php echo base_url(); ?>dosen/data-mahasiswa/filter",
               method: "POST",
               data: {
                   nim: nim
@@ -379,7 +388,7 @@
                       $("#namae").val(xx[2]);
                       $("#id_pre").val(xx[3]);
                       $("#id_tme").val(xx[4]);
-                      $("#passe").val(xx[5]);
+                      //   $("#passe").val(xx[5]);
                   } else {
                       swal({
                           title: 'Update Gagal',
@@ -400,8 +409,6 @@
           })
       }
 
-
-
       function update() {
           var nim = $("#nime").val();
           var nama = $("#namae").val();
@@ -409,7 +416,7 @@
           var id_tm = $("#id_tme").val();
           var pass = $("#passe").val();
 
-          if (nim == "" || nama == "" || id_pr == "" || id_tm == "" || pass == "") {
+          if (nim == "" || nama == "" || id_pr == "" || id_tm == "") {
               swal({
                   title: 'Update Gagal',
                   text: 'Ada Isian yang Belum Anda Isi !',
@@ -424,7 +431,7 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>ub_mh",
+              url: "<?php echo base_url(); ?>dosen/data-mahasiswa/update",
               method: "POST",
               data: {
                   nim: nim,

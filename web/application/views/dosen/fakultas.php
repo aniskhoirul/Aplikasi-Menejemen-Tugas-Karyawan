@@ -180,7 +180,7 @@
   var tabel = $("#tbl_fk").DataTable({
     "responsive": true,
     "autoWidth": false,
-    "ajax": "<?php echo base_url() ; ?>json_fk",
+    "ajax": "<?php echo base_url() ; ?>dosen/fakultas/json",
     "fnDrawCallback": function(oSettings){
         swal.close();
       }
@@ -202,7 +202,7 @@
       }).then((Hapuss)=>{
           if(Hapuss){
               $.ajax({
-                  url: "<?php echo base_url() ; ?>h_fk",
+                  url: "<?php echo base_url() ; ?>dosen/fakultas/destroy",
                   method: "POST",
                   data: {id: id},
                   cache: "false",
@@ -245,7 +245,7 @@
     }
     swal("Memproses Data.....", {button: false, closeOnClickOutside: false, closeOnEsc: false});
     $.ajax({
-        url: "<?php echo base_url() ; ?>tbh_fk",
+        url: "<?php echo base_url(''); ?>dosen/fakultas/store",
         method: "POST",
         data: { a: a},
         cache: "false",
@@ -258,6 +258,7 @@
               text: 'Data Berhasil di Tambahkan',
               icon: 'success'
             }).then((Refreshh)=>{
+              $('#md_tbh').modal('hide');
               refresh();
               tabel.ajax.reload(null, false);
             });
@@ -276,7 +277,7 @@
     var id = $(el).data("id");
     swal("Memproses Data.....", {button: false, closeOnClickOutside: false, closeOnEsc: false});
     $.ajax({
-      url: "<?php echo base_url() ; ?>f_fk",
+      url: "<?php echo base_url() ; ?>dosen/fakultas/filter",
       method: "POST",
       data: {id: id},
       cache: "false",
@@ -312,7 +313,7 @@
 
     swal("Memproses Data.....", {button: false, closeOnClickOutside: false, closeOnEsc: false});
       $.ajax({
-        url: "<?php echo base_url() ; ?>ub_fk",
+        url: "<?php echo base_url() ; ?>dosen/fakultas/update",
         method: "POST",
         data: {id: id, nama: nama },
         cache: "false",

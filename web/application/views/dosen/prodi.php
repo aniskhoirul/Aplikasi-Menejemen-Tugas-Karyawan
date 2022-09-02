@@ -5,12 +5,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Jabatan</h1>
+            <h1 class="m-0 text-dark">Prodi</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-              <li class="breadcrumb-item active">Jabatan</li>
+              <li class="breadcrumb-item active">Prodi</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -31,11 +31,12 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="tbl_jbt" class="table table-bordered table-striped">
+                <table id="tbl_pr" class="table table-bordered table-striped">
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Nama Jabatan</th>
+                      <th>Id Fakultas</th>
+                      <th>Nama Prodi</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -58,7 +59,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Edit Jabatan</h4>
+            <h4 class="modal-title">Edit Prodi</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -66,14 +67,62 @@
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label>Nama Jabatan</label>
+                <label>Id Fakultas</label>
                 <input type="hidden" name="ide" id="ide">
-                <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="namae" id="namae">
+                <!-- <input type="text"  required placeholder="Masukkan Nama Departemen" name="idfke" id="idfke"> -->
+                <select name="idfke" id="idfke" class="form-control">
+                  <option disabled selected>-- Pilih Fakultas --</option>
+                  <?php foreach ($fakultas as $value) : ?>
+                    <option value="<?= $value->id_fakultas?>"><?= $value->nama_fakultas?></option>
+                  <?php endforeach ?>
+                </select>
+                <div class="form-group">
+                  <label>Nama Prodi</label>
+                  <input type="hidden" name="ide" id="ide">
+                  <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="namae" id="namae">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
+                <button type="button" class="btn btn-primary waves-effect waves-light" onclick="update()">Update</button>
+              </div>
+            </form> <!-- TUTUP FORM -->
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <div class="modal fade" id="md_tbh">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Tambah Prodi</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label>Id Fakultas</label>
+                <!-- <input type="text" class="form-control" required placeholder="Masukkan Nama Prodi" name="idfk" id="idfk"> -->
+                <select name="idfk" id="idfk" class="form-control">
+                  <option disabled selected>-- Pilih Fakultas --</option>
+                  <?php foreach ($fakultas as $value) : ?>
+                    <option value="<?= $value->id_fakultas?>"><?= $value->nama_fakultas?></option>
+                  <?php endforeach ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Nama Prodi</label>
+                <input type="text" class="form-control" required placeholder="Masukkan Nama Prodi" name="nama" id="nama">
               </div>
           </div>
           <div class="modal-footer">
             <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
-            <button type="button" class="btn btn-primary waves-effect waves-light" onclick="update()">Update</button>
+            <button type="button" class="btn btn-primary waves-effect waves-light" onclick="tambah()">Save</button>
           </div>
           </form> <!-- TUTUP FORM -->
         </div>
@@ -81,34 +130,6 @@
       <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
-  <div class="modal fade" id="md_tbh">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Tambah Jabatan</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label>Nama Jabatan</label>
-              <input type="text" class="form-control" required placeholder="Masukkan Nama Jabatan" name="nama" id="nama">
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
-          <button type="button" class="btn btn-primary waves-effect waves-light" onclick="tambah()">Save</button>
-        </div>
-        </form> <!-- TUTUP FORM -->
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
   </div>
   <!-- /.modal -->
 
@@ -180,10 +201,10 @@
       closeOnClickOutside: false,
       closeOnEsc: false
     });
-    var tabel = $("#tbl_jbt").DataTable({
+    var tabel = $("#tbl_pr").DataTable({
       "responsive": true,
       "autoWidth": false,
-      "ajax": "<?php echo base_url(); ?>json_jbn",
+      "ajax": "<?php echo base_url(); ?>dosen/prodi/json",
       "fnDrawCallback": function(oSettings) {
         swal.close();
       }
@@ -216,7 +237,7 @@
       }).then((Hapuss) => {
         if (Hapuss) {
           $.ajax({
-            url: "<?php echo base_url(); ?>h_jbn",
+            url: "<?php echo base_url(); ?>dosen/prodi/destroy",
             method: "POST",
             data: {
               id: id
@@ -267,9 +288,9 @@
     }
 
     function tambah() {
-
-      var a = $("#nama").val();
-      if (a == "") {
+      var idfk = $("#idfk").val();
+      var nama = $("#nama").val();
+      if (idfk == "" || nama == "") {
         swal({
           title: 'Tambah Gagal',
           text: 'Nama Belum Anda Isi !',
@@ -283,10 +304,11 @@
         closeOnEsc: false
       });
       $.ajax({
-        url: "<?php echo base_url(); ?>tbh_jbn",
+        url: "<?php echo base_url(); ?>dosen/prodi/store",
         method: "POST",
         data: {
-          a: a
+          idfk: idfk,
+          nama: nama
         },
         cache: "false",
         success: function(x) {
@@ -298,6 +320,7 @@
               text: 'Data Berhasil di Tambahkan',
               icon: 'success'
             }).then((Refreshh) => {
+              $('#md_tbh').modal('hide')
               refresh();
               tabel.ajax.reload(null, false);
             });
@@ -328,7 +351,7 @@
         closeOnEsc: false
       });
       $.ajax({
-        url: "<?php echo base_url(); ?>f_jbn",
+        url: "<?php echo base_url(); ?>dosen/prodi/filter",
         method: "POST",
         data: {
           id: id
@@ -340,7 +363,8 @@
           var xx = y.split("|");
           if (xx[0] == 1) {
             $("#ide").val(xx[1]);
-            $("#namae").val(xx[2]);
+            $("#idfke").val(xx[2]);
+            $("#namae").val(xx[3]);
           } else {
             swal({
               title: 'Update Gagal',
@@ -365,9 +389,10 @@
 
     function update() {
       var id = $("#ide").val();
-      var nm = $("#namae").val();
+      var idfk = $("#idfke").val();
+      var nama = $("#namae").val();
 
-      if (id == "" || nm == "") {
+      if (id == "" || idfk == "" || nama == "") {
         swal({
           title: 'Update Gagal',
           text: 'Ada Isian yang Belum Anda Isi !',
@@ -382,11 +407,12 @@
         closeOnEsc: false
       });
       $.ajax({
-        url: "<?php echo base_url(); ?>ub_jbn",
+        url: "<?php echo base_url(); ?>dosen/prodi/update",
         method: "POST",
         data: {
           id: id,
-          nm: nm
+          idfk: idfk,
+          nama: nama
         },
         cache: "false",
         success: function(x) {
@@ -423,6 +449,7 @@
 
     function refresh() {
       $("#ide").val("");
+      $("#idfke").val("");
       $("#namae").val("");
       $('#md_edit').modal('hide');
     }

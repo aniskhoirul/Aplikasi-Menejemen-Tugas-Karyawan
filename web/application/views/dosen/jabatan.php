@@ -5,12 +5,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Prodi</h1>
+            <h1 class="m-0 text-dark">Jabatan</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-              <li class="breadcrumb-item active">Prodi</li>
+              <li class="breadcrumb-item active">Jabatan</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -31,12 +31,11 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="tbl_pr" class="table table-bordered table-striped">
+                <table id="tbl_jbt" class="table table-bordered table-striped">
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Id Fakultas</th>
-                      <th>Nama Prodi</th>
+                      <th>Nama Jabatan</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -59,7 +58,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Edit Prodi</h4>
+            <h4 class="modal-title">Edit Jabatan</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -67,50 +66,14 @@
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label>Id Fakultas</label>
+                <label>Nama Jabatan</label>
                 <input type="hidden" name="ide" id="ide">
-                <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="idfke" id="idfke">
-                <div class="form-group">
-                  <label>Nama Prodi</label>
-                  <input type="hidden" name="ide" id="ide">
-                  <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="namae" id="namae">
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
-                <button type="button" class="btn btn-primary waves-effect waves-light" onclick="update()">Update</button>
-              </div>
-            </form> <!-- TUTUP FORM -->
-          </div>
-        </div>
-        <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-    <div class="modal fade" id="md_tbh">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Tambah Prodi</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label>Id Fakultas</label>
-                <input type="text" class="form-control" required placeholder="Masukkan Nama Prodi" name="idfk" id="idfk">
-              </div>
-              <div class="form-group">
-                <label>Nama Prodi</label>
-                <input type="text" class="form-control" required placeholder="Masukkan Nama Prodi" name="nama" id="nama">
+                <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="namae" id="namae">
               </div>
           </div>
           <div class="modal-footer">
             <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
-            <button type="button" class="btn btn-primary waves-effect waves-light" onclick="tambah()">Save</button>
+            <button type="button" class="btn btn-primary waves-effect waves-light" onclick="update()">Update</button>
           </div>
           </form> <!-- TUTUP FORM -->
         </div>
@@ -118,6 +81,34 @@
       <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+  <div class="modal fade" id="md_tbh">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Tambah Jabatan</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label>Nama Jabatan</label>
+              <input type="text" class="form-control" required placeholder="Masukkan Nama Jabatan" name="nama" id="nama">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
+          <button type="button" class="btn btn-primary waves-effect waves-light" onclick="tambah()">Save</button>
+        </div>
+        </form> <!-- TUTUP FORM -->
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
   </div>
   <!-- /.modal -->
 
@@ -189,10 +180,10 @@
       closeOnClickOutside: false,
       closeOnEsc: false
     });
-    var tabel = $("#tbl_pr").DataTable({
+    var tabel = $("#tbl_jbt").DataTable({
       "responsive": true,
       "autoWidth": false,
-      "ajax": "<?php echo base_url(); ?>json_pr",
+      "ajax": "<?php echo base_url(); ?>dosen/jabatan/json",
       "fnDrawCallback": function(oSettings) {
         swal.close();
       }
@@ -225,7 +216,7 @@
       }).then((Hapuss) => {
         if (Hapuss) {
           $.ajax({
-            url: "<?php echo base_url(); ?>h_pr",
+            url: "<?php echo base_url(); ?>dosen/jabatan/destroy",
             method: "POST",
             data: {
               id: id
@@ -276,9 +267,9 @@
     }
 
     function tambah() {
-      var idfk = $("#idfk").val();
-      var nama = $("#nama").val();
-      if (idfk == "" || nama == "") {
+
+      var a = $("#nama").val();
+      if (a == "") {
         swal({
           title: 'Tambah Gagal',
           text: 'Nama Belum Anda Isi !',
@@ -292,11 +283,10 @@
         closeOnEsc: false
       });
       $.ajax({
-        url: "<?php echo base_url(); ?>tbh_pr",
+        url: "<?php echo base_url(); ?>dosen/jabatan/store",
         method: "POST",
         data: {
-          idfk: idfk,
-          nama: nama
+          a: a
         },
         cache: "false",
         success: function(x) {
@@ -308,6 +298,7 @@
               text: 'Data Berhasil di Tambahkan',
               icon: 'success'
             }).then((Refreshh) => {
+              $('#md_tbh').modal('hide');
               refresh();
               tabel.ajax.reload(null, false);
             });
@@ -338,7 +329,7 @@
         closeOnEsc: false
       });
       $.ajax({
-        url: "<?php echo base_url(); ?>f_pr",
+        url: "<?php echo base_url(); ?>dosen/jabatan/filter",
         method: "POST",
         data: {
           id: id
@@ -350,8 +341,7 @@
           var xx = y.split("|");
           if (xx[0] == 1) {
             $("#ide").val(xx[1]);
-            $("#idfke").val(xx[2]);
-            $("#namae").val(xx[3]);
+            $("#namae").val(xx[2]);
           } else {
             swal({
               title: 'Update Gagal',
@@ -376,10 +366,9 @@
 
     function update() {
       var id = $("#ide").val();
-      var idfk = $("#idfke").val();
-      var nama = $("#namae").val();
+      var nm = $("#namae").val();
 
-      if (id == "" || idfk == "" || nama == "") {
+      if (id == "" || nm == "") {
         swal({
           title: 'Update Gagal',
           text: 'Ada Isian yang Belum Anda Isi !',
@@ -394,12 +383,11 @@
         closeOnEsc: false
       });
       $.ajax({
-        url: "<?php echo base_url(); ?>ub_pr",
+        url: "<?php echo base_url(); ?>dosen/jabatan/update",
         method: "POST",
         data: {
           id: id,
-          idfk: idfk,
-          nama: nama
+          nm: nm
         },
         cache: "false",
         success: function(x) {
@@ -436,7 +424,6 @@
 
     function refresh() {
       $("#ide").val("");
-      $("#idfke").val("");
       $("#namae").val("");
       $('#md_edit').modal('hide');
     }

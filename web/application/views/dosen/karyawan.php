@@ -36,10 +36,9 @@
                                       <tr>
                                           <th>No</th>
                                           <th>Nama Karyawan</th>
-                                          <th>Id Jabatan</th>
+                                          <th>Jabatan</th>
                                           <th>Tanggal Lahir</th>
                                           <th>Tempat Lahir</th>
-                                          <th>Pasword</th>
                                           <th>Email</th>
                                           <th>Aksi</th>
                                       </tr>
@@ -76,28 +75,28 @@
                               <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="namae" id="namae">
                           </div>
                           <div class="form-group">
-                              <label>Id Jabatan</label>
-                              <input type="hidden" name="no_ide" id="no_ide">
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="id_jbne" id="id_jbne">
+                              <label>Jabatan</label>
+                              <select name="id_jbne" id="id_jbne" class="form-control">
+                                  <option disabled selected>-- Pilih Jabatan --</option>
+                                  <?php foreach ($jabatan as $value) : ?>
+                                      <option value="<?= $value->id_jabatan ?>"><?= $value->jabatan ?></option>
+                                  <?php endforeach ?>
+                              </select>
                           </div>
                           <div class="form-group">
                               <label>Tanggal Lahir</label>
-                              <input type="hidden" name="no_ide" id="no_ide">
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="tgl_lahire" id="tgl_lahire">
+                              <input type="date" class="form-control" required placeholder="Masukkan Nama Departemen" name="tgl_lahire" id="tgl_lahire">
                           </div>
                           <div class="form-group">
                               <label>Tempat Lahir</label>
-                              <input type="hidden" name="no_ide" id="no_ide">
                               <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="tle" id="tle">
                           </div>
                           <div class="form-group">
                               <label>Pasword</label>
-                              <input type="hidden" name="no_ide" id="no_ide">
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="passe" id="passe">
+                              <input type="password" class="form-control" required placeholder="Masukkan Nama Departemen" name="passe" id="passe">
                           </div>
                           <div class="form-group">
                               <label> Email</label>
-                              <input type="hidden" name="no_ide" id="no_ide">
                               <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="emaile" id="emaile">
                           </div>
                   </div>
@@ -129,8 +128,13 @@
                           <input type="text" class="form-control" required placeholder="Masukkan Nama Karyawan" name="nama" id="nama">
                       </div>
                       <div class="form-group">
-                          <label>Id Jabatan</label>
-                          <input type="text" class="form-control" required placeholder="Masukkan Id Jabatan" name="id_jbn" id="id_jbn">
+                          <label>Jabatan</label>
+                          <select name="id_jbn" id="id_jbn" class="form-control">
+                              <option disabled selected>-- Pilih Jabatan --</option>
+                              <?php foreach ($jabatan as $value) : ?>
+                                  <option value="<?= $value->id_jabatan ?>"><?= $value->jabatan ?></option>
+                              <?php endforeach ?>
+                          </select>
                       </div>
                       <div class="form-group">
                           <label>Tanggal Lahir</label>
@@ -142,7 +146,7 @@
                       </div>
                       <div class="form-group">
                           <label>Password</label>
-                          <input type="text" class="form-control" required placeholder="Masukkan password" name="pass" id="pass">
+                          <input type="password" class="form-control" required placeholder="Masukkan password" name="pass" id="pass">
                       </div>
                       <div class="form-group">
                           <label> Email</label>
@@ -234,14 +238,14 @@
       var tabel = $("#tbl_kry").DataTable({
           "responsive": true,
           "autoWidth": false,
-          "ajax": "<?php echo base_url(); ?>json_kr",
+          "ajax": "<?php echo base_url(); ?>dosen/karyawan/json",
           "fnDrawCallback": function(oSettings) {
               swal.close();
           }
       });
 
       function hapus(el) {
-          var no_id = $(el).data("no_id");
+          var no_id = $(el).data("id");
           // console.log(id);
           swal("Memproses Data.....", {
               button: false,
@@ -267,7 +271,7 @@
           }).then((Hapuss) => {
               if (Hapuss) {
                   $.ajax({
-                      url: "<?php echo base_url(); ?>h_kr",
+                      url: "<?php echo base_url(); ?>dosen/karyawan/destroy",
                       method: "POST",
                       data: {
                           no_id: no_id
@@ -339,7 +343,7 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>tbh_kr",
+              url: "<?php echo base_url(); ?>dosen/karyawan/store",
               method: "POST",
               data: {
                   nama: nama_karyawan,
@@ -359,6 +363,7 @@
                           text: 'Data Berhasil di Tambahkan',
                           icon: 'success'
                       }).then((Refreshh) => {
+                          $('#md_tbh').modal('hide');
                           refresh();
                           tabel.ajax.reload(null, false);
                       });
@@ -382,14 +387,14 @@
       }
 
       function filter(el) {
-          var no_id = $(el).data("no_id");
+          var no_id = $(el).data("id");
           swal("Memproses Data.....", {
               button: false,
               closeOnClickOutside: false,
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>f_kr",
+              url: "<?php echo base_url(); ?>dosen/karyawan/filter",
               method: "POST",
               data: {
                   no_id: no_id
@@ -400,13 +405,12 @@
                   var y = atob(x);
                   var xx = y.split("|");
                   if (xx[0] == 1) {
-                      $("no_ide").val(xx[1]);
+                      $("#no_ide").val(xx[1]);
                       $("#namae").val(xx[2]);
                       $("#id_jbne").val(xx[3]);
                       $("#tgl_lahire").val(xx[4]);
                       $("#tle").val(xx[5]);
-                      $("#passe").val(xx[6]);
-                      $("#emaile").val(xx[7]);
+                      $("#emaile").val(xx[6]);
 
                   } else {
                       swal({
@@ -439,7 +443,7 @@
           var pass = $("#passe").val();
           var email = $("#emaile").val();
 
-          if (no_id == "" || nama == "" || id_jbn == "" || tgl_lahir == "" || tl == "" || pass == "" || email == "") {
+          if (no_id == "" || nama == "" || id_jbn == "" || tgl_lahir == "" || tl == "" || email == "") {
               swal({
                   title: 'Update Gagal',
                   text: 'Ada Isian yang Belum Anda Isi !',
@@ -454,7 +458,7 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>ub_kr",
+              url: "<?php echo base_url(); ?>dosen/karyawan/update",
               method: "POST",
               data: {
                   no_id: no_id,

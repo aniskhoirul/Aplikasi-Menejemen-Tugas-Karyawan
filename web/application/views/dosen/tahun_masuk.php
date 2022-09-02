@@ -68,7 +68,7 @@
                           <div class="form-group">
                               <label>Nama Tahun</label>
                               <input type="hidden" name="ide" id="ide">
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="namae" id="namae">
+                              <input type="number" class="form-control" required placeholder="Masukkan Tahun" name="namae" id="namae">
                           </div>
                   </div>
                   <div class="modal-footer">
@@ -96,7 +96,7 @@
                   <form>
                       <div class="form-group">
                           <label>Nama Tahun</label>
-                          <input type="text" class="form-control" required placeholder="Masukkan Nama Jabatan" name="nama" id="nama">
+                          <input type="number" class="form-control" required placeholder="Masukkan Tahun" name="nama" id="nama">
                       </div>
               </div>
               <div class="modal-footer">
@@ -183,7 +183,7 @@
       var tabel = $("#tbl_tama").DataTable({
           "responsive": true,
           "autoWidth": false,
-          "ajax": "<?php echo base_url(); ?>json_tm",
+          "ajax": "<?php echo base_url(); ?>dosen/tahun-masuk/json",
           "fnDrawCallback": function(oSettings) {
               swal.close();
           }
@@ -216,7 +216,7 @@
           }).then((Hapuss) => {
               if (Hapuss) {
                   $.ajax({
-                      url: "<?php echo base_url(); ?>h_tm",
+                      url: "<?php echo base_url(); ?>dosen/tahun-masuk/destroy",
                       method: "POST",
                       data: {
                           id: id
@@ -283,7 +283,7 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>tbh_tm",
+              url: "<?php echo base_url(); ?>dosen/tahun-masuk/store",
               method: "POST",
               data: {
                   a: a
@@ -298,6 +298,7 @@
                           text: 'Data Berhasil di Tambahkan',
                           icon: 'success'
                       }).then((Refreshh) => {
+                        $('#md_tbh').modal('hide');
                           refresh();
                           tabel.ajax.reload(null, false);
                       });
@@ -328,7 +329,7 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>f_tm",
+              url: "<?php echo base_url(); ?>dosen/tahun-masuk/filter",
               method: "POST",
               data: {
                   id: id
@@ -382,11 +383,11 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>ub_tm",
+              url: "<?php echo base_url(); ?>dosen/tahun-masuk/update",
               method: "POST",
               data: {
                   id: id,
-                  nm: nm
+                  nama: nm
               },
               cache: "false",
               success: function(x) {

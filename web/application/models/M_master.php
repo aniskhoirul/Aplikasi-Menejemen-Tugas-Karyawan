@@ -164,7 +164,7 @@ class M_master extends CI_Model
 	//MAHASISWA//
 	public function mdata_mh()
 	{
-		$sql = "SELECT * FROM tb_mahasiswa";
+		$sql = "SELECT * FROM mahasiswa INNER JOIN tb_prodi ON mahasiswa.id_prodi=tb_prodi.id_prodi INNER JOIN tb_fakultas ON tb_prodi.id_fakultas=tb_fakultas.id_fakultas";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return $querySQL->result();
@@ -174,7 +174,7 @@ class M_master extends CI_Model
 	}
 	public function mhapus_mh($nim)
 	{
-		$sql = "DELETE FROM tb_mahasiswa WHERE nim ='$nim'";
+		$sql = "DELETE FROM mahasiswa WHERE nim ='$nim'";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return "1";
@@ -184,9 +184,19 @@ class M_master extends CI_Model
 	}
 	public function mtambah_mh($nama, $id_pr, $id_tm, $pass)
 	{
-		$sql = "INSERT INTO tb_mahasiswa VALUES('','$nama','$id_pr','$id_tm','$pass');";
-		$querySQL = $this->db->query($sql);
-		if ($querySQL) {
+		$nim = 12 . (int)preg_replace('/(0)\.(\d+) (\d+)/', '$3$1$2', microtime());
+		// $sql = "INSERT INTO tb_mahasiswa VALUES($nim,'$nama','$id_pr','$id_tm','$pass')";
+		$data = [
+			'nim' => $nim,
+			'nama' => $nama,
+			'id_prodi' => $id_pr,
+			'id_thn_masuk' => $id_tm,
+			'pasword' => $pass,
+		];
+		$sql = $this->db->insert('tb_mahasiswa', $data);
+		// echo json_encode($sql);
+		// $querySQL = $this->db->query($sql);
+		if ($sql) {
 			return "1";
 		} else {
 			return "0";
@@ -194,7 +204,7 @@ class M_master extends CI_Model
 	}
 	public function mfilter_mh($nim)
 	{
-		$sql = "SELECT * FROM tb_mahasiswa WHERE nim ='$nim'";
+		$sql = "SELECT * FROM mahasiswa WHERE nim ='$nim'";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return $querySQL->result();
@@ -204,7 +214,11 @@ class M_master extends CI_Model
 	}
 	public function mubah_mh($nim, $nama, $id_pr, $id_tm, $pass)
 	{
-		$sql = "UPDATE tb_mahasiswa SET nama='$nama',id_prodi='$id_pr',id_thn_masuk='$id_tm', pasword ='$pass'  WHERE nim='$nim';";
+		if ($pass == "") {
+			$sql = "UPDATE mahasiswa SET nama='$nama',id_prodi='$id_pr',id_thn_masuk='$id_tm' WHERE nim='$nim'";
+		}else{
+			$sql = "UPDATE mahasiswa SET nama='$nama',id_prodi='$id_pr',id_thn_masuk='$id_tm', pasword ='$pass'  WHERE nim='$nim'";
+		}
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return "1";
@@ -320,7 +334,7 @@ class M_master extends CI_Model
 	//DOSEN//
 	public function mdata_dos()
 	{
-		$sql = "SELECT * FROM tb_dosen";
+		$sql = "SELECT * FROM tb_dosen INNER JOIN tb_jabatan ON tb_dosen.id_jabatan=tb_jabatan.id_jabatan";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return $querySQL->result();
@@ -360,7 +374,11 @@ class M_master extends CI_Model
 	}
 	public function mubah_dos($no_id, $nidn, $id_jbn, $nama, $tgl_lahir, $tl, $pass)
 	{
-		$sql = " UPDATE tb_dosen SET nidn='$nidn',id_jabatan='$id_jbn',nama_dosen='$nama',tgl_lahir='$tgl_lahir',tempat_lahir='$tl',pasword='$pass'  WHERE no_id='$no_id';";
+		if ($pass == "") {
+			$sql = " UPDATE tb_dosen SET nidn='$nidn',id_jabatan='$id_jbn',nama_dosen='$nama',tgl_lahir='$tgl_lahir',tempat_lahir='$tl' WHERE no_id='$no_id'";
+		}else{
+			$sql = " UPDATE tb_dosen SET nidn='$nidn',id_jabatan='$id_jbn',nama_dosen='$nama',tgl_lahir='$tgl_lahir',tempat_lahir='$tl',password='$pass'  WHERE no_id='$no_id'";
+		}
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return "1";
@@ -372,7 +390,7 @@ class M_master extends CI_Model
 	//JENIS GAJI//
 	public function mdata_jgaji()
 	{
-		$sql = "SELECT *FROM tb_jn_gaji";
+		$sql = "SELECT * FROM tb_jn_gaji";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return $querySQL->result();
@@ -424,7 +442,7 @@ class M_master extends CI_Model
 	//GAJI//
 	public function mdata_gaji()
 	{
-		$sql = "SELECT * FROM tb_dt_gaji";
+		$sql = "SELECT * FROM tb_dt_gaji INNER JOIN tb_jn_gaji ON tb_dt_gaji.id_jn_gaji=tb_jn_gaji.id_jn_gaji";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return $querySQL->result();
@@ -476,7 +494,7 @@ class M_master extends CI_Model
 	//KARYAWAN//
 	public function mdata_kr()
 	{
-		$sql = "SELECT * FROM tb_karyawan";
+		$sql = "SELECT * FROM tb_karyawan INNER JOIN tb_jabatan ON tb_karyawan.id_jabatan=tb_jabatan.id_jabatan";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return $querySQL->result();
@@ -516,7 +534,12 @@ class M_master extends CI_Model
 	}
 	public function mubah_kr($no_id, $nama, $id_jbn, $tgl_lahir, $tl, $pass, $email)
 	{
-		$sql = "UPDATE tb_karyawan SET nama_karyawan='$nama',id_jabatan='$id_jbn',tgl_lahir='$tgl_lahir',tempat_lahir='$tl', pasword ='$pass', email ='$email'  WHERE no_id='$no_id';";
+		if ($pass == "") {
+			$sql = "UPDATE tb_karyawan SET nama_karyawan='$nama',id_jabatan='$id_jbn',tgl_lahir='$tgl_lahir',tempat_lahir='$tl', email ='$email'  WHERE no_id='$no_id'";
+		}else{
+			$sql = "UPDATE tb_karyawan SET nama_karyawan='$nama',id_jabatan='$id_jbn',tgl_lahir='$tgl_lahir',tempat_lahir='$tl', password ='$pass', email ='$email'  WHERE no_id='$no_id'";
+		}
+
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return "1";

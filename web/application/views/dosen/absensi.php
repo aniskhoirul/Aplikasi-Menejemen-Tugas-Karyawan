@@ -69,12 +69,11 @@
                           <div>
                               <label>No Id</label>
                               <input type="hidden" name="ide" id="ide">
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="no_ide" id="no_ide">
+                              <input type="number" class="form-control" required placeholder="Masukkan Nama Departemen" name="no_ide" id="no_ide">
                           </div>
                           <div class="form-group">
                               <label>jumlah wajib</label>
-                              <input type="hidden" name="ide" id="ide">
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="jmle" id="jmle">
+                              <input type="number" class="form-control" required placeholder="Masukkan Nama Departemen" name="jmle" id="jmle">
                           </div>
                   </div>
                   <div class="modal-footer">
@@ -102,11 +101,11 @@
                   <form>
                       <div class="form-group">
                           <label>No Id</label>
-                          <input type="text" class="form-control" required placeholder="Masukkan Nama no id" name="no_id" id="no_id">
+                          <input type="number" class="form-control" required placeholder="Masukkan Nama no id" name="no_id" id="no_id">
                       </div>
                       <div class="form-group">
                           <label>Jumlah Wajib</label>
-                          <input type="text" class="form-control" required placeholder="Masukkan Nama jumlah" name="jml" id="jml">
+                          <input type="number" class="form-control" required placeholder="Masukkan Nama jumlah" name="jml" id="jml">
                       </div>
               </div>
               <div class="modal-footer">
@@ -193,7 +192,7 @@
       var tabel = $("#tbl_abn").DataTable({
           "responsive": true,
           "autoWidth": false,
-          "ajax": "<?php echo base_url(); ?>json_abs",
+          "ajax": "<?php echo base_url(); ?>dosen/absensi/json",
           "fnDrawCallback": function(oSettings) {
               swal.close();
           }
@@ -294,7 +293,7 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>tbh_abs",
+              url: "<?php echo base_url(); ?>dosen/absensi/store",
               method: "POST",
               data: {
                   no_id: no_id,
@@ -310,6 +309,7 @@
                           text: 'Data Berhasil di Tambahkan',
                           icon: 'success'
                       }).then((Refreshh) => {
+                          $('#md_tbh').modal('hide');
                           refresh();
                           tabel.ajax.reload(null, false);
                       });
@@ -340,7 +340,7 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>f_abs",
+              url: "<?php echo base_url(); ?>dosen/absensi/filter",
               method: "POST",
               data: {
                   id: id
@@ -352,7 +352,8 @@
                   var xx = y.split("|");
                   if (xx[0] == 1) {
                       $("#ide").val(xx[1]);
-                      $("#namae").val(xx[2]);
+                      $("#no_ide").val(xx[2]);
+                      $("#jmle").val(xx[3]);
                   } else {
                       swal({
                           title: 'Update Gagal',
@@ -395,7 +396,7 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>ub_abs",
+              url: "<?php echo base_url(); ?>dosen/absensi/update",
               method: "POST",
               data: {
                   id: id,

@@ -35,7 +35,7 @@
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Id Fakultas</th>
+                      <th>Fakultas</th>
                       <th>Nama Prodi</th>
                       <th>Aksi</th>
                     </tr>
@@ -67,7 +67,7 @@
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label>Id Fakultas</label>
+                <label>Fakultas</label>
                 <input type="hidden" name="ide" id="ide">
                 <!-- <input type="text"  required placeholder="Masukkan Nama Departemen" name="idfke" id="idfke"> -->
                 <select name="idfke" id="idfke" class="form-control">
@@ -106,7 +106,7 @@
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label>Id Fakultas</label>
+                <label>Fakultas</label>
                 <!-- <input type="text" class="form-control" required placeholder="Masukkan Nama Prodi" name="idfk" id="idfk"> -->
                 <select name="idfk" id="idfk" class="form-control">
                   <option disabled selected>-- Pilih Fakultas --</option>
@@ -204,7 +204,7 @@
     var tabel = $("#tbl_pr").DataTable({
       "responsive": true,
       "autoWidth": false,
-      "ajax": "<?php echo base_url(); ?>dosen/prodi/json",
+      "ajax": "<?php echo base_url(); ?>admin/prodi/json",
       "fnDrawCallback": function(oSettings) {
         swal.close();
       }
@@ -237,7 +237,7 @@
       }).then((Hapuss) => {
         if (Hapuss) {
           $.ajax({
-            url: "<?php echo base_url(); ?>dosen/prodi/destroy",
+            url: "<?php echo base_url(); ?>admin/prodi/destroy",
             method: "POST",
             data: {
               id: id
@@ -304,7 +304,7 @@
         closeOnEsc: false
       });
       $.ajax({
-        url: "<?php echo base_url(); ?>dosen/prodi/store",
+        url: "<?php echo base_url(); ?>admin/prodi/store",
         method: "POST",
         data: {
           idfk: idfk,
@@ -351,7 +351,7 @@
         closeOnEsc: false
       });
       $.ajax({
-        url: "<?php echo base_url(); ?>dosen/prodi/filter",
+        url: "<?php echo base_url(); ?>admin/prodi/filter",
         method: "POST",
         data: {
           id: id
@@ -407,7 +407,7 @@
         closeOnEsc: false
       });
       $.ajax({
-        url: "<?php echo base_url(); ?>dosen/prodi/update",
+        url: "<?php echo base_url(); ?>admin/prodi/update",
         method: "POST",
         data: {
           id: id,

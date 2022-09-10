@@ -5,12 +5,12 @@
           <div class="container-fluid">
               <div class="row mb-2">
                   <div class="col-sm-6">
-                      <h1 class="m-0 text-dark">Tahun Masuk</h1>
+                      <h1 class="m-0 text-dark">Absensi</h1>
                   </div><!-- /.col -->
                   <div class="col-sm-6">
                       <ol class="breadcrumb float-sm-right">
                           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                          <li class="breadcrumb-item active">Tahun Masuk</li>
+                          <li class="breadcrumb-item active">Absensi</li>
                       </ol>
                   </div><!-- /.col -->
               </div><!-- /.row -->
@@ -31,11 +31,12 @@
                           </div>
                           <!-- /.card-header -->
                           <div class="card-body">
-                              <table id="tbl_tama" class="table table-bordered table-striped">
+                              <table id="tbl_abn" class="table table-bordered table-striped">
                                   <thead>
                                       <tr>
                                           <th>No</th>
-                                          <th>Nama Tahun</th>
+                                          <th>Jabatan</th>
+                                          <th>Jumlah wajib</th>
                                           <th>Aksi</th>
                                       </tr>
                                   </thead>
@@ -58,17 +59,27 @@
           <div class="modal-dialog">
               <div class="modal-content">
                   <div class="modal-header">
-                      <h4 class="modal-title">Edit Tahun Masuk</h4>
+                      <h4 class="modal-title">Edit Absensi</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                       </button>
                   </div>
                   <div class="modal-body">
                       <form>
-                          <div class="form-group">
-                              <label>Nama Tahun</label>
+                          <div>
+                              <label>Jabatan</label>
                               <input type="hidden" name="ide" id="ide">
-                              <input type="number" class="form-control" required placeholder="Masukkan Tahun" name="namae" id="namae">
+                              <!-- <input type="number" class="form-control" required placeholder="Masukkan Nama Departemen" name="id_jabatane" id="id_jabatane"> -->
+                              <select name="id_jabatane" id="id_jabatane" class="form-control">
+                                  <option disabled selected>-- Pilih Jabatan --</option>
+                                  <?php foreach ($jabatan as $value) : ?>
+                                      <option value="<?= $value->id_jabatan ?>"><?= $value->jabatan ?></option>
+                                  <?php endforeach ?>
+                              </select>
+                          </div>
+                          <div class="form-group">
+                              <label>jumlah wajib</label>
+                              <input type="number" class="form-control" required placeholder="Masukkan Nama Departemen" name="jmle" id="jmle">
                           </div>
                   </div>
                   <div class="modal-footer">
@@ -87,7 +98,7 @@
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-header">
-                  <h4 class="modal-title">Tambah Tahun Masuk</h4>
+                  <h4 class="modal-title">Tambah absensi</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
@@ -95,8 +106,17 @@
               <div class="modal-body">
                   <form>
                       <div class="form-group">
-                          <label>Nama Tahun</label>
-                          <input type="number" class="form-control" required placeholder="Masukkan Tahun" name="nama" id="nama">
+                          <label>Jabatan</label>
+                          <select name="id_jabatan" id="id_jabatan" class="form-control">
+                              <option disabled selected>-- Pilih Jabatan --</option>
+                              <?php foreach ($jabatan as $value) : ?>
+                                  <option value="<?= $value->id_jabatan ?>"><?= $value->jabatan ?></option>
+                              <?php endforeach ?>
+                          </select>
+                      </div>
+                      <div class="form-group">
+                          <label>Jumlah Wajib</label>
+                          <input type="number" class="form-control" required placeholder="Masukkan Nama jumlah" name="jml" id="jml">
                       </div>
               </div>
               <div class="modal-footer">
@@ -180,10 +200,10 @@
           closeOnClickOutside: false,
           closeOnEsc: false
       });
-      var tabel = $("#tbl_tama").DataTable({
+      var tabel = $("#tbl_abn").DataTable({
           "responsive": true,
           "autoWidth": false,
-          "ajax": "<?php echo base_url(); ?>dosen/tahun-masuk/json",
+          "ajax": "<?php echo base_url(); ?>admin/absensi/json",
           "fnDrawCallback": function(oSettings) {
               swal.close();
           }
@@ -216,7 +236,7 @@
           }).then((Hapuss) => {
               if (Hapuss) {
                   $.ajax({
-                      url: "<?php echo base_url(); ?>dosen/tahun-masuk/destroy",
+                      url: "<?php echo base_url(); ?>admin/absensi/destroy",
                       method: "POST",
                       data: {
                           id: id
@@ -268,8 +288,9 @@
 
       function tambah() {
 
-          var a = $("#nama").val();
-          if (a == "") {
+          var id_jabatan = $("#id_jabatan").val();
+          var jml_wajib = $("#jml").val();
+          if (id_jabatan == "" || jml_wajib == "") {
               swal({
                   title: 'Tambah Gagal',
                   text: 'Nama Belum Anda Isi !',
@@ -283,10 +304,11 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>dosen/tahun-masuk/store",
+              url: "<?php echo base_url(); ?>admin/absensi/store",
               method: "POST",
               data: {
-                  a: a
+                  id_jabatan: id_jabatan,
+                  jml: jml_wajib
               },
               cache: "false",
               success: function(x) {
@@ -298,7 +320,7 @@
                           text: 'Data Berhasil di Tambahkan',
                           icon: 'success'
                       }).then((Refreshh) => {
-                        $('#md_tbh').modal('hide');
+                          $('#md_tbh').modal('hide');
                           refresh();
                           tabel.ajax.reload(null, false);
                       });
@@ -329,7 +351,7 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>dosen/tahun-masuk/filter",
+              url: "<?php echo base_url(); ?>admin/absensi/filter",
               method: "POST",
               data: {
                   id: id
@@ -341,7 +363,8 @@
                   var xx = y.split("|");
                   if (xx[0] == 1) {
                       $("#ide").val(xx[1]);
-                      $("#namae").val(xx[2]);
+                      $("#id_jabatane").val(xx[2]);
+                      $("#jmle").val(xx[3]);
                   } else {
                       swal({
                           title: 'Update Gagal',
@@ -366,9 +389,10 @@
 
       function update() {
           var id = $("#ide").val();
-          var nm = $("#namae").val();
+          var id_jabatan = $("#id_jabatane").val();
+          var jml = $("#jmle").val();
 
-          if (id == "" || nm == "") {
+          if (id == "" || id_jabatan == "" || jml == "") {
               swal({
                   title: 'Update Gagal',
                   text: 'Ada Isian yang Belum Anda Isi !',
@@ -383,11 +407,12 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>dosen/tahun-masuk/update",
+              url: "<?php echo base_url(); ?>admin/absensi/update",
               method: "POST",
               data: {
                   id: id,
-                  nama: nm
+                  id_jabatan: id_jabatan,
+                  jml: jml
               },
               cache: "false",
               success: function(x) {
@@ -424,7 +449,8 @@
 
       function refresh() {
           $("#ide").val("");
-          $("#namae").val("");
+          $("#id_jabatane").val("");
+          $("#jmle").val("");
           $('#md_edit').modal('hide');
       }
   </script>

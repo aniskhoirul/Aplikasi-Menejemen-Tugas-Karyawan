@@ -5,7 +5,7 @@ class DashboardController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if (!$this->session->userdata('no_id')) {
+        if (!$this->session->userdata('username')) {
             redirect('login');
         }
     }
@@ -13,6 +13,6 @@ class DashboardController extends CI_Controller
     public function index()
     {
         $this->load->view('template/header');
-		$this->load->view('karyawan/dashboard');
+		$this->load->view('admin/dashboard');
     }
 }

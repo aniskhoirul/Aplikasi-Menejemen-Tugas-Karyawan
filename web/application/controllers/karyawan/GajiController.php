@@ -5,7 +5,7 @@ class GajiController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if (!$this->session->userdata('nidn')) {
+        if (!$this->session->userdata('no_id')) {
             redirect('login');
         }
     }
@@ -13,7 +13,7 @@ class GajiController extends CI_Controller
     public function index()
     {
         $this->load->view('template/header');
-        $this->load->view('dosen/gaji');
+        $this->load->view('karyawan/gaji');
     }
 
     public function json()

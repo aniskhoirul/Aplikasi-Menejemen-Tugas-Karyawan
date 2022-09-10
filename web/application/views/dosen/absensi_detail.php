@@ -4,12 +4,12 @@
           <div class="container-fluid">
               <div class="row mb-2">
                   <div class="col-sm-6">
-                      <h1 class="m-0 text-dark">Gaji</h1>
+                      <h1 class="m-0 text-dark">Detail Absensi</h1>
                   </div>
                   <div class="col-sm-6">
                       <ol class="breadcrumb float-sm-right">
                           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                          <li class="breadcrumb-item active">Gaji</li>
+                          <li class="breadcrumb-item active">Detail Absensi</li>
                       </ol>
                   </div>
               </div>
@@ -24,8 +24,7 @@
                       <div class="card">
                           <div class="card-header">
                               <h3 class="card-title">
-                                  <h2 class="m-0 text-dark">Gaji</h2>
-                                  <!-- <button type='button' class='btn btn-success waves-effect waves-light' data-toggle='modal' data-target='#md_tbh'>Tambah</button> -->
+                                  <h2 class="m-0 text-dark">Detail Absensi</h2>
                               </h3>
                           </div>
                           <div class="card-body">
@@ -33,9 +32,8 @@
                                   <thead>
                                       <tr>
                                           <th>No</th>
-                                          <th>Jenis Gaji</th>
-                                          <th>Nama Gaji</th>
-                                          <th>Nominal</th>
+                                          <th>Waktu</th>
+                                          <th>Nilai Absensi</th>
                                       </tr>
                                   </thead>
 
@@ -87,6 +85,8 @@
   <!-- JQVMap -->
   <script src="<?php echo base_url(); ?>plugins/jqvmap/jquery.vmap.min.js"></script>
   <script src="<?php echo base_url(); ?>plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+  <!-- jQuery Knob Chart -->
+  <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
   <!-- daterangepicker -->
   <script src="<?php echo base_url(); ?>plugins/moment/moment.min.js"></script>
   <script src="<?php echo base_url(); ?>plugins/daterangepicker/daterangepicker.js"></script>
@@ -119,7 +119,7 @@
       var tabel = $("#table").DataTable({
           "responsive": true,
           "autoWidth": false,
-          "ajax": "<?php echo base_url(); ?>dosen/gaji/json",
+          "ajax": "<?php echo base_url(); ?>dosen/absensi/json_detail",
           "fnDrawCallback": function(oSettings) {
               swal.close();
           }

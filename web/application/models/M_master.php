@@ -111,7 +111,7 @@ class M_master extends CI_Model
 	//PRODI//
 	public function mdata_pr()
 	{
-		$sql = "SELECT * FROM tb_prodi";
+		$sql = "SELECT * FROM tb_prodi INNER JOIN tb_fakultas ON tb_prodi.id_fakultas=tb_fakultas.id_fakultas";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return $querySQL->result();
@@ -164,7 +164,7 @@ class M_master extends CI_Model
 	//MAHASISWA//
 	public function mdata_mh()
 	{
-		$sql = "SELECT * FROM mahasiswa INNER JOIN tb_prodi ON mahasiswa.id_prodi=tb_prodi.id_prodi INNER JOIN tb_fakultas ON tb_prodi.id_fakultas=tb_fakultas.id_fakultas";
+		$sql = "SELECT * FROM tb_mahasiswa INNER JOIN tb_prodi ON tb_mahasiswa.id_prodi=tb_prodi.id_prodi INNER JOIN tb_fakultas ON tb_prodi.id_fakultas=tb_fakultas.id_fakultas";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return $querySQL->result();
@@ -174,7 +174,7 @@ class M_master extends CI_Model
 	}
 	public function mhapus_mh($nim)
 	{
-		$sql = "DELETE FROM mahasiswa WHERE nim ='$nim'";
+		$sql = "DELETE FROM tb_mahasiswa WHERE nim ='$nim'";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return "1";
@@ -204,7 +204,7 @@ class M_master extends CI_Model
 	}
 	public function mfilter_mh($nim)
 	{
-		$sql = "SELECT * FROM mahasiswa WHERE nim ='$nim'";
+		$sql = "SELECT * FROM tb_mahasiswa WHERE nim ='$nim'";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return $querySQL->result();
@@ -230,7 +230,7 @@ class M_master extends CI_Model
 	//absensi//
 	public function mdata_abs()
 	{
-		$sql = "SELECT * FROM tb_absensi";
+		$sql = "SELECT * FROM tb_absensi INNER JOIN tb_jabatan ON tb_absensi.id_jabatan=tb_jabatan.id_jabatan";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return $querySQL->result();
@@ -248,9 +248,9 @@ class M_master extends CI_Model
 			return "0";
 		}
 	}
-	public function mtambah_abs($no_id, $jml)
+	public function mtambah_abs($id_jabatan, $jml)
 	{
-		$sql = "INSERT INTO tb_absensi VALUES('','$no_id','$jml');";
+		$sql = "INSERT INTO tb_absensi VALUES('','$id_jabatan','$jml');";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return "1";
@@ -268,9 +268,9 @@ class M_master extends CI_Model
 			return 0;
 		}
 	}
-	public function mubah_abs($id, $no_id, $jml)
+	public function mubah_abs($id, $id_jabatan, $jml)
 	{
-		$sql = " UPDATE tb_absensi SET no_id='$no_id',jml_wajib='$jml' WHERE id_absensi='$id';";
+		$sql = " UPDATE tb_absensi SET id_jabatan='$id_jabatan',jml_wajib='$jml' WHERE id_absensi='$id';";
 		$querySQL = $this->db->query($sql);
 		if ($querySQL) {
 			return "1";
@@ -649,6 +649,17 @@ class M_master extends CI_Model
 			return "1";
 		} else {
 			return "0";
+		}
+	}
+
+	public function m_filter_tugas($id)
+	{
+		$sql = "SELECT*FROM tb_job WHERE id_job='$id'";
+		$querySQL = $this->db->query($sql);
+		if ($querySQL) {
+			return $querySQL->result();
+		} else {
+			return 0;
 		}
 	}
 }

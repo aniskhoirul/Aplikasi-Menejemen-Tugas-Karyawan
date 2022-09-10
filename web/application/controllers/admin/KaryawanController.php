@@ -5,7 +5,7 @@ class KaryawanController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if (!$this->session->userdata('nidn')) {
+        if (!$this->session->userdata('username')) {
             redirect('login');
         }
     }
@@ -14,7 +14,7 @@ class KaryawanController extends CI_Controller
     {
         $data['jabatan'] = $this->db->get('tb_jabatan')->result();
         $this->load->view('template/header');
-        $this->load->view('dosen/karyawan', $data);
+        $this->load->view('admin/karyawan', $data);
     }
 
     public function json()

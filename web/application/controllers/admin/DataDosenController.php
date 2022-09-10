@@ -5,7 +5,7 @@ class DataDosenController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if (!$this->session->userdata('nidn')) {
+        if (!$this->session->userdata('username')) {
             redirect('login');
         }
     }
@@ -14,7 +14,7 @@ class DataDosenController extends CI_Controller
     {
         $data['jabatan'] = $this->db->get('tb_jabatan')->result();
         $this->load->view('template/header');
-        $this->load->view('dosen/datadosen', $data);
+        $this->load->view('admin/datadosen', $data);
     }
 
     public function json()

@@ -119,7 +119,7 @@
       var tabel = $("#table").DataTable({
           "responsive": true,
           "autoWidth": false,
-          "ajax": "<?php echo base_url(); ?>dosen/gaji/json",
+          "ajax": "<?php echo base_url(); ?>karyawan/gaji/json",
           "fnDrawCallback": function(oSettings) {
               swal.close();
           }

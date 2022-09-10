@@ -180,7 +180,7 @@
   var tabel = $("#tbl_fk").DataTable({
     "responsive": true,
     "autoWidth": false,
-    "ajax": "<?php echo base_url() ; ?>dosen/fakultas/json",
+    "ajax": "<?php echo base_url() ; ?>admin/fakultas/json",
     "fnDrawCallback": function(oSettings){
         swal.close();
       }
@@ -202,7 +202,7 @@
       }).then((Hapuss)=>{
           if(Hapuss){
               $.ajax({
-                  url: "<?php echo base_url() ; ?>dosen/fakultas/destroy",
+                  url: "<?php echo base_url() ; ?>admin/fakultas/destroy",
                   method: "POST",
                   data: {id: id},
                   cache: "false",
@@ -245,7 +245,7 @@
     }
     swal("Memproses Data.....", {button: false, closeOnClickOutside: false, closeOnEsc: false});
     $.ajax({
-        url: "<?php echo base_url(''); ?>dosen/fakultas/store",
+        url: "<?php echo base_url(''); ?>admin/fakultas/store",
         method: "POST",
         data: { a: a},
         cache: "false",
@@ -277,7 +277,7 @@
     var id = $(el).data("id");
     swal("Memproses Data.....", {button: false, closeOnClickOutside: false, closeOnEsc: false});
     $.ajax({
-      url: "<?php echo base_url() ; ?>dosen/fakultas/filter",
+      url: "<?php echo base_url() ; ?>admin/fakultas/filter",
       method: "POST",
       data: {id: id},
       cache: "false",
@@ -313,7 +313,7 @@
 
     swal("Memproses Data.....", {button: false, closeOnClickOutside: false, closeOnEsc: false});
       $.ajax({
-        url: "<?php echo base_url() ; ?>dosen/fakultas/update",
+        url: "<?php echo base_url() ; ?>admin/fakultas/update",
         method: "POST",
         data: {id: id, nama: nama },
         cache: "false",

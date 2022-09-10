@@ -5,12 +5,12 @@
           <div class="container-fluid">
               <div class="row mb-2">
                   <div class="col-sm-6">
-                      <h1 class="m-0 text-dark">Mahasiswa</h1>
+                      <h1 class="m-0 text-dark">Surat</h1>
                   </div><!-- /.col -->
                   <div class="col-sm-6">
                       <ol class="breadcrumb float-sm-right">
                           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                          <li class="breadcrumb-item active">Mahasiswa</li>
+                          <li class="breadcrumb-item active">Gaji</li>
                       </ol>
                   </div><!-- /.col -->
               </div><!-- /.row -->
@@ -31,14 +31,13 @@
                           </div>
                           <!-- /.card-header -->
                           <div class="card-body">
-                              <table id="tbl_mhs" class="table table-bordered table-striped">
+                              <table id="tbl_surat" class="table table-bordered table-striped">
                                   <thead>
                                       <tr>
                                           <th>No</th>
-                                          <th>Nama Mahasiswa</th>
-                                          <th>Prodi</th>
-                                          <th>Fakultas</th>
-                                          <th>Tahun Masuk</th>
+                                          <th>Id Jenis Surat</th>
+                                          <th>Id Tahun Masuk</th>
+                                          <th>Upload Surat</th>
                                           <th>Aksi</th>
                                       </tr>
                                   </thead>
@@ -61,7 +60,7 @@
           <div class="modal-dialog">
               <div class="modal-content">
                   <div class="modal-header">
-                      <h4 class="modal-title">Edit Mahasiswa</h4>
+                      <h4 class="modal-title">Edit Surat</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                       </button>
@@ -69,27 +68,19 @@
                   <div class="modal-body">
                       <form>
                           <div class="form-group">
-                              <label>Nama Mahasiswa</label>
-                              <input type="hidden" name="nime" id="nime">
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="namae" id="namae">
+                              <label>Id Jenis Surat</label>
+                              <input type="hidden" name="ide" id="ide">
+                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="id_jn_surate" id="id_jn_surate">
                           </div>
                           <div class="form-group">
-                              <label>Prodi</label>
-                              <!-- <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="id_pre" id="id_pre"> -->
-                              <select name="id_pre" id="id_pre" class="form-control">
-                                  <option disabled selected>-- Pilih Jabatan --</option>
-                                  <?php foreach ($prodi as $value) : ?>
-                                      <option value="<?= $value->id_prodi ?>"><?= $value->nama_prodi ?></option>
-                                  <?php endforeach ?>
-                              </select>
+                              <label>Id Tahun Masuk</label>
+                              <input type="hidden" name="ide" id="ide">
+                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="id_thn_masuke" id="id_thn_masuke">
                           </div>
                           <div class="form-group">
-                              <label>Tahun Masuk</label>
-                              <input type="text" class="form-control" required placeholder="Masukkan Tahun Masuk" name="id_tme" id="id_tme">
-                          </div>
-                          <div class="form-group">
-                              <label>pasword</label>
-                              <input type="text" class="form-control" required placeholder="Masukkan Password" name="passe" id="passe">
+                              <label>Upload Surat</label>
+                              <input type="hidden" name="ide" id="ide">
+                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="uploade" id="uploade">
                           </div>
                   </div>
                   <div class="modal-footer">
@@ -108,38 +99,42 @@
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-header">
-                  <h4 class="modal-title">Tambah Mahasiswa</h4>
+                  <h4 class="modal-title">Tambah Surat</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
               </div>
               <div class="modal-body">
-                  <form>
+                  <form id="submit">
                       <div class="form-group">
-                          <label>Nama Mahasiswa</label>
-                          <input type="text" class="form-control" required placeholder="Masukkan Nama Mahasiswa" name="nama" id="nama">
-                      </div>
-                      <div class="form-group">
-                          <label>Prodi</label>
-                          <select name="id_pr" id="id_pr" class="form-control">
-                              <option disabled selected>-- Pilih Jabatan --</option>
-                              <?php foreach ($prodi as $value) : ?>
-                                  <option value="<?= $value->id_prodi ?>"><?= $value->nama_prodi ?></option>
+                          <label>Jenis Surat</label>
+                          <!-- <input type="text" class="form-control" required placeholder="Masukkan ID Jenis Surat" name="id_jn_surat" id="id_jn_surat"> -->
+                          <select name="id_jn_surat" id="id_jn_surat" class="form-control">
+                              <option disabled selected>-- Pilih Jenis Surat --</option>
+                              <?php foreach ($jenis_surat as $value) : ?>
+                                  <option value="<?= $value->id_jn_surat ?>"><?= $value->nama_surat ?></option>
                               <?php endforeach ?>
                           </select>
                       </div>
                       <div class="form-group">
-                          <label>Tahun Masuk</label>
-                          <input type="number" class="form-control" required placeholder="Masukkan id Tahun Masuk" name="id_tm" id="id_tm">
+                          <label> Id Tahun Masuk</label>
+                          <!-- <input type="text" class="form-control" required placeholder="Masukkan Tahun Masuk" name="id_thn_masuk" id="id_thn_masuk"> -->
+                          <select name="id_thn_masuk" id="id_thn_masuk" class="form-control">
+                              <option disabled selected>-- Pilih Tahun Masuk --</option>
+                              <?php foreach ($tahun_masuk as $tahun) : ?>
+                                  <option value="<?= $tahun->id_thn_masuk ?>"><?= $tahun->nama_tahun ?></option>
+                              <?php endforeach ?>
+                          </select>
                       </div>
                       <div class="form-group">
-                          <label>Password</label>
-                          <input type="password" class="form-control" required placeholder="Masukkan Nama Mahasiswa" name="pass" id="pass">
+                          <label>upload surat</label>
+                          <input type="file" class="form-control" name="upload" id="upload" required>
                       </div>
+
               </div>
               <div class="modal-footer">
                   <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
-                  <button type="button" class="btn btn-primary waves-effect waves-light" onclick="tambah()">Save</button>
+                  <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
               </div>
               </form> <!-- TUTUP FORM -->
           </div>
@@ -218,17 +213,17 @@
           closeOnClickOutside: false,
           closeOnEsc: false
       });
-      var tabel = $("#tbl_mhs").DataTable({
+      var tabel = $("#tbl_surat").DataTable({
           "responsive": true,
           "autoWidth": false,
-          "ajax": "<?php echo base_url(); ?>dosen/data-mahasiswa/json",
+          "ajax": "<?php echo base_url(); ?>admin/surat/json",
           "fnDrawCallback": function(oSettings) {
               swal.close();
           }
       });
 
       function hapus(el) {
-          var nim = $(el).data("id");
+          var id = $(el).data("id");
           // console.log(id);
           swal("Memproses Data.....", {
               button: false,
@@ -254,10 +249,10 @@
           }).then((Hapuss) => {
               if (Hapuss) {
                   $.ajax({
-                      url: "<?php echo base_url(); ?>dosen/data-mahasiswa/destroy",
+                      url: "<?php echo base_url(); ?>admin/surat/destroy",
                       method: "POST",
                       data: {
-                          nim: nim
+                          id: id
                       },
                       cache: "false",
                       success: function(x) {
@@ -304,79 +299,77 @@
           });
       }
 
-      function tambah() {
-
-          var nama = $("#nama").val();
-          var id_prodi = $("#id_pr").val();
-          var id_thn_masuk = $("#id_tm").val();
-          var pasword = $("#pass").val();
-          if (nama == "" || id_prodi == "" || id_thn_masuk == "" || pasword == "") {
-              swal({
-                  title: 'Tambah Gagal',
-                  text: 'Nama Belum Anda Isi !',
-                  icon: 'error'
-              });
-              return;
-          }
-          swal("Memproses Data.....", {
-              button: false,
-              closeOnClickOutside: false,
-              closeOnEsc: false
-          });
-          $.ajax({
-              url: "<?php echo base_url(); ?>dosen/data-mahasiswa/store",
-              method: "POST",
-              data: {
-                  nama: nama,
-                  id_pr: id_prodi,
-                  id_tm: id_thn_masuk,
-                  pass: pasword
-              },
-              cache: "false",
-              success: function(x) {
-                  swal.close();
-                  var y = atob(x);
-                  if (y == 1) {
-                      swal({
-                          title: 'Tambah Berhasil',
-                          text: 'Data Berhasil di Tambahkan',
-                          icon: 'success'
-                      }).then((Refreshh) => {
-                          $('#md_tbh').modal('hide');
-                          refresh();
-                          tabel.ajax.reload(null, false);
-                      });
-                  } else {
-                      swal({
-                          title: 'Tambah Gagal',
-                          text: 'Ada Beberapa Masalah dengan Data yang Anda Isikan !',
-                          icon: 'error'
-                      });
-                  }
-              },
-              error: function() {
-                  swal.close();
-                  swal({
-                      title: 'Tambah Gagal',
-                      text: 'Jaringan Anda Bermasalah !',
-                      icon: 'error'
-                  });
+        $("#submit").submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            console.log(formData)
+            var id_jn_surat = $("#id_jn_surat").val();
+            var id_thn_masuk = $("#id_thn_masuk").val();
+            var upload_surat = $("#upload").val();
+            if (id_jn_surat == "" || id_thn_masuk == "") {
+                swal({
+                    title: 'Tambah Gagal',
+                    text: 'Nama Belum Anda Isi !',
+                    icon: 'error'
+                });
+                return;
+            }
+            swal("Memproses Data.....", {
+                button: false,
+                closeOnClickOutside: false,
+                closeOnEsc: false
+            });
+            $.ajax({
+                url: "<?php echo base_url(); ?>admin/surat/store",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(x) {
+                    console.log(x)
+                    swal.close();
+                    //   var y = atob(x);
+                    //   if (y == 1) {
+                    //       swal({
+                    //           title: 'Tambah Berhasil',
+                    //           text: 'Data Berhasil di Tambahkan',
+                    //           icon: 'success'
+                    //       }).then((Refreshh) => {
+                    //           refresh();
+                    //           tabel.ajax.reload(null, false);
+                    //       });
+                    //   } else {
+                    //       swal({
+                    //           title: 'Tambah Gagal',
+                    //           text: 'Ada Beberapa Masalah dengan Data yang Anda Isikan !',
+                    //           icon: 'error'
+                    //       });
+                    //   }
+                },
+                error: function(x) {
+                    swal.close();
+                    console.log(x)
+                    swal({
+                        title: 'Tambah Gagal',
+                        text: x.responseJSON.message,
+                        icon: 'error'
+                    });
               }
           })
-      }
+      })
 
       function filter(el) {
-          var nim = $(el).data("id");
+          var id = $(el).data("id");
           swal("Memproses Data.....", {
               button: false,
               closeOnClickOutside: false,
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>dosen/data-mahasiswa/filter",
+              url: "<?php echo base_url(); ?>admin/surat/filter",
               method: "POST",
               data: {
-                  nim: nim
+                  id: id
               },
               cache: "false",
               success: function(x) {
@@ -384,11 +377,10 @@
                   var y = atob(x);
                   var xx = y.split("|");
                   if (xx[0] == 1) {
-                      $("#nime").val(xx[1]);
-                      $("#namae").val(xx[2]);
-                      $("#id_pre").val(xx[3]);
-                      $("#id_tme").val(xx[4]);
-                      //   $("#passe").val(xx[5]);
+                      $("#ide").val(xx[1]);
+                      $("#id_jn_surate").val(xx[2]);
+                      $("#id_thn_masuke").val(xx[3]);
+                      $("#uploade").val(xx[4]);
                   } else {
                       swal({
                           title: 'Update Gagal',
@@ -409,14 +401,16 @@
           })
       }
 
-      function update() {
-          var nim = $("#nime").val();
-          var nama = $("#namae").val();
-          var id_pr = $("#id_pre").val();
-          var id_tm = $("#id_tme").val();
-          var pass = $("#passe").val();
 
-          if (nim == "" || nama == "" || id_pr == "" || id_tm == "") {
+
+      function update() {
+          var id = $("#ide").val();
+          var id_jn_surat = $("#id_jn_surate").val();
+          var id_thn_masuk = $("#id_thn_masuke").val();
+          var upload_surat = $("#upload_surate").val();
+
+
+          if (id == "" || id_jn_surat == "" || id_thn_masuk == "" || upload_surat == "") {
               swal({
                   title: 'Update Gagal',
                   text: 'Ada Isian yang Belum Anda Isi !',
@@ -431,14 +425,13 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>dosen/data-mahasiswa/update",
+              url: "<?php echo base_url(); ?>admin/surat/update",
               method: "POST",
               data: {
-                  nim: nim,
-                  nama: nama,
-                  id_pr: id_pr,
-                  id_tm: id_tm,
-                  pass: pass
+                  id: id,
+                  id_jn_surat: id_jn_surat,
+                  id_thn_masuk: id_thn_masuk,
+                  upload_surat: upload_surat
               },
               cache: "false",
               success: function(x) {
@@ -474,11 +467,10 @@
       }
 
       function refresh() {
-          $("#nime").val("");
-          $("#namae").val("");
-          $("#id_pre").val("");
-          $("#id_tme").val("");
-          $("#passe").val("");
+          $("#ide").val("");
+          $("#id_jn_surate").val("");
+          $("#id_thn_masuke").val("");
+          $("#upload_surate").val("");
           $('#md_edit').modal('hide');
       }
   </script>

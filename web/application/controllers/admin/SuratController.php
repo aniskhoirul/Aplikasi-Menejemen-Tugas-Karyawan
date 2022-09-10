@@ -5,7 +5,7 @@ class SuratController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if (!$this->session->userdata('nidn')) {
+        if (!$this->session->userdata('username')) {
             redirect('login');
         }
     }
@@ -15,7 +15,7 @@ class SuratController extends CI_Controller
         $data['jenis_surat'] = $this->db->get('tb_jn_surat')->result();
         $data['tahun_masuk'] = $this->db->get('tb_thn_masuk')->result();
         $this->load->view('template/header');
-        $this->load->view('dosen/surat', $data);
+        $this->load->view('admin/surat', $data);
     }
 
     public function json()

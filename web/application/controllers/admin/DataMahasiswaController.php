@@ -5,7 +5,7 @@ class DataMahasiswaController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if (!$this->session->userdata('nidn')) {
+        if (!$this->session->userdata('username')) {
             redirect('login');
         }
     }
@@ -14,7 +14,7 @@ class DataMahasiswaController extends CI_Controller
     {
         $data['prodi'] = $this->db->get('tb_prodi')->result();
         $this->load->view('template/header');
-        $this->load->view('dosen/datamahasiswa', $data);
+        $this->load->view('admin/datamahasiswa', $data);
     }
 
     public function json()

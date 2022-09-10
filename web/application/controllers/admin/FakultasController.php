@@ -5,7 +5,7 @@ class FakultasController extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if (!$this->session->userdata('nidn')) {
+        if (!$this->session->userdata('username')) {
             redirect('login');
         }
     }
@@ -13,7 +13,7 @@ class FakultasController extends CI_Controller
     public function index()
     {
         $this->load->view('template/header');
-        $this->load->view('dosen/fakultas');
+        $this->load->view('admin/fakultas');
     }
 
     public function store()

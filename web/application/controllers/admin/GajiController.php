@@ -1,19 +1,20 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-class TahunMasukController extends CI_Controller
+class GajiController extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        if (!$this->session->userdata('nidn')) {
+        if (!$this->session->userdata('username')) {
             redirect('login');
         }
     }
 
     public function index()
     {
+        $data['jenis_gaji'] = $this->db->get('tb_jn_gaji')->result();
         $this->load->view('template/header');
-        $this->load->view('dosen/tahun_masuk');
+		$this->load->view('admin/gaji', $data);
     }
 
     public function json()
@@ -21,12 +22,15 @@ class TahunMasukController extends CI_Controller
         $a = 1;
 		$dtJSON = '{"data": [xxx]}';
 		$dtisi = "";
-		$dt = $this->M_master->mdata_tm();
+		$dt = $this->M_master->mdata_gaji();
 		foreach ($dt as $k) {
-			$idu = $k->id_thn_masuk;
-			$nama = $k->nama_tahun;
+			$idu = $k->id_dt_gaji;
+			$id_jn_gaji = $k->nama_jn_gaji;
+			$nama = $k->nama_gaji;
+			$nominal = $k->nominal_gaji;
+
 			$tomboledit = "<button type='button' class='btn btn-warning waves-effect waves-light' data-id='" . $idu . "'  onclick='filter(this)' data-target='#md_edit' data-toggle='modal' >Edit</button> <button class='btn btn-danger waves-effect waves-light' data-id='" . $idu . "' title='Hapus' onclick='hapus(this)'>Hapus</button>";
-			$dtisi .= '["' . $a++ . '","' . $nama . '","' . $tomboledit . '"],';
+			$dtisi .= '["' . $a++ . '","' . $id_jn_gaji . '","' . $nama . '","' . $nominal . '","' . $tomboledit . '"],';
 		}
 		$dtisifix = rtrim($dtisi, ",");
 		$data = str_replace("xxx", $dtisifix, $dtJSON);
@@ -35,22 +39,26 @@ class TahunMasukController extends CI_Controller
 
     public function store()
     {
-        $a = trim(str_replace("'", "''", $this->input->post("a")));
-		$operasi = $this->M_master->mtambah_tm($a);
+        $id_jn_gaji = trim(str_replace("'", "''", $this->input->post("id_jn_gaji")));
+		$nama_gaji = trim(str_replace("'", "''", $this->input->post("nama")));
+		$nominal_gaji = trim(str_replace("'", "''", $this->input->post("nominal")));
+		$operasi = $this->M_master->mtambah_gaji($id_jn_gaji, $nama_gaji, $nominal_gaji);
 		echo base64_encode($operasi);
     }
 
     public function filter()
     {
         $id = trim($this->input->post("id"));
-		$dt = $this->M_master->mfilter_tm($id);
+		$dt = $this->M_master->mfilter_gaji($id);
 		if (is_array($dt)) {
 			if (count($dt) > 0) {
 				foreach ($dt as $k) {
-					$id = $k->id_thn_masuk;
-					$nama = $k->nama_tahun;
+					$id = $k->id_dt_gaji;
+					$id_jn_gaji = $k->id_jn_gaji;
+					$nama = $k->nama_gaji;
+					$nominal = $k->nominal_gaji;
 				}
-				echo base64_encode("1|" . $id . "|" . $nama);
+				echo base64_encode("1|" . $id . "|" . $id_jn_gaji . "|" . $nama . "|" . $nominal);
 			} else {
 				echo base64_encode("0|");
 			}
@@ -62,8 +70,10 @@ class TahunMasukController extends CI_Controller
     public function update()
     {
         $id = trim(str_replace("'", "''", $this->input->post("id")));
-		$nama = trim(str_replace("'", "''", $this->input->post("nama")));
-		$operasi = $this->M_master->mubah_tm($id, $nama);
+		$id_jn_gaji = trim(str_replace("'", "''", $this->input->post("id_jn_gaji")));
+		$nama_gaji = trim(str_replace("'", "''", $this->input->post("nama")));
+		$nominal_gaji = trim(str_replace("'", "''", $this->input->post("nominal")));
+		$operasi = $this->M_master->mubah_gaji($id, $id_jn_gaji, $nama_gaji, $nominal_gaji);
 		echo base64_encode($operasi);
     }
 
@@ -71,7 +81,7 @@ class TahunMasukController extends CI_Controller
     {
         $a = trim(str_replace("'", "''", $this->input->post("id")));
 
-		$operasi = $this->M_master->mhapus_tm($a);
+		$operasi = $this->M_master->mhapus_gaji($a);
 
 		echo base64_encode($operasi);
     }

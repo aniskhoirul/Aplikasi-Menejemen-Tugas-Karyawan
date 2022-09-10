@@ -5,12 +5,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Data Dosen</h1>
+            <h1 class="m-0 text-dark">Jabatan</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-              <li class="breadcrumb-item active">Dosen</li>
+              <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+              <li class="breadcrumb-item active">Jabatan</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -31,15 +31,11 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="tbl_dos" class="table table-bordered table-striped">
+                <table id="tbl_jbt" class="table table-bordered table-striped">
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Nidn</th>
-                      <th>Id jabatan</th>
-                      <th>Nama Dosen</th>
-                      <th>Tanggal Lahir</th>
-                      <th>Tempat Lahir</th>
+                      <th>Nama Jabatan</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -62,7 +58,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Edit Dosen</h4>
+            <h4 class="modal-title">Edit Jabatan</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -70,36 +66,10 @@
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label>NIDN </label>
-                <input type="hidden" name="no_ide" id="no_ide">
-                <input type="number" class="form-control" required placeholder="Masukkan Nama Departemen" name="nidne" id="nidne">
-              </div>
-              <div class="form-group">
-                <label>Jabatan </label>
-                <select name="id_jbne" id="id_jbne" class="form-control">
-                  <option disabled selected>-- Pilih Jabatan --</option>
-                  <?php foreach ($jabatan as $value) : ?>
-                    <option value="<?= $value->id_jabatan ?>"><?= $value->jabatan ?></option>
-                  <?php endforeach ?>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Nama Dosen </label>
+                <label>Nama Jabatan</label>
+                <input type="hidden" name="ide" id="ide">
                 <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="namae" id="namae">
               </div>
-              <div class="form-group">
-                <label>Tanggal Lahir</label>
-                <input type="date" class="form-control" required placeholder="Masukkan Nama Departemen" name="tgl_lahire" id="tgl_lahire">
-              </div>
-              <div class="form-group">
-                <label>Tempat Lahir</label>
-                <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="tle" id="tle">
-              </div>
-              <div class="form-group">
-                <label>Pasword</label>
-                <input type="password" class="form-control" required placeholder="Masukkan Nama Departemen" name="passe" id="passe">
-              </div>
-
           </div>
           <div class="modal-footer">
             <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
@@ -117,7 +87,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Tambah Dosen</h4>
+          <h4 class="modal-title">Tambah Jabatan</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -125,33 +95,8 @@
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label>NIDN </label>
-              <input type="number" class="form-control" required placeholder="Masukkan NIDN" name="nidn" id="nidn">
-            </div>
-            <div class="form-group">
-              <label>Jabatan</label>
-              <select name="id_jbn" id="id_jbn" class="form-control">
-                <option disabled selected>-- Pilih Jabatan --</option>
-                <?php foreach ($jabatan as $value) : ?>
-                  <option value="<?= $value->id_jabatan ?>"><?= $value->jabatan ?></option>
-                <?php endforeach ?>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Nama Dosen </label>
-              <input type="text" class="form-control" required placeholder="Masukkan Nama dosen" name="nama" id="nama">
-            </div>
-            <div class="form-group">
-              <label>Tanggal Lahir</label>
-              <input type="date" class="form-control" required placeholder="Masukkan Nama Tanggal lahir" name="tgl_lahir" id="tgl_lahir">
-            </div>
-            <div class="form-group">
-              <label>Tempat Lahir</label>
-              <input type="text" class="form-control" required placeholder="Masukkan Nama tempat lahir" name="tl" id="tl">
-            </div>
-            <div class="form-group">
-              <label>Pasword</label>
-              <input type="password" class="form-control" required placeholder="Masukkan Nama password" name="pass" id="pass">
+              <label>Nama Jabatan</label>
+              <input type="text" class="form-control" required placeholder="Masukkan Nama Jabatan" name="nama" id="nama">
             </div>
         </div>
         <div class="modal-footer">
@@ -235,17 +180,18 @@
       closeOnClickOutside: false,
       closeOnEsc: false
     });
-    var tabel = $("#tbl_dos").DataTable({
+    var tabel = $("#tbl_jbt").DataTable({
       "responsive": true,
       "autoWidth": false,
-      "ajax": "<?php echo base_url(); ?>dosen/data-dosen/json",
+      "ajax": "<?php echo base_url(); ?>admin/jabatan/json",
       "fnDrawCallback": function(oSettings) {
         swal.close();
       }
     });
 
     function hapus(el) {
-      var no_id = $(el).data("id");
+      var id = $(el).data("id");
+      // console.log(id);
       swal("Memproses Data.....", {
         button: false,
         closeOnClickOutside: false,
@@ -270,10 +216,10 @@
       }).then((Hapuss) => {
         if (Hapuss) {
           $.ajax({
-            url: "<?php echo base_url(); ?>dosen/data-dosen/destroy",
+            url: "<?php echo base_url(); ?>admin/jabatan/destroy",
             method: "POST",
             data: {
-              no_id: no_id
+              id: id
             },
             cache: "false",
             success: function(x) {
@@ -322,14 +268,8 @@
 
     function tambah() {
 
-      var nidn = $("#nidn").val();
-      var id_jbn = $("#id_jbn").val();
-      var nama = $("#nama").val();
-      var tgl_lahir = $("#tgl_lahir").val();
-      var tl = $("#tl").val();
-      var pass = $("#pass").val();
-      if (nidn == "" || id_jbn == "" || nama == "" || tgl_lahir == "" || tl == "") {
-
+      var a = $("#nama").val();
+      if (a == "") {
         swal({
           title: 'Tambah Gagal',
           text: 'Nama Belum Anda Isi !',
@@ -343,15 +283,10 @@
         closeOnEsc: false
       });
       $.ajax({
-        url: "<?php echo base_url(); ?>dosen/data-dosen/store",
+        url: "<?php echo base_url(); ?>admin/jabatan/store",
         method: "POST",
         data: {
-          nidn: nidn,
-          id_jbn: id_jbn,
-          nama: nama,
-          tgl_lahir: tgl_lahir,
-          tl: tl,
-          pass: pass
+          a: a
         },
         cache: "false",
         success: function(x) {
@@ -387,17 +322,17 @@
     }
 
     function filter(el) {
-      var no_id = $(el).data("id");
+      var id = $(el).data("id");
       swal("Memproses Data.....", {
         button: false,
         closeOnClickOutside: false,
         closeOnEsc: false
       });
       $.ajax({
-        url: "<?php echo base_url(); ?>dosen/data-dosen/filter",
+        url: "<?php echo base_url(); ?>admin/jabatan/filter",
         method: "POST",
         data: {
-          no_id: no_id
+          id: id
         },
         cache: "false",
         success: function(x) {
@@ -405,15 +340,8 @@
           var y = atob(x);
           var xx = y.split("|");
           if (xx[0] == 1) {
-            console.log(xx)
-            $("#no_ide").val(xx[1]);
-            $("#nidne").val(xx[2]);
-            $("#id_jbne").val(xx[3]);
-            $("#namae").val(xx[4]);
-            $("#tgl_lahire").val(xx[5]);
-            $("#tle").val(xx[6]);
-            // $("#passe").val(xx[7]);
-
+            $("#ide").val(xx[1]);
+            $("#namae").val(xx[2]);
           } else {
             swal({
               title: 'Update Gagal',
@@ -437,15 +365,10 @@
 
 
     function update() {
-      var no_id = $("#no_ide").val();
-      var nidn = $("#nidne").val();
-      var id_jbn = $("#id_jbne").val();
-      var nama = $("#namae").val();
-      var tgl_lahir = $("#tgl_lahire").val();
-      var tl = $("#tle").val();
-      var pass = $("#passe").val();
+      var id = $("#ide").val();
+      var nm = $("#namae").val();
 
-      if (no_id == "" || nidn == "" || id_jbn == "" || nama == "" || tgl_lahir == "" || tl == "") {
+      if (id == "" || nm == "") {
         swal({
           title: 'Update Gagal',
           text: 'Ada Isian yang Belum Anda Isi !',
@@ -460,16 +383,11 @@
         closeOnEsc: false
       });
       $.ajax({
-        url: "<?php echo base_url(); ?>dosen/data-dosen/update",
+        url: "<?php echo base_url(); ?>admin/jabatan/update",
         method: "POST",
         data: {
-          no_id: no_id,
-          nidn: nidn,
-          id_jbn: id_jbn,
-          nama: nama,
-          tgl_lahir: tgl_lahir,
-          tl: tl,
-          pass: pass
+          id: id,
+          nm: nm
         },
         cache: "false",
         success: function(x) {
@@ -505,13 +423,8 @@
     }
 
     function refresh() {
-      $("#no_ide").val("");
-      $("#nidne").val("");
-      $("#id_jbne").val("");
+      $("#ide").val("");
       $("#namae").val("");
-      $("#tgl_lahire").val("");
-      $("#tle").val("");
-      $("#passe").val("");
       $('#md_edit').modal('hide');
     }
   </script>

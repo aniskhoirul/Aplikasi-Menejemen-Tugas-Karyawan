@@ -5,12 +5,12 @@
           <div class="container-fluid">
               <div class="row mb-2">
                   <div class="col-sm-6">
-                      <h1 class="m-0 text-dark">Karyawan</h1>
+                      <h1 class="m-0 text-dark">Tugas</h1>
                   </div><!-- /.col -->
                   <div class="col-sm-6">
                       <ol class="breadcrumb float-sm-right">
                           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                          <li class="breadcrumb-item active">Karyawan</li>
+                          <li class="breadcrumb-item active">Tugas</li>
                       </ol>
                   </div><!-- /.col -->
               </div><!-- /.row -->
@@ -31,19 +31,33 @@
                           </div>
                           <!-- /.card-header -->
                           <div class="card-body">
-                              <table id="tbl_kry" class="table table-bordered table-striped">
+                              <table id="table" class="table table-bordered table-striped">
                                   <thead>
                                       <tr>
                                           <th>No</th>
-                                          <th>Nama Karyawan</th>
-                                          <th>Jabatan</th>
-                                          <th>Tanggal Lahir</th>
-                                          <th>Tempat Lahir</th>
-                                          <th>Email</th>
-                                          <th>Aksi</th>
+                                          <th width="15%">Karyawan</th>
+                                          <th width="15%">Jenis Tugas</th>
+                                          <th>Tugas</th>
+                                          <th width="25%">Aksi</th>
                                       </tr>
                                   </thead>
+                                  <?php $no = 1;
+                                    foreach ($data_tugas as $value) : ?>
+                                      <tr>
+                                          <td><?= $no++ ?></td>
+                                          <td><?= $value->nama_karyawan ?></td>
+                                          <td><?= $value->nama_jn_job ?></td>
+                                          <td><?= $value->list_job ?></td>
+                                          <td>
+                                              <a href="<?= base_url() ?>admin/tugas/show/<?= $value->id_job ?>" class='btn btn-info waves-effect waves-light'>Detail</a>
 
+                                              <button type='button' class='btn btn-warning waves-effect waves-light' data-id='<?= $value->id_job ?>' onclick='filter(this)' data-target='#md_edit' data-toggle='modal'>Edit</button>
+
+                                              <button class='btn btn-danger waves-effect waves-light' data-id='<?= $value->id_job ?>' title='Hapus' onclick='hapus(this)'>Hapus</button>
+                                          </td>
+                                      </tr>
+
+                                  <?php endforeach ?>
                               </table>
                           </div>
                           <!-- /.card-body -->
@@ -62,43 +76,36 @@
           <div class="modal-dialog">
               <div class="modal-content">
                   <div class="modal-header">
-                      <h4 class="modal-title">Edit Karyawan</h4>
+                      <h4 class="modal-title">Edit Tugas</h4>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                       </button>
                   </div>
                   <div class="modal-body">
                       <form>
-                          <div class="form-group">
-                              <label>Nama Karyawan</label>
-                              <input type="hidden" name="no_ide" id="no_ide">
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="namae" id="namae">
-                          </div>
-                          <div class="form-group">
-                              <label>Jabatan</label>
-                              <select name="id_jbne" id="id_jbne" class="form-control">
-                                  <option disabled selected>-- Pilih Jabatan --</option>
-                                  <?php foreach ($jabatan as $value) : ?>
-                                      <option value="<?= $value->id_jabatan ?>"><?= $value->jabatan ?></option>
-                                  <?php endforeach ?>
-                              </select>
-                          </div>
-                          <div class="form-group">
-                              <label>Tanggal Lahir</label>
-                              <input type="date" class="form-control" required placeholder="Masukkan Nama Departemen" name="tgl_lahire" id="tgl_lahire">
-                          </div>
-                          <div class="form-group">
-                              <label>Tempat Lahir</label>
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="tle" id="tle">
-                          </div>
-                          <div class="form-group">
-                              <label>Pasword</label>
-                              <input type="password" class="form-control" required placeholder="Masukkan Nama Departemen" name="passe" id="passe">
-                          </div>
-                          <div class="form-group">
-                              <label> Email</label>
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="emaile" id="emaile">
-                          </div>
+                            <div class="form-group">
+                                <label>Karyawan</label>
+                                <input type="hidden" name="ide" id="ide">
+                                <select name="eno_id" id="eno_id" class="form-control">
+                                    <option disabled selected>-- Pilih Karyawan --</option>
+                                    <?php foreach ($karyawan as $value) : ?>
+                                        <option value="<?= $value->no_id ?>"><?= $value->nama_karyawan ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Jenis Tugas</label>
+                                <select name="eid_jn_job" id="eid_jn_job" class="form-control">
+                                    <option disabled selected>-- Pilih Jenis Tugas --</option>
+                                    <?php foreach ($jenis_tugas as $value) : ?>
+                                        <option value="<?= $value->id_jn_job ?>"><?= $value->nama_jn_job ?></option>
+                                    <?php endforeach ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Nama Tugas</label>
+                                <textarea name="elist_job" id="elist_job" class="form-control" cols="30" rows="10" required placeholder="Masukkan Nama Tugas"></textarea>
+                            </div>
                   </div>
                   <div class="modal-footer">
                       <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
@@ -106,64 +113,55 @@
                   </div>
                   </form> <!-- TUTUP FORM -->
               </div>
+              <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+      <div class="modal fade" id="md_tbh">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h4 class="modal-title">Tambah Tugas</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <form>
+                          <div class="form-group">
+                              <label>Karyawan</label>
+                              <select name="no_id" id="no_id" class="form-control">
+                                  <option disabled selected>-- Pilih Karyawan --</option>
+                                  <?php foreach ($karyawan as $value) : ?>
+                                      <option value="<?= $value->no_id ?>"><?= $value->nama_karyawan ?></option>
+                                  <?php endforeach ?>
+                              </select>
+                          </div>
+                          <div class="form-group">
+                              <label>Jenis Tugas</label>
+                              <select name="id_jn_job" id="id_jn_job" class="form-control">
+                                  <option disabled selected>-- Pilih Jenis Tugas --</option>
+                                  <?php foreach ($jenis_tugas as $value) : ?>
+                                      <option value="<?= $value->id_jn_job ?>"><?= $value->nama_jn_job ?></option>
+                                  <?php endforeach ?>
+                              </select>
+                          </div>
+                          <div class="form-group">
+                              <label>Nama Tugas</label>
+                              <textarea name="list_job" id="list_job" class="form-control" cols="30" rows="10" required placeholder="Masukkan Nama Tugas"></textarea>
+                          </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
+                      <button type="button" class="btn btn-primary waves-effect waves-light" onclick="tambah()">Save</button>
+                  </div>
+                  </form> <!-- TUTUP FORM -->
+              </div>
           </div>
           <!-- /.modal-content -->
       </div>
       <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
-  <div class="modal fade" id="md_tbh">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h4 class="modal-title">Tambah Karyawan</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                  <form>
-                      <div class="form-group">
-                          <label>Nama Karyawan</label>
-                          <input type="text" class="form-control" required placeholder="Masukkan Nama Karyawan" name="nama" id="nama">
-                      </div>
-                      <div class="form-group">
-                          <label>Jabatan</label>
-                          <select name="id_jbn" id="id_jbn" class="form-control">
-                              <option disabled selected>-- Pilih Jabatan --</option>
-                              <?php foreach ($jabatan as $value) : ?>
-                                  <option value="<?= $value->id_jabatan ?>"><?= $value->jabatan ?></option>
-                              <?php endforeach ?>
-                          </select>
-                      </div>
-                      <div class="form-group">
-                          <label>Tanggal Lahir</label>
-                          <input type="date" class="form-control" required placeholder="Masukkan Tanggal Lahir" name="tgl_lahir" id="tgl_lahir">
-                      </div>
-                      <div class="form-group">
-                          <label>Tempat Lahir</label>
-                          <input type="text" class="form-control" required placeholder="Masukkan Tempat Lahir" name="tl" id="tl">
-                      </div>
-                      <div class="form-group">
-                          <label>Password</label>
-                          <input type="password" class="form-control" required placeholder="Masukkan password" name="pass" id="pass">
-                      </div>
-                      <div class="form-group">
-                          <label> Email</label>
-                          <input type="text" class="form-control" required placeholder="Masukkan Email" name="email" id="email">
-                      </div>
-
-              </div>
-              <div class="modal-footer">
-                  <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
-                  <button type="button" class="btn btn-primary waves-effect waves-light" onclick="tambah()">Save</button>
-              </div>
-              </form> <!-- TUTUP FORM -->
-          </div>
-      </div>
-      <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
   </div>
   <!-- /.modal -->
 
@@ -230,23 +228,11 @@
 
 
   <script>
-      swal("Sedang Mengakses Data.....", {
-          button: false,
-          closeOnClickOutside: false,
-          closeOnEsc: false
-      });
-      var tabel = $("#tbl_kry").DataTable({
-          "responsive": true,
-          "autoWidth": false,
-          "ajax": "<?php echo base_url(); ?>dosen/karyawan/json",
-          "fnDrawCallback": function(oSettings) {
-              swal.close();
-          }
-      });
+      var tabel = $("#table").DataTable();
 
       function hapus(el) {
-          var no_id = $(el).data("id");
-          // console.log(id);
+          var id = $(el).data("id");
+          console.log(id);
           swal("Memproses Data.....", {
               button: false,
               closeOnClickOutside: false,
@@ -271,46 +257,27 @@
           }).then((Hapuss) => {
               if (Hapuss) {
                   $.ajax({
-                      url: "<?php echo base_url(); ?>dosen/karyawan/destroy",
+                      url: "<?php echo base_url(); ?>admin/tugas/destroy",
                       method: "POST",
                       data: {
-                          no_id: no_id
+                          id: id
                       },
                       cache: "false",
-                      success: function(x) {
+                      success: function(response) {
                           swal.close();
-                          var y = atob(x);
-                          if (y == 1) {
-                              swal({
-                                  title: 'Hapus Berhasil',
-                                  text: 'Data Berhasil di Hapus',
-                                  icon: 'success'
-                              }).then((Refreshh) => {
-                                  // refresh();
-                                  tabel.ajax.reload(null, false);
-                              });
-                          } else {
-                              if (y == 90) {
-                                  swal({
-                                      title: 'Hapus Gagal',
-                                      text: 'Data Level Masih digunakan, Sehingga Tidak Dapat di Hapus Hanya Dapat di Ubah',
-                                      icon: 'error'
-                                  });
-                                  // refresh();
-                              } else {
-                                  swal({
-                                      title: 'Hapus Gagal',
-                                      text: 'Periksa Kembali Data Yang Anda Pilih !',
-                                      icon: 'error'
-                                  });
-                              }
-                          }
+                          swal({
+                              title: 'Hapus Berhasil',
+                              text: response.message,
+                              icon: 'success'
+                          }).then(function() {
+                              location.reload();
+                          });
                       },
-                      error: function() {
+                      error: function(response) {
                           swal.close();
                           swal({
                               title: 'Hapus Gagal',
-                              text: 'Jaringan Anda Bermasalah !',
+                              text: response.responseJSON.message,
                               icon: 'error'
                           });
                       }
@@ -322,14 +289,10 @@
       }
 
       function tambah() {
-
-          var nama_karyawan = $("#nama").val();
-          var id_jabatan = $("#id_jbn").val();
-          var tgl_lahir = $("#tgl_lahir").val();
-          var tempat_lahir = $("#tl").val();
-          var pasword = $("#pass").val();
-          var email = $("#email").val();
-          if (nama_karyawan == "" || id_jabatan == "" || tgl_lahir == "" || tempat_lahir == "" || pasword == "" || email == "") {
+          var no_id = $("#no_id").val();
+          var id_jn_job = $("#id_jn_job").val();
+          var list_job = $("#list_job").val();
+          if (no_id == "" || id_jn_job == "" || list_job == "") {
               swal({
                   title: 'Tambah Gagal',
                   text: 'Nama Belum Anda Isi !',
@@ -343,15 +306,12 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>dosen/karyawan/store",
+              url: "<?php echo base_url(); ?>admin/tugas/store",
               method: "POST",
               data: {
-                  nama: nama_karyawan,
-                  id_jbn: id_jabatan,
-                  tgl_lahir: tgl_lahir,
-                  tl: tempat_lahir,
-                  pass: pasword,
-                  email: email
+                  no_id: no_id,
+                  id_jn_job: id_jn_job,
+                  list_job: list_job,
               },
               cache: "false",
               success: function(x) {
@@ -363,9 +323,10 @@
                           text: 'Data Berhasil di Tambahkan',
                           icon: 'success'
                       }).then((Refreshh) => {
-                          $('#md_tbh').modal('hide');
+                          $('#md_tbh').modal('hide')
                           refresh();
-                          tabel.ajax.reload(null, false);
+                          //   tabel.ajax.reload(null, false);
+                          location.reload(true);
                       });
                   } else {
                       swal({
@@ -387,17 +348,17 @@
       }
 
       function filter(el) {
-          var no_id = $(el).data("id");
+          var id = $(el).data("id");
           swal("Memproses Data.....", {
               button: false,
               closeOnClickOutside: false,
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>dosen/karyawan/filter",
+              url: "<?php echo base_url(); ?>admin/tugas/filter",
               method: "POST",
               data: {
-                  no_id: no_id
+                  id: id
               },
               cache: "false",
               success: function(x) {
@@ -405,13 +366,10 @@
                   var y = atob(x);
                   var xx = y.split("|");
                   if (xx[0] == 1) {
-                      $("#no_ide").val(xx[1]);
-                      $("#namae").val(xx[2]);
-                      $("#id_jbne").val(xx[3]);
-                      $("#tgl_lahire").val(xx[4]);
-                      $("#tle").val(xx[5]);
-                      $("#emaile").val(xx[6]);
-
+                      $("#ide").val(xx[1]);
+                      $("#eno_id").val(xx[2]);
+                      $("#eid_jn_job").val(xx[3]);
+                      $("#elist_job").val(xx[4]);
                   } else {
                       swal({
                           title: 'Update Gagal',
@@ -435,15 +393,12 @@
 
 
       function update() {
-          var no_id = $("#no_ide").val();
-          var nama = $("#namae").val();
-          var id_jbn = $("#id_jbne").val();
-          var tgl_lahir = $("#tgl_lahire").val();
-          var tl = $("#tle").val();
-          var pass = $("#passe").val();
-          var email = $("#emaile").val();
+          var id = $("#ide").val();
+          var eno_id = $("#eno_id").val();
+          var eid_jn_job = $("#eid_jn_job").val();
+          var elist_job = $("#elist_job").val();
 
-          if (no_id == "" || nama == "" || id_jbn == "" || tgl_lahir == "" || tl == "" || email == "") {
+          if (id == "" || eno_id == "" || eid_jn_job == "" || elist_job == "") {
               swal({
                   title: 'Update Gagal',
                   text: 'Ada Isian yang Belum Anda Isi !',
@@ -458,16 +413,13 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>dosen/karyawan/update",
+              url: "<?php echo base_url(); ?>admin/tugas/update",
               method: "POST",
               data: {
-                  no_id: no_id,
-                  nama: nama,
-                  id_jbn: id_jbn,
-                  tgl_lahir: tgl_lahir,
-                  tl: tl,
-                  pass: pass,
-                  email: email
+                  id: id,
+                  eno_id: eno_id,
+                  eid_jn_job: eid_jn_job,
+                  elist_job: elist_job
               },
               cache: "false",
               success: function(x) {
@@ -479,8 +431,7 @@
                           text: 'Data Berhasil di Update',
                           icon: 'success'
                       }).then((Refreshh) => {
-                          refresh();
-                          tabel.ajax.reload(null, false);
+                          location.reload()
                       });
                   } else {
                       swal({
@@ -503,14 +454,9 @@
       }
 
       function refresh() {
-
-          $("no_ide").val("");
+          $("#ide").val("");
+          $("#idfke").val("");
           $("#namae").val("");
-          $("#id_jbne").val("");
-          $("#tgl_lahire").val("");
-          $("#tle").val("");
-          $("#passe").val("");
-          $("#emaile").val("");
           $('#md_edit').modal('hide');
       }
   </script>

@@ -40,6 +40,7 @@ class LoginController extends CI_Controller
             if ($dosen->num_rows() > 0) {
                 $data = $dosen->row();
                 $simpan = [
+                    'no_id' => $data->no_id,
                     'nidn' => $data->nidn,
                     'jabatan' => $data->jabatan,
                     'nama' => $data->nama_dosen,
@@ -51,7 +52,7 @@ class LoginController extends CI_Controller
                 $this->db->from('tb_karyawan');
                 $this->db->join('tb_jabatan', 'tb_karyawan.id_jabatan=tb_jabatan.id_jabatan');
                 $this->db->where('tb_karyawan.email', $email);
-                $this->db->where('tb_karyawan.password', $password);
+                $this->db->where('tb_karyawan.pasword', $password);
                 $karyawan = $this->db->get();
 
                 if ($karyawan->num_rows() > 0) {
@@ -65,13 +66,35 @@ class LoginController extends CI_Controller
                     $this->session->set_userdata($simpan);
                     redirect(base_url('karyawan/dashboard'));
                 } else {
-                    $this->session->set_flashdata(
-                        'login-gagal',
-                        '<div class="alert alert-danger" role="alert">
-                            Email/NIDN atau password salah!
-                        </div>'
-                    );
-                    redirect(base_url('login'));
+                    $this->db->select('*');
+                    $this->db->from('tb_admin');
+                    $this->db->join('tb_jabatan', 'tb_admin.id_jabatan=tb_jabatan.id_jabatan');
+                    $this->db->join('tb_role', 'tb_admin.id_role=tb_role.id');
+                    $this->db->where('tb_admin.username', $email);
+                    $this->db->where('tb_admin.password', $password);
+                    $admin = $this->db->get();
+
+                    if ($admin->num_rows() > 0) {
+                        $data = $admin->row();
+                        $simpan = [
+                            'nama' => $data->name,
+                            'username' => $data->username,
+                            'email' => $data->email,
+                            'role' => $data->role,
+                            'jabatan' => $data->jabatan,
+                        ];
+                        $this->session->set_userdata($simpan);
+                        redirect(base_url('admin/dashboard'));
+                    }else{
+                        $this->session->set_flashdata(
+                            'login-gagal',
+                            '<div class="alert alert-danger" role="alert">
+                                Email/NIDN atau password salah!
+                            </div>'
+                        );
+                        redirect(base_url('login'));
+                    }
+
                 }
             }
         }

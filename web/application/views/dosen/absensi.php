@@ -1,22 +1,20 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
       <div class="content-header">
           <div class="container-fluid">
               <div class="row mb-2">
                   <div class="col-sm-6">
                       <h1 class="m-0 text-dark">Absensi</h1>
-                  </div><!-- /.col -->
+                  </div>
                   <div class="col-sm-6">
                       <ol class="breadcrumb float-sm-right">
                           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                           <li class="breadcrumb-item active">Absensi</li>
                       </ol>
-                  </div><!-- /.col -->
-              </div><!-- /.row -->
-          </div><!-- /.container-fluid -->
+                  </div>
+              </div>
+          </div>
       </div>
-      <!-- /.content-header -->
 
       <!-- Main content -->
       <section class="content">
@@ -26,100 +24,30 @@
                       <div class="card">
                           <div class="card-header">
                               <h3 class="card-title">
-                                  <button type='button' class='btn btn-success waves-effect waves-light' data-toggle='modal' data-target='#md_tbh'>Tambah</button>
+                                  <h2 class="m-0 text-dark">Absensi</h2>
                               </h3>
                           </div>
-                          <!-- /.card-header -->
                           <div class="card-body">
-                              <table id="tbl_abn" class="table table-bordered table-striped">
+                              <table id="table" class="table table-bordered table-striped">
                                   <thead>
                                       <tr>
                                           <th>No</th>
-                                          <th>No Id</th>
-                                          <th>Jumlah wajib</th>
-                                          <th>Aksi</th>
+                                          <th>Jabatan</th>
+                                          <th>Jumlah Wajib Hadir</th>
+                                          <th>Action</th>
                                       </tr>
                                   </thead>
 
                               </table>
                           </div>
-                          <!-- /.card-body -->
                       </div>
-                      <!-- /.card -->
                   </div>
-                  <!-- /.col -->
               </div>
-              <!-- /.row -->
           </div>
-          <!-- /.container-fluid -->
       </section>
-      <!-- /.content -->
 
-      <div class="modal fade" id="md_edit">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h4 class="modal-title">Edit Absensi</h4>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      <form>
-                          <div>
-                              <label>No Id</label>
-                              <input type="hidden" name="ide" id="ide">
-                              <input type="number" class="form-control" required placeholder="Masukkan Nama Departemen" name="no_ide" id="no_ide">
-                          </div>
-                          <div class="form-group">
-                              <label>jumlah wajib</label>
-                              <input type="number" class="form-control" required placeholder="Masukkan Nama Departemen" name="jmle" id="jmle">
-                          </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
-                      <button type="button" class="btn btn-primary waves-effect waves-light" onclick="update()">Update</button>
-                  </div>
-                  </form> <!-- TUTUP FORM -->
-              </div>
-          </div>
-          <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
+
   </div>
-  <!-- /.modal -->
-  <div class="modal fade" id="md_tbh">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h4 class="modal-title">Tambah absensi</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                  <form>
-                      <div class="form-group">
-                          <label>No Id</label>
-                          <input type="number" class="form-control" required placeholder="Masukkan Nama no id" name="no_id" id="no_id">
-                      </div>
-                      <div class="form-group">
-                          <label>Jumlah Wajib</label>
-                          <input type="number" class="form-control" required placeholder="Masukkan Nama jumlah" name="jml" id="jml">
-                      </div>
-              </div>
-              <div class="modal-footer">
-                  <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
-                  <button type="button" class="btn btn-primary waves-effect waves-light" onclick="tambah()">Save</button>
-              </div>
-              </form> <!-- TUTUP FORM -->
-          </div>
-      </div>
-      <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
 
 
   </div>
@@ -189,7 +117,7 @@
           closeOnClickOutside: false,
           closeOnEsc: false
       });
-      var tabel = $("#tbl_abn").DataTable({
+      var tabel = $("#table").DataTable({
           "responsive": true,
           "autoWidth": false,
           "ajax": "<?php echo base_url(); ?>dosen/absensi/json",
@@ -197,251 +125,6 @@
               swal.close();
           }
       });
-
-      function hapus(el) {
-          var id = $(el).data("id");
-          // console.log(id);
-          swal("Memproses Data.....", {
-              button: false,
-              closeOnClickOutside: false,
-              closeOnEsc: false
-          });
-          swal({
-              title: 'Hapus Data',
-              text: "Anda Yakin Ingin Menghapus Data Ini ?",
-              icon: 'warning',
-              buttons: {
-                  confirm: {
-                      text: 'Yakin',
-                      className: 'btn btn-success'
-                  },
-                  cancel: {
-                      visible: true,
-                      text: 'Tidak',
-                      className: 'btn btn-danger'
-                  }
-              }
-
-          }).then((Hapuss) => {
-              if (Hapuss) {
-                  $.ajax({
-                      url: "<?php echo base_url(); ?>h_abs",
-                      method: "POST",
-                      data: {
-                          id: id
-                      },
-                      cache: "false",
-                      success: function(x) {
-                          swal.close();
-                          var y = atob(x);
-                          if (y == 1) {
-                              swal({
-                                  title: 'Hapus Berhasil',
-                                  text: 'Data Berhasil di Hapus',
-                                  icon: 'success'
-                              }).then((Refreshh) => {
-                                  // refresh();
-                                  tabel.ajax.reload(null, false);
-                              });
-                          } else {
-                              if (y == 90) {
-                                  swal({
-                                      title: 'Hapus Gagal',
-                                      text: 'Data Level Masih digunakan, Sehingga Tidak Dapat di Hapus Hanya Dapat di Ubah',
-                                      icon: 'error'
-                                  });
-                                  // refresh();
-                              } else {
-                                  swal({
-                                      title: 'Hapus Gagal',
-                                      text: 'Periksa Kembali Data Yang Anda Pilih !',
-                                      icon: 'error'
-                                  });
-                              }
-                          }
-                      },
-                      error: function() {
-                          swal.close();
-                          swal({
-                              title: 'Hapus Gagal',
-                              text: 'Jaringan Anda Bermasalah !',
-                              icon: 'error'
-                          });
-                      }
-                  })
-              } else {
-                  swal.close();
-              }
-          });
-      }
-
-      function tambah() {
-
-          var no_id = $("#no_id").val();
-          var jml_wajib = $("#jml").val();
-          if (no_id == "" || jml_wajib == "") {
-              swal({
-                  title: 'Tambah Gagal',
-                  text: 'Nama Belum Anda Isi !',
-                  icon: 'error'
-              });
-              return;
-          }
-          swal("Memproses Data.....", {
-              button: false,
-              closeOnClickOutside: false,
-              closeOnEsc: false
-          });
-          $.ajax({
-              url: "<?php echo base_url(); ?>dosen/absensi/store",
-              method: "POST",
-              data: {
-                  no_id: no_id,
-                  jml: jml_wajib
-              },
-              cache: "false",
-              success: function(x) {
-                  swal.close();
-                  var y = atob(x);
-                  if (y == 1) {
-                      swal({
-                          title: 'Tambah Berhasil',
-                          text: 'Data Berhasil di Tambahkan',
-                          icon: 'success'
-                      }).then((Refreshh) => {
-                          $('#md_tbh').modal('hide');
-                          refresh();
-                          tabel.ajax.reload(null, false);
-                      });
-                  } else {
-                      swal({
-                          title: 'Tambah Gagal',
-                          text: 'Ada Beberapa Masalah dengan Data yang Anda Isikan !',
-                          icon: 'error'
-                      });
-                  }
-              },
-              error: function() {
-                  swal.close();
-                  swal({
-                      title: 'Tambah Gagal',
-                      text: 'Jaringan Anda Bermasalah !',
-                      icon: 'error'
-                  });
-              }
-          })
-      }
-
-      function filter(el) {
-          var id = $(el).data("id");
-          swal("Memproses Data.....", {
-              button: false,
-              closeOnClickOutside: false,
-              closeOnEsc: false
-          });
-          $.ajax({
-              url: "<?php echo base_url(); ?>dosen/absensi/filter",
-              method: "POST",
-              data: {
-                  id: id
-              },
-              cache: "false",
-              success: function(x) {
-                  swal.close();
-                  var y = atob(x);
-                  var xx = y.split("|");
-                  if (xx[0] == 1) {
-                      $("#ide").val(xx[1]);
-                      $("#no_ide").val(xx[2]);
-                      $("#jmle").val(xx[3]);
-                  } else {
-                      swal({
-                          title: 'Update Gagal',
-                          text: 'Data Tidak di Temukan',
-                          icon: 'error'
-                      });
-                      refresh();
-                  }
-              },
-              error: function() {
-                  swal.close();
-                  swal({
-                      title: 'Filter Gagal',
-                      text: 'Jaringan Anda Bermasalah !',
-                      icon: 'error'
-                  });
-              }
-          })
-      }
-
-
-
-      function update() {
-          var id = $("#ide").val();
-          var no_id = $("#no_ide").val();
-          var jml = $("#jmle").val();
-
-          if (id == "" || no_id == "" || jml == "") {
-              swal({
-                  title: 'Update Gagal',
-                  text: 'Ada Isian yang Belum Anda Isi !',
-                  icon: 'error'
-              });
-              return;
-          }
-
-          swal("Memproses Data.....", {
-              button: false,
-              closeOnClickOutside: false,
-              closeOnEsc: false
-          });
-          $.ajax({
-              url: "<?php echo base_url(); ?>dosen/absensi/update",
-              method: "POST",
-              data: {
-                  id: id,
-                  no_id: no_id,
-                  jml: jml
-              },
-              cache: "false",
-              success: function(x) {
-                  swal.close();
-                  var y = atob(x);
-                  if (y == 1) {
-                      swal({
-                          title: 'Update Berhasil',
-                          text: 'Data Berhasil di Update',
-                          icon: 'success'
-                      }).then((Refreshh) => {
-                          refresh();
-                          tabel.ajax.reload(null, false);
-                      });
-                  } else {
-                      swal({
-                          title: 'Update Gagal',
-                          text: 'Ada Beberapa Masalah dengan Data yang Anda Isikan !',
-                          icon: 'error'
-                      });
-                  }
-
-              },
-              error: function() {
-                  swal.close();
-                  swal({
-                      title: 'Update Gagal',
-                      text: 'Jaringan Anda Bermasalah !',
-                      icon: 'error'
-                  });
-              }
-          })
-      }
-
-      function refresh() {
-          $("#ide").val("");
-          $("#no_ide").val("");
-          $("#jmle").val("");
-          $('#md_edit').modal('hide');
-      }
   </script>
 
   </body>

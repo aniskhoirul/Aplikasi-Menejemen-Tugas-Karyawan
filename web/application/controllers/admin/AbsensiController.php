@@ -1,20 +1,20 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-class ProdiController extends CI_Controller
+class AbsensiController extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        if (!$this->session->userdata('nidn')) {
+        if (!$this->session->userdata('username')) {
             redirect('login');
         }
     }
 
     public function index()
     {
-        $data['fakultas'] = $this->db->get('tb_fakultas')->result();
+		$data['jabatan'] = $this->db->get('tb_jabatan')->result();
         $this->load->view('template/header');
-		$this->load->view('dosen/prodi', $data);
+		$this->load->view('admin/absensi', $data);
     }
 
     public function json()
@@ -22,32 +22,41 @@ class ProdiController extends CI_Controller
         $a = 1;
 		$dtJSON = '{"data": [xxx]}';
 		$dtisi = "";
-		$dt = $this->M_master->mdata_pr();
+		$dt = $this->M_master->mdata_abs();
 		foreach ($dt as $k) {
-			$idu = $k->id_prodi;
-			$idfk = $k->id_fakultas;
-			$nama = $k->nama_prodi;
+			$idu = $k->id_absensi;
+			$id_jabatan = $k->jabatan;
+			$jml = $k->jml_wajib;
 
 			$tomboledit = "<button type='button' class='btn btn-warning waves-effect waves-light' data-id='" . $idu . "'  onclick='filter(this)' data-target='#md_edit' data-toggle='modal' >Edit</button> <button class='btn btn-danger waves-effect waves-light' data-id='" . $idu . "' title='Hapus' onclick='hapus(this)'>Hapus</button>";
-			$dtisi .= '["' . $a++ . '","' . $idfk . '","' . $nama . '","' . $tomboledit . '"],';
+			$dtisi .= '["' . $a++ . '","' . $id_jabatan . '","' . $jml . '","' . $tomboledit . '"],';
 		}
 		$dtisifix = rtrim($dtisi, ",");
 		$data = str_replace("xxx", $dtisifix, $dtJSON);
 		echo $data;
     }
 
+    public function store()
+    {
+        $id_jabatan = trim(str_replace("'", "''", $this->input->post("id_jabatan")));
+		$jml = trim(str_replace("'", "''", $this->input->post("jml")));
+		$operasi = $this->M_master->mtambah_abs($id_jabatan, $jml);
+		echo base64_encode($operasi);
+    }
+
     public function filter()
     {
         $id = trim($this->input->post("id"));
-		$dt = $this->M_master->mfilter_pr($id);
+		$dt = $this->M_master->mfilter_abs($id);
+        // echo json_encode($dt);
 		if (is_array($dt)) {
 			if (count($dt) > 0) {
 				foreach ($dt as $k) {
-					$id = $k->id_prodi;
-					$idfk = $k->id_fakultas;
-					$nama = $k->nama_prodi;
+					$id = $k->id_absensi;
+					$id_jabatan = $k->id_jabatan;
+					$jml = $k->jml_wajib;
 				}
-				echo base64_encode("1|" . $id . "|" . $idfk . "|" . $nama);
+				echo base64_encode("1|" . $id . "|" . $id_jabatan . "|" . $jml);
 			} else {
 				echo base64_encode("0|");
 			}
@@ -56,20 +65,12 @@ class ProdiController extends CI_Controller
 		}
     }
 
-    public function store()
-    {
-        $idfk = trim(str_replace("'", "''", $this->input->post("idfk")));
-		$nama = trim(str_replace("'", "''", $this->input->post("nama")));
-		$operasi = $this->M_master->mtambah_pr($idfk, $nama);
-		echo base64_encode($operasi);
-    }
-
     public function update()
     {
         $id = trim(str_replace("'", "''", $this->input->post("id")));
-		$idfk = trim(str_replace("'", "''", $this->input->post("idfk")));
-		$nama = trim(str_replace("'", "''", $this->input->post("nama")));
-		$operasi = $this->M_master->mubah_pr($id, $idfk, $nama);
+		$id_jabatan = trim(str_replace("'", "''", $this->input->post("id_jabatan")));
+		$jml = trim(str_replace("'", "''", $this->input->post("jml")));
+		$operasi = $this->M_master->mubah_abs($id, $id_jabatan, $jml);
 		echo base64_encode($operasi);
     }
 
@@ -77,7 +78,7 @@ class ProdiController extends CI_Controller
     {
         $a = trim(str_replace("'", "''", $this->input->post("id")));
 
-		$operasi = $this->M_master->mhapus_pr($a);
+		$operasi = $this->M_master->mhapus_abs($a);
 
 		echo base64_encode($operasi);
     }

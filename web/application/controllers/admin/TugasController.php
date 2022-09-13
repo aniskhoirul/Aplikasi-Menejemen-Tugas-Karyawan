@@ -59,22 +59,22 @@ class TugasController extends CI_Controller
     public function filter()
     {
         $id = trim($this->input->post("id"));
-		$dt = $this->M_master->m_filter_tugas($id);
-		if (is_array($dt)) {
-			if (count($dt) > 0) {
-				foreach ($dt as $k) {
-					$id = $k->id_job;
-					$no_id = $k->no_id;
-					$id_jn_job = $k->id_jn_job;
-					$list_job = $k->list_job;
-				}
-				echo base64_encode("1|" . $id . "|" . $no_id ."|" . $id_jn_job ."|" . $list_job);
-			} else {
-				echo base64_encode("0|");
-			}
-		} else {
-			echo base64_encode("0|");
-		}
+        $dt = $this->M_master->m_filter_tugas($id);
+        if (is_array($dt)) {
+            if (count($dt) > 0) {
+                foreach ($dt as $k) {
+                    $id = $k->id_job;
+                    $no_id = $k->no_id;
+                    $id_jn_job = $k->id_jn_job;
+                    $list_job = $k->list_job;
+                }
+                echo base64_encode("1|" . $id . "|" . $no_id . "|" . $id_jn_job . "|" . $list_job);
+            } else {
+                echo base64_encode("0|");
+            }
+        } else {
+            echo base64_encode("0|");
+        }
     }
 
     public function update()
@@ -126,15 +126,17 @@ class TugasController extends CI_Controller
 
     public function store_detail()
     {
-		$config['upload_path']          = './assets/file_job/';
-		$config['allowed_types']        = 'gif|jpg|png|pdf';
-		$config['max_size']             = 100;
-		$config['max_width']            = 1024;
-		$config['max_height']           = 768;
+        $config['upload_path']          = './assets/file_job/';
+        $config['allowed_types']        = 'gif|jpg|png|pdf';
         $this->load->library('upload', $config);
-        if (!$this->upload->do_upload('file')){
-			echo base64_encode("0");
-        }else{
+        if (!$this->upload->do_upload('file')) {
+            return $this->output->set_content_type('application/json')
+                ->set_status_header(500)
+                ->set_output(json_encode([
+                    'status' => 'error',
+                    'message' => 'File gagal diupload'
+                ]));
+        } else {
             $data = [
                 'id_job' => $this->input->post('id_job'),
                 'waktu_mulai' => $this->input->post('waktu_mulai'),
@@ -143,7 +145,7 @@ class TugasController extends CI_Controller
                 'data_job' =>  $this->upload->data("file_name"),
                 'notif' => 'false'
             ];
-    
+
             $insert = $this->db->insert('tb_detail_job', $data);
             if ($insert) {
                 return $this->output->set_content_type('application/json')
@@ -160,7 +162,6 @@ class TugasController extends CI_Controller
                         'message' => 'Data gagal disimpan'
                     ]));
             }
-		}
-
+        }
     }
 }

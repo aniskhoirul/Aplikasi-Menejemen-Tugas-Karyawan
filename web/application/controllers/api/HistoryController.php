@@ -16,7 +16,7 @@ class HistoryController extends CI_Controller {
         $detail = $this->db->query("SELECT * FROM `tb_job` 
 									INNER JOIN `tb_karyawan` ON tb_karyawan.no_id=tb_job.no_id 
 									INNER JOIN `tb_jn_job` ON tb_job.id_jn_job=tb_jn_job.id_jn_job
-									AND tb_job.no_id='$id_user'
+									AND tb_job.no_id='$id_user' ORDER BY tb_job.id_job DESC
 									")->result();
 		echo json_encode($detail);
 	}

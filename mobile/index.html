@@ -506,7 +506,9 @@
             $.getJSON(url + "api/v1/history/show", { id: $(el).data('id') }, function (data) {
                 $('#list_job').html(data.list_job);
                 $('#data_job').html(data.data_job);
-                $('#created_at').html(dateIndo(data.created_at));
+                $('#created_at').html(dateTimeIndo(data.created_at));
+                $('#waktu_mulai').html(dateIndo(data.waktu_mulai));
+                $('#waktu_akhir').html(dateIndo(data.waktu_akhir));
 
                 if (data.upload != null) {
                     btn_download += `
@@ -521,7 +523,7 @@
                 }else{
                     btn_download += `
                         <div class="col">
-                            <a href="javascript:void(0)" class=""col button button-outline button-raised color-blue" data-url="`+ url + `assets/file_job/` + data.data_job + `" onclick="download_history(this)">Download Job</a>
+                            <a href="javascript:void(0)" class="col button button-outline button-raised color-blue" data-url="`+ url + `assets/file_job/` + data.data_job + `" onclick="download_history(this)">Download Job</a>
                         </div>
                     `;
                 }

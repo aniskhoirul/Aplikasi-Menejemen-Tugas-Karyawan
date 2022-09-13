@@ -36,7 +36,7 @@ var app = new Framework7({
 });
 
 
-function dateIndo(string) {
+function dateTimeIndo(string) {
   bulanIndo = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
   date = string.split(" ")[0];
@@ -47,4 +47,17 @@ function dateIndo(string) {
   tahun = date.split("-")[0];
 
   return tanggal + " " + bulanIndo[Math.abs(bulan)] + " " + tahun + " " + time;
+}
+
+function dateIndo(string) {
+  bulanIndo = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+  date = string.split(" ")[0];
+  // time = string.split(" ")[1];
+
+  tanggal = date.split("-")[2];
+  bulan = date.split("-")[1];
+  tahun = date.split("-")[0];
+
+  return tanggal + " " + bulanIndo[Math.abs(bulan)] + " " + tahun;
 }

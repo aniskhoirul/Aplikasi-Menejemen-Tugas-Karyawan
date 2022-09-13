@@ -71,133 +71,166 @@
 
         <!-- menu Admin -->
         <?php if ($this->session->userdata('username') != "") : ?>
-          <!-- Sidebar Menu -->
-          <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-              <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-              <li class="nav-item has-treeview">
-                <a href="<?= base_url('admin/dashboard') ?>" class="nav-link <?= $this->uri->segment(2) == 'dashboard' ? 'active' : '' ?>">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>
-                    Dashboard
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item has-treeview">
-                <a href="<?= base_url('admin/tugas') ?>" class="nav-link <?= $this->uri->segment(2) == 'tugas' ? 'active' : '' ?>">
-                  <i class="nav-icon fas fa-tasks"></i>
-                  <p>
-                    Tugas
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item <?= $this->uri->segment(2) == 'fakultas' || $this->uri->segment(2) == 'prodi' ? 'menu-open' : '' ?>">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Jurusan
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="<?php echo base_url();  ?>admin/fakultas" class="nav-link <?= $this->uri->segment(2) == 'fakultas' ? 'active' : '' ?>">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Fakultas</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url(); ?>admin/prodi" class="nav-link <?= $this->uri->segment(2) == 'prodi' ? 'active' : '' ?>">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Prodi</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
+          <?php if ($this->session->userdata('role') == 'admin') : ?>
+            <nav class="mt-2">
+              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item has-treeview">
+                  <a href="<?= base_url('admin/dashboard') ?>" class="nav-link <?= $this->uri->segment(2) == 'dashboard' ? 'active' : '' ?>">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>
+                      Dashboard
+                    </p>
+                  </a>
+                </li>
 
-              <li class="nav-item <?= $this->uri->segment(2) == 'karyawan' || $this->uri->segment(2) == 'data-dosen' || $this->uri->segment(2) == 'data-mahasiswa' ? 'menu-open' : '' ?>">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-copy"></i>
-                  <p>
-                    Master User
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="<?php echo base_url(); ?>admin/karyawan" class="nav-link <?= $this->uri->segment(2) == 'karyawan' ? 'active' : '' ?>">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Karyawan</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url(); ?>admin/data-dosen" class="nav-link <?= $this->uri->segment(2) == 'data-dosen' ? 'active' : '' ?>">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Dosen</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url(); ?>admin/data-mahasiswa" class="nav-link <?= $this->uri->segment(2) == 'data-mahasiswa' ? 'active' : '' ?>">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Mahasiswa</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
+                <li class="nav-item has-treeview">
+                  <a href="<?= base_url('admin/tugas') ?>" class="nav-link <?= $this->uri->segment(2) == 'tugas' ? 'active' : '' ?>">
+                    <i class="nav-icon fas fa-tasks"></i>
+                    <p>
+                      Tugas
+                    </p>
+                  </a>
+                </li>
+
+                <li class="nav-item <?= $this->uri->segment(2) == 'fakultas' || $this->uri->segment(2) == 'prodi' ? 'menu-open' : '' ?>">
+                  <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                      Jurusan
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="<?php echo base_url();  ?>admin/fakultas" class="nav-link <?= $this->uri->segment(2) == 'fakultas' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Fakultas</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?php echo base_url(); ?>admin/prodi" class="nav-link <?= $this->uri->segment(2) == 'prodi' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Prodi</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="nav-item <?= $this->uri->segment(2) == 'karyawan' || $this->uri->segment(2) == 'data-dosen' || $this->uri->segment(2) == 'data-mahasiswa' ? 'menu-open' : '' ?>">
+                  <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-copy"></i>
+                    <p>
+                      Master User
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="<?php echo base_url(); ?>admin/karyawan" class="nav-link <?= $this->uri->segment(2) == 'karyawan' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Karyawan</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?php echo base_url(); ?>admin/data-dosen" class="nav-link <?= $this->uri->segment(2) == 'data-dosen' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Dosen</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?php echo base_url(); ?>admin/data-mahasiswa" class="nav-link <?= $this->uri->segment(2) == 'data-mahasiswa' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Mahasiswa</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
 
 
-              <li class="nav-item <?= $this->uri->segment(2) == 'absensi' || $this->uri->segment(2) == 'gaji' || $this->uri->segment(2) == 'jabatan' || $this->uri->segment(2) == 'tahun-masuk' || $this->uri->segment(2) == 'surat' ? 'menu-open' : '' ?>">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-chart-pie"></i>
-                  <p>
-                    Manajemen
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="<?php echo base_url(); ?>admin/absensi" class="nav-link <?= $this->uri->segment(2) == 'absensi' ? 'active' : '' ?>">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Absensi</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url(); ?>admin/gaji" class="nav-link  <?= $this->uri->segment(2) == 'gaji' ? 'active' : '' ?>">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Gaji</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url(); ?>admin/jabatan" class="nav-link <?= $this->uri->segment(2) == 'jabatan' ? 'active' : '' ?>">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Jabatan</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url(); ?>admin/tahun-masuk" class="nav-link <?= $this->uri->segment(2) == 'tahun-masuk' ? 'active' : '' ?>">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Tahun Masuk</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="<?php echo base_url(); ?>admin/surat" class=" nav-link <?= $this->uri->segment(2) == 'surat' ? 'active' : '' ?>">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Surat</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item has-treeview">
-                <a href="<?= base_url('logout') ?>" class="nav-link">
-                  <i class="nav-icon fas fa-arrow-circle-left"></i>
-                  <p>
-                    Keluar
-                  </p>
-                </a>
-              </li>
-            </ul>
-          </nav>
+                <li class="nav-item <?= $this->uri->segment(2) == 'absensi' || $this->uri->segment(2) == 'gaji' || $this->uri->segment(2) == 'jabatan' || $this->uri->segment(2) == 'tahun-masuk' || $this->uri->segment(2) == 'surat' ? 'menu-open' : '' ?>">
+                  <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-chart-pie"></i>
+                    <p>
+                      Manajemen
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="<?php echo base_url(); ?>admin/absensi" class="nav-link <?= $this->uri->segment(2) == 'absensi' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Absensi</p>
+                      </a>
+                    </li>
+                    <!-- <li class="nav-item">
+                      <a href="<?php echo base_url(); ?>admin/gaji" class="nav-link  <?= $this->uri->segment(2) == 'gaji' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Gaji</p>
+                      </a>
+                    </li> -->
+                    <li class="nav-item">
+                      <a href="<?php echo base_url(); ?>admin/jabatan" class="nav-link <?= $this->uri->segment(2) == 'jabatan' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Jabatan</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?php echo base_url(); ?>admin/tahun-masuk" class="nav-link <?= $this->uri->segment(2) == 'tahun-masuk' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Tahun Masuk</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?php echo base_url(); ?>admin/surat" class=" nav-link <?= $this->uri->segment(2) == 'surat' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Surat</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="nav-item has-treeview">
+                  <a href="<?= base_url('logout') ?>" class="nav-link">
+                    <i class="nav-icon fas fa-arrow-circle-left"></i>
+                    <p>
+                      Keluar
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          <?php elseif ($this->session->userdata('role') == 'keuangan') : ?>
+            <nav class="mt-2">
+              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item has-treeview">
+                  <a href="<?= base_url('admin/dashboard') ?>" class="nav-link <?= $this->uri->segment(2) == 'dashboard' ? 'active' : '' ?>">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>
+                      Dashboard
+                    </p>
+                  </a>
+                </li>
+
+                <li class="nav-item has-treeview">
+                  <a href="<?= base_url('admin/gaji') ?>" class="nav-link <?= $this->uri->segment(2) == 'gaji' ? 'active' : '' ?>">
+                    <i class="nav-icon fas fa-money-check-alt"></i>
+                    <p>
+                      Penggajian
+                    </p>
+                  </a>
+                </li>
+
+                <li class="nav-item has-treeview">
+                  <a href="<?= base_url('logout') ?>" class="nav-link">
+                    <i class="nav-icon fas fa-arrow-circle-left"></i>
+                    <p>
+                      Keluar
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          <?php endif ?>
 
           <!-- Menu Dosen -->
         <?php elseif ($this->session->userdata('nidn') != "") : ?>
@@ -211,7 +244,7 @@
                   </p>
                 </a>
               </li>
-              
+
               <li class="nav-item has-treeview">
                 <a href="<?= base_url('dosen/absensi') ?>" class="nav-link <?= $this->uri->segment(2) == 'absensi' ? 'active' : '' ?>">
                   <i class="nav-icon fas fa-user-check"></i>
@@ -278,4 +311,3 @@
       </div>
       <!-- /.sidebar -->
     </aside>
-

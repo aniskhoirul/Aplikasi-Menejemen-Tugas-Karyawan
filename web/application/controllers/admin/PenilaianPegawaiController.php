@@ -32,7 +32,7 @@ class PenilaianPegawaiController extends CI_Controller
 			@$row->id_kinerja_pegawai = $ambil->id;
 
 			## perhitungan kehadiran
-			$hadir = $this->M_Kinerja->get_one_kehadiran(['a.id_absen' => $id_karyawan]);
+			$hadir = $this->M_Kinerja->get_one_kehadiran(['id_absen' => $id_karyawan]);
 			@$row->point_kehadiran = $hadir->persentase;
 
 		}

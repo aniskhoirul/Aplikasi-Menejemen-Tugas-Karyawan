@@ -138,6 +138,15 @@ $route['admin/surat/filter'] = 'admin/SuratController/filter';
 $route['admin/surat/update'] = 'admin/SuratController/update';
 $route['admin/surat/destroy'] = 'admin/SuratController/destroy';
 
+// Penilaian Pegawai
+$route['admin/penilaian-pegawai'] = 'admin/PenilaianPegawaiController';
+$route['admin/penilaian-pegawai/store'] = 'admin/PenilaianPegawaiController/simpan';
+$route['admin/penilaian-pegawai/cetak'] = 'admin/PenilaianPegawaiController/cetak';
+
+// Laporan Penilaian
+$route['admin/laporan-penilaian'] = 'admin/LaporanPenilaianController';
+$route['admin/laporan-penilaian/cetak'] = 'admin/LaporanPenilaianController/cetak_laporan';
+$route['admin/laporan-penilaian/chart'] = 'admin/LaporanPenilaianController/chart';
 
 // ================================KARYAWAN================
 $route['karyawan/dashboard'] = 'karyawan/DashboardController';

@@ -90,3 +90,19 @@
 		$bgku = ["bg-success","bg-primary","bg-warning","bg-info","bg-danger"];
 		return $bgku[rand(0,4)];
 	}
+
+	function grade($value){
+		$hasil = "";
+        if($value >= 91){
+          $hasil = 'A';
+        }elseif($value >= 76 && $value <= 90){
+          $hasil = 'B';
+        }elseif($value >= 66 && $value <= 75){
+          $hasil = 'C';
+        }elseif($value >= 51 && $value <= 65){
+            $hasil = 'D';
+        }elseif($value <= 50){
+            $hasil = 'E';
+        }
+        return ($hasil);
+	}

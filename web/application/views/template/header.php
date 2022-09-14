@@ -99,7 +99,7 @@
 
                 <li class="nav-item <?= $this->uri->segment(2) == 'penilaian-pegawai' || $this->uri->segment(2) == 'laporan-penilaian' ? 'menu-open' : '' ?>">
                   <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+                    <i class="nav-icon fas fa-file-alt"></i>
                     <p>
                       Penilaian
                       <i class="fas fa-angle-left right"></i>

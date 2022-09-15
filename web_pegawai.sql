@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 07, 2022 at 12:50 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.28
+-- Waktu pembuatan: 15 Sep 2022 pada 11.16
+-- Versi server: 10.4.19-MariaDB
+-- Versi PHP: 7.4.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,25 +18,57 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `web_pegawai`
+-- Database: `web_pegawai_2`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_absensi`
+-- Struktur dari tabel `tb_absensi`
 --
 
 CREATE TABLE `tb_absensi` (
   `id_absensi` int(11) NOT NULL,
-  `no_id` int(11) NOT NULL,
+  `id_jabatan` int(11) NOT NULL,
   `jml_wajib` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_absensi`
+--
+
+INSERT INTO `tb_absensi` (`id_absensi`, `id_jabatan`, `jml_wajib`) VALUES
+(1, 1, 24),
+(5, 2, 24);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_detail_job`
+-- Struktur dari tabel `tb_admin`
+--
+
+CREATE TABLE `tb_admin` (
+  `id` int(11) NOT NULL,
+  `name` varchar(225) NOT NULL,
+  `username` varchar(225) NOT NULL,
+  `email` varchar(225) NOT NULL,
+  `password` varchar(225) NOT NULL,
+  `id_jabatan` int(11) NOT NULL,
+  `id_role` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_admin`
+--
+
+INSERT INTO `tb_admin` (`id`, `name`, `username`, `email`, `password`, `id_jabatan`, `id_role`) VALUES
+(1, 'Administrator', 'admin', 'admin@gmail.com', '5f4dcc3b5aa765d61d8327deb882cf99', 1, 1),
+(2, 'Admin Keuangan', 'adminkeuangan', 'adminkeuangan@gmail.com', '5f4dcc3b5aa765d61d8327deb882cf99', 1, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_detail_job`
 --
 
 CREATE TABLE `tb_detail_job` (
@@ -52,48 +84,44 @@ CREATE TABLE `tb_detail_job` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tb_detail_job`
+-- Dumping data untuk tabel `tb_detail_job`
 --
 
 INSERT INTO `tb_detail_job` (`id_detail`, `id_job`, `waktu_mulai`, `waktu_akhir`, `status`, `data_job`, `upload`, `notif`, `created_at`) VALUES
-(8, 9, '2022-08-29', '2022-08-31', 'true', 'soal.pdf', 'report.pdf', 'true', '2022-08-29 07:40:24'),
-(9, 10, '2022-09-09', '2022-09-10', 'true', 'soal.pdf', 'mpdf.pdf', 'true', '2022-08-29 07:40:24'),
-(10, 11, '2022-08-29', '2022-08-31', 'true', 'soal-revisi.pdf', '', 'true', '2022-08-31 06:11:37'),
-(11, 12, '2021-08-04', '2021-08-14', 'true', 'fcoba.pdf', 'PL_APM.pdf', '', '2022-09-04 05:52:52'),
-(12, 13, '2022-08-11', '2022-08-31', 'true', 'informasi.pdf', '', '', '0000-00-00 00:00:00'),
-(13, 14, '2022-08-27', '2022-09-10', 'false', 'penelitian.pdf\r\n\r\n', NULL, 'false', '0000-00-00 00:00:00'),
-(14, 15, '2022-08-28', '2022-09-17', 'false', 'data.pdf', NULL, '', '2022-09-04 05:49:57'),
-(15, 16, '2022-08-31', '2022-09-21', 'false', 'koordinasi dan kerjasama.pdf', NULL, '', '2022-09-04 05:49:38'),
-(16, 17, '2022-01-07', '2022-02-07', 'false', 'penyusunan-laporan.pdf', NULL, '', '0000-00-00 00:00:00'),
-(17, 18, '2022-01-18', '2022-01-11', 'false', 'Pusat.Komputer.pdf', NULL, '', '0000-00-00 00:00:00'),
-(18, 19, '2022-02-23', '2022-06-15', 'false', 'Melaksanakan penyimpanan dan penyajian data serta memberikan infonnasi yang\r\ndibutuhkan.', NULL, '', '2022-09-07 05:11:13'),
-(19, 19, '2022-05-10', '2022-05-25', 'false', ' penyimpanan dan penyajian.pdf', NULL, '', '0000-00-00 00:00:00'),
-(20, 20, '2022-01-01', '2022-02-08', 'false', 'program kerja.pdf', NULL, '', '0000-00-00 00:00:00'),
-(21, 21, '2022-01-18', '2022-01-18', 'false', 'tugas-tugasSub.pdf\r\n', NULL, '', '0000-00-00 00:00:00'),
-(22, 22, '2022-02-09', '2022-03-02', 'false', 'tugas-tugasSub.pdf', NULL, '', '0000-00-00 00:00:00'),
-(23, 23, '2022-02-15', '2022-02-11', 'false', 'administrasi-pelaksanaan-anggaran.pdf\r\n', NULL, '', '0000-00-00 00:00:00'),
-(24, 24, '2022-03-01', '2022-03-31', 'false', 'administrasi-penyusunan-anggaran.pdf', NULL, '', '0000-00-00 00:00:00'),
-(25, 25, '2022-07-06', '2022-08-01', 'false', 'pengawasan keuangan.pdf\r\n', NULL, '', '0000-00-00 00:00:00'),
-(26, 26, '2022-01-19', '2022-02-09', 'false', 'administrasi.pdf', NULL, '', '0000-00-00 00:00:00'),
-(27, 27, '2022-01-27', '2022-05-11', 'false', 'petunjuk.pdf', NULL, '', '0000-00-00 00:00:00'),
-(28, 28, '2022-07-06', '2022-09-07', 'false', 'penilaian prestasi.pdf', NULL, '', '0000-00-00 00:00:00'),
-(29, 29, '2022-09-08', '2022-09-12', 'false', 'laporan kegiatan.pdf\r\n', NULL, '', '0000-00-00 00:00:00'),
-(30, 30, '2022-02-01', '2022-02-28', 'false', 'program kerja.pdf\r\n', NULL, '', '0000-00-00 00:00:00'),
-(31, 31, '2022-03-08', '2022-03-31', 'false', 'data keuangan.pdf\r\n', NULL, '', '0000-00-00 00:00:00'),
-(32, 32, '2022-01-04', '2022-01-18', 'false', 'rencana keuangan.pdf', NULL, '', '0000-00-00 00:00:00'),
-(33, 33, '2022-01-20', '2022-01-31', 'false', 'program kerja.pdf', NULL, '', '2022-09-07 09:32:24'),
-(34, 34, '2022-01-18', '2022-02-22', 'false', 'buku kegiatan.pdf', NULL, '', '0000-00-00 00:00:00'),
-(35, 35, '2022-02-08', '2022-02-28', 'false', '(DP3).pdf\r\n', NULL, '', '0000-00-00 00:00:00'),
-(36, 36, '2022-02-16', '2022-03-31', 'false', 'presensi.pdf', NULL, '', '0000-00-00 00:00:00'),
-(37, 38, '2022-04-04', '2022-04-11', 'false', 'komputerisasi.pdf', NULL, '', '0000-00-00 00:00:00'),
-(38, 39, '2022-04-19', '2022-05-17', 'false', 'data / informasi.pdf', NULL, '', '0000-00-00 00:00:00'),
-(39, 40, '2022-05-10', '2022-05-11', 'false', 'data / informasi.pdf', NULL, '', '0000-00-00 00:00:00'),
-(40, 41, '2022-01-25', '2022-01-31', 'false', 'infonnasi.pdf', NULL, '', '0000-00-00 00:00:00');
+(46, 53, '1974-02-15', '2014-03-04', 'false', 'SURAT_EDARAN_PELAKSANAAN_YUDISIUM_DAN_TEHNIS_PENGUMPULAN_TUGAS_AKHIR_TAHUN_AKADEMIK_2021_2022.pdf', NULL, 'false', '2022-09-13 04:06:16');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_dosen`
+-- Struktur dari tabel `tb_detail_kualitas`
+--
+
+CREATE TABLE `tb_detail_kualitas` (
+  `id` int(11) NOT NULL,
+  `id_kualitas_kerja` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_detail_kualitas`
+--
+
+INSERT INTO `tb_detail_kualitas` (`id`, `id_kualitas_kerja`, `nama`) VALUES
+(1, 1, 'Kreativitas'),
+(2, 2, 'Kehadiran'),
+(3, 3, 'Pelanggaran'),
+(4, 4, 'Penampilan'),
+(5, 4, 'Kesopanan'),
+(6, 4, 'Kejujuran'),
+(7, 5, 'Kerjasama'),
+(8, 5, 'Komunikasi'),
+(9, 6, 'Jumlah job yang diberikan'),
+(10, 6, 'Hasil yang dilakukan');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_dosen`
 --
 
 CREATE TABLE `tb_dosen` (
@@ -103,39 +131,87 @@ CREATE TABLE `tb_dosen` (
   `nama_dosen` text NOT NULL,
   `tgl_lahir` date NOT NULL,
   `tempat_lahir` varchar(30) NOT NULL,
-  `pasword` int(11) NOT NULL
+  `password` varchar(225) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_dosen`
+--
+
+INSERT INTO `tb_dosen` (`no_id`, `nidn`, `id_jabatan`, `nama_dosen`, `tgl_lahir`, `tempat_lahir`, `password`) VALUES
+(1, 12345678, 1, 'Nama Dosen', '2022-08-30', 'Jombang', '5f4dcc3b5aa765d61d8327deb882cf99'),
+(3, 36, 8, 'Ut doloribus illum', '2016-03-12', 'Voluptas beatae nece', 'f3ed11bbdb94fd9ebdefbaf646ab94d3');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_dt_absensi`
+-- Struktur dari tabel `tb_dt_absensi`
 --
 
 CREATE TABLE `tb_dt_absensi` (
   `id_dt_absen` int(11) NOT NULL,
+  `id_no_id` int(11) NOT NULL,
   `id_absen` int(11) NOT NULL,
   `waktu` varchar(10) NOT NULL,
   `nilai_absensi` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `tb_dt_absensi`
+--
+
+INSERT INTO `tb_dt_absensi` (`id_dt_absen`, `id_no_id`, `id_absen`, `waktu`, `nilai_absensi`) VALUES
+(1, 1, 1, '6', '20');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_dt_gaji`
+-- Struktur dari tabel `tb_dt_gaji`
 --
 
 CREATE TABLE `tb_dt_gaji` (
   `id_dt_gaji` int(11) NOT NULL,
-  `id_jn_gaji` int(11) NOT NULL,
-  `nama_gaji` varchar(25) NOT NULL,
-  `nominal_gaji` varchar(25) NOT NULL
+  `id_jn` int(11) NOT NULL,
+  `id_karyawan` int(11) NOT NULL,
+  `nama_gaji` text DEFAULT NULL,
+  `nominal_gaji` varchar(25) NOT NULL,
+  `tanggal` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_dt_gaji`
+--
+
+INSERT INTO `tb_dt_gaji` (`id_dt_gaji`, `id_jn`, `id_karyawan`, `nama_gaji`, `nominal_gaji`, `tanggal`) VALUES
+(16, 1, 1, 'Doloribus architecto', '600000', '2022-09-01'),
+(17, 2, 1, 'Soluta dolor atque a', '0', '2022-09-01'),
+(18, 3, 1, 'Suscipit sunt sit l', '100000', '2022-09-01'),
+(19, 5, 1, 'Aperiam est sit simi', '10000', '2022-09-01'),
+(20, 1, 2, 'Sint eu ut voluptatu', '600000', '2022-09-01'),
+(21, 2, 2, 'Rerum optio dolorib', '20000', '2022-09-01'),
+(22, 3, 2, 'Quam voluptatem min', '100000', '2022-09-01'),
+(23, 5, 2, 'Molestias ea volupta', '30000', '2022-09-01'),
+(28, 1, 3, 'Possimus quo fugiat', '700000', '2022-09-01'),
+(29, 2, 3, 'Odio cupidatat excep', '0', '2022-09-01'),
+(30, 3, 3, 'Dolor vel quidem vol', '50000', '2022-09-01'),
+(31, 5, 3, 'Pariatur Molestiae ', '0', '2022-09-01'),
+(32, 1, 4, 'Aut officiis autem q', '750000', '2022-09-01'),
+(33, 2, 4, 'Mollit proident por', '0', '2022-09-01'),
+(34, 3, 4, 'Delectus est vitae', '0', '2022-09-01'),
+(35, 5, 4, 'Sint quia mollitia e', '0', '2022-09-01'),
+(36, 1, 5, 'Et et et quia omnis ', '700000', '2022-09-01'),
+(37, 2, 5, 'Sint quam eum labori', '0', '2022-09-01'),
+(38, 3, 5, 'Qui ipsum voluptas ', '100000', '2022-09-01'),
+(39, 5, 5, 'Explicabo Voluptate', '0', '2022-09-01'),
+(40, 1, 6, 'Consectetur libero p', '1500000', '2022-09-01'),
+(41, 2, 6, 'Incidunt pariatur ', '500000', '2022-09-01'),
+(42, 3, 6, 'Ullamco nulla volupt', '400000', '2022-09-01'),
+(43, 5, 6, 'Maiores aut aut arch', '0', '2022-09-01');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_dt_surat`
+-- Struktur dari tabel `tb_dt_surat`
 --
 
 CREATE TABLE `tb_dt_surat` (
@@ -148,18 +224,26 @@ CREATE TABLE `tb_dt_surat` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_fakultas`
+-- Struktur dari tabel `tb_fakultas`
 --
 
 CREATE TABLE `tb_fakultas` (
   `id_fakultas` int(11) NOT NULL,
-  `nama_fakultas` varchar(25) NOT NULL
+  `nama_fakultas` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_fakultas`
+--
+
+INSERT INTO `tb_fakultas` (`id_fakultas`, `nama_fakultas`) VALUES
+(1, 'Fakultas Teknologi Informasi'),
+(4, 'Fakultas Ilmu Pendidikan');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_jabatan`
+-- Struktur dari tabel `tb_jabatan`
 --
 
 CREATE TABLE `tb_jabatan` (
@@ -168,7 +252,7 @@ CREATE TABLE `tb_jabatan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tb_jabatan`
+-- Dumping data untuk tabel `tb_jabatan`
 --
 
 INSERT INTO `tb_jabatan` (`id_jabatan`, `jabatan`) VALUES
@@ -187,7 +271,7 @@ INSERT INTO `tb_jabatan` (`id_jabatan`, `jabatan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_jn_gaji`
+-- Struktur dari tabel `tb_jn_gaji`
 --
 
 CREATE TABLE `tb_jn_gaji` (
@@ -195,10 +279,20 @@ CREATE TABLE `tb_jn_gaji` (
   `nama_jn_gaji` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `tb_jn_gaji`
+--
+
+INSERT INTO `tb_jn_gaji` (`id_jn_gaji`, `nama_jn_gaji`) VALUES
+(1, 'Gaji Pokok'),
+(2, 'Gaji Bonus'),
+(3, 'Gaji Tunjangan'),
+(5, 'Gaji Lembur');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_jn_job`
+-- Struktur dari tabel `tb_jn_job`
 --
 
 CREATE TABLE `tb_jn_job` (
@@ -207,7 +301,7 @@ CREATE TABLE `tb_jn_job` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tb_jn_job`
+-- Dumping data untuk tabel `tb_jn_job`
 --
 
 INSERT INTO `tb_jn_job` (`id_jn_job`, `nama_jn_job`) VALUES
@@ -218,7 +312,7 @@ INSERT INTO `tb_jn_job` (`id_jn_job`, `nama_jn_job`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_jn_surat`
+-- Struktur dari tabel `tb_jn_surat`
 --
 
 CREATE TABLE `tb_jn_surat` (
@@ -226,10 +320,18 @@ CREATE TABLE `tb_jn_surat` (
   `nama_surat` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `tb_jn_surat`
+--
+
+INSERT INTO `tb_jn_surat` (`id_jn_surat`, `nama_surat`) VALUES
+(1, 'Jenis surat 1'),
+(2, 'Jenis surat 2');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_job`
+-- Struktur dari tabel `tb_job`
 --
 
 CREATE TABLE `tb_job` (
@@ -240,48 +342,16 @@ CREATE TABLE `tb_job` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tb_job`
+-- Dumping data untuk tabel `tb_job`
 --
 
 INSERT INTO `tb_job` (`id_job`, `no_id`, `id_jn_job`, `list_job`) VALUES
-(9, 2, 1, 'data pendidikan dan pengajaran'),
-(10, 2, 2, 'n komputerisasi program pendidikan dan pengajaran,\r\n'),
-(11, 2, 3, ' peningkatan dan pengembangan\r\npengetahuan sumber Jaya dibidang komputer.\r\n'),
-(12, 2, 1, 'tugas pokok tambahan'),
-(13, 2, 1, 'pengolahan data dan informasi tugas-tugas seluruh Unit Kerja dan Bagian-bagian'),
-(14, 2, 1, 'penelitian dan pengabdian masyarakat.\r\n'),
-(15, 2, 1, 'Menyusun konsep rencana kegiatan danprogram kerja Pusat Komputer'),
-(16, 2, 1, 'koordinasi dan kerjasama antar Pusat Komputer'),
-(17, 2, 1, 'Melaksanakan penilaian prestasi kegiatan dan proses penyelenggaraan kegiatan\r\nserta penyusunan laporan.'),
-(18, 2, 1, 'engusahakan dan melaksanakan administrasi ketatausahaan dan kerumah tanggaan Pusat Komputer.'),
-(19, 2, 1, 'Melaksanakan penyimpanan dan penyajian data serta memberikan infonnasi yang\r\ndibutuhkan.'),
-(20, 6, 1, 'Menyusun rencana kegiatan dan program kerja'),
-(21, 6, 1, 'Menyusun konsep rencana di bidang keuangan'),
-(22, 6, 1, 'Mengkoordinasikan tugas-tugasSub Bagian di bawahnya.\r\n'),
-(23, 6, 1, 'administrasi penyusunan anggaran.'),
-(24, 6, 1, 'administrasi pelaksanaan anggaran.\r\n'),
-(25, 6, 1, 'pengelolaan dan pengawasan keuangan.\r\n'),
-(26, 6, 1, 'mengolah administrasi dan menyajikan data keuangan.'),
-(27, 6, 1, 'Memberikan bimbingan / petunjuk pelaksanaan tugas.\r\n'),
-(28, 6, 1, 'penilaian prestasi'),
-(29, 6, 1, 'proses penyelenggaraan\r\nkegiatan serta penyusunan laporan kegiatan.\r\n'),
-(30, 6, 1, 'rencana kegiatan dan program kerja.\r\n'),
-(31, 6, 1, 'mengolah administrasi dan menyajikan data keuangan.\r\n'),
-(32, 6, 2, 'konsep rencana di bidang keuangan.'),
-(33, 6, 2, 'rencana kegiatan dan program kerja.'),
-(34, 6, 2, 'Mengisi buku kegiatan harian'),
-(35, 6, 2, 'Mengisi buku kegiatan harian'),
-(36, 6, 2, 'Daftar Penilaian Prestasi Pegawai (DP3)\r\n'),
-(37, 6, 2, 'administrasi presensi pegawai'),
-(38, 2, 2, 'Melayani kegiatan komputerisasi'),
-(39, 2, 2, 'menyajikan data / informasi yang diperlukan.'),
-(40, 2, 3, 'menyusun menyajikan data / informasi yang diperlukan.'),
-(41, 6, 3, 'infonnasi yang\r\ndibutuhkan.');
+(53, 2, 1, 'Tugas Pokok September');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_karyawan`
+-- Struktur dari tabel `tb_karyawan`
 --
 
 CREATE TABLE `tb_karyawan` (
@@ -295,21 +365,118 @@ CREATE TABLE `tb_karyawan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tb_karyawan`
+-- Dumping data untuk tabel `tb_karyawan`
 --
 
 INSERT INTO `tb_karyawan` (`no_id`, `nama_karyawan`, `id_jabatan`, `tgl_lahir`, `tempat_lahir`, `pasword`, `email`) VALUES
-(1, 'Ima Tri Wa', 1, '2022-07-13', 'Jombang', '81dc9bdb52d04dc20036dbd8313ed055', 'ima@gmail.com'),
-(2, 'Novia Angg', 2, '2022-07-03', 'Jombang', '81dc9bdb52d04dc20036dbd8313ed055', 'novia@gmail.com'),
-(3, 'Badriyatul', 2, '2022-07-16', 'Jombang', '1234', 'Badriyatul@gmail'),
-(4, 'Nuning Eva', 1, '2022-07-10', 'Jombang', '81dc9bdb52d04dc20036dbd8313ed055', 'Nuning@gmail.com'),
-(5, 'Hanum Fari', 1, '2022-07-26', 'Jombang', '1234', 'HanumFaridah@gmail.com'),
-(6, 'Herni Idaw', 3, '2022-07-19', 'Jombang', '81dc9bdb52d04dc20036dbd8313ed055', 'herni@gmail.com');
+(1, 'Ima Tri Wa', 1, '2022-07-13', 'Jombang', '5f4dcc3b5aa765d61d8327deb882cf99', 'ima@gmail.com'),
+(2, 'Novia Angg', 2, '2022-07-03', 'Jombang', '5f4dcc3b5aa765d61d8327deb882cf99', 'novia@gmail.com'),
+(3, 'Badriyatul', 2, '2022-07-16', 'Jombang', '5f4dcc3b5aa765d61d8327deb882cf99', 'Badriyatul@gmail'),
+(4, 'Nuning Eva', 1, '2022-07-10', 'Jombang', '5f4dcc3b5aa765d61d8327deb882cf99', 'Nuning@gmail.com'),
+(5, 'Hanum Fari', 1, '2022-07-26', 'Jombang', '5f4dcc3b5aa765d61d8327deb882cf99', 'HanumFaridah@gmail.com'),
+(6, 'Herni Idaw', 3, '2022-07-19', 'Jombang', '5f4dcc3b5aa765d61d8327deb882cf99', 'herni@gmail.com');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_mahasiswa`
+-- Struktur dari tabel `tb_kinerja_pegawai`
+--
+
+CREATE TABLE `tb_kinerja_pegawai` (
+  `id` int(11) NOT NULL,
+  `id_karyawan` int(11) DEFAULT NULL,
+  `id_kualitas_kerja` int(11) DEFAULT NULL,
+  `id_detil_kualitas` int(11) DEFAULT NULL,
+  `point_kinerja` double DEFAULT 0,
+  `grade` varchar(2) DEFAULT NULL,
+  `tanggal` date DEFAULT NULL,
+  `hasil` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_kinerja_pegawai`
+--
+
+INSERT INTO `tb_kinerja_pegawai` (`id`, `id_karyawan`, `id_kualitas_kerja`, `id_detil_kualitas`, `point_kinerja`, `grade`, `tanggal`, `hasil`) VALUES
+(81, 1, 1, 1, 16, 'B', '2022-09-01', 88.3),
+(82, 1, 2, 2, 12.3, 'B', '2022-09-01', 88.3),
+(83, 1, 3, 3, 5, 'B', '2022-09-01', 88.3),
+(84, 1, 4, 6, 10, 'B', '2022-09-01', 88.3),
+(85, 1, 4, 5, 6, 'B', '2022-09-01', 88.3),
+(86, 1, 4, 4, 1, 'B', '2022-09-01', 88.3),
+(87, 1, 5, 7, 10, 'B', '2022-09-01', 88.3),
+(88, 1, 5, 8, 3, 'B', '2022-09-01', 88.3),
+(89, 1, 6, 9, 10, 'B', '2022-09-01', 88.3),
+(90, 1, 6, 10, 15, 'B', '2022-09-01', 88.3),
+(101, 2, 1, 1, 18, 'B', '2022-09-01', 83),
+(102, 2, 2, 2, 0, 'B', '2022-09-01', 83),
+(103, 2, 3, 3, 5, 'B', '2022-09-01', 83),
+(104, 2, 4, 6, 5, 'B', '2022-09-01', 83),
+(105, 2, 4, 5, 5, 'B', '2022-09-01', 83),
+(106, 2, 4, 4, 10, 'B', '2022-09-01', 83),
+(107, 2, 5, 7, 10, 'B', '2022-09-01', 83),
+(108, 2, 5, 8, 5, 'B', '2022-09-01', 83),
+(109, 2, 6, 9, 20, 'B', '2022-09-01', 83),
+(110, 2, 6, 10, 5, 'B', '2022-09-01', 83),
+(111, 3, 1, 1, 20, 'A', '2022-09-01', 96.45),
+(112, 3, 2, 2, 12.45, 'A', '2022-09-01', 96.45),
+(113, 3, 3, 3, 4, 'A', '2022-09-01', 96.45),
+(114, 3, 4, 6, 10, 'A', '2022-09-01', 96.45),
+(115, 3, 4, 5, 5, 'A', '2022-09-01', 96.45),
+(116, 3, 4, 4, 5, 'A', '2022-09-01', 96.45),
+(117, 3, 5, 7, 10, 'A', '2022-09-01', 96.45),
+(118, 3, 5, 8, 5, 'A', '2022-09-01', 96.45),
+(119, 3, 6, 9, 20, 'A', '2022-09-01', 96.45),
+(120, 3, 6, 10, 5, 'A', '2022-09-01', 96.45),
+(121, 4, 1, 1, 18, 'E', '2022-09-01', 23),
+(122, 4, 2, 2, 0, 'E', '2022-09-01', 23),
+(123, 4, 3, 3, 5, 'E', '2022-09-01', 23),
+(124, 4, 4, 6, 0, 'E', '2022-09-01', 23),
+(125, 4, 4, 5, 0, 'E', '2022-09-01', 23),
+(126, 4, 4, 4, 0, 'E', '2022-09-01', 23),
+(127, 4, 5, 7, 0, 'E', '2022-09-01', 23),
+(128, 4, 5, 8, 0, 'E', '2022-09-01', 23),
+(129, 4, 6, 9, 0, 'E', '2022-09-01', 23),
+(130, 4, 6, 10, 0, 'E', '2022-09-01', 23),
+(131, 5, 1, 1, 18, 'E', '2022-09-01', 18),
+(132, 5, 2, 2, 0, 'E', '2022-09-01', 18),
+(133, 5, 3, 3, 0, 'E', '2022-09-01', 18),
+(134, 5, 4, 6, 0, 'E', '2022-09-01', 18),
+(135, 5, 4, 5, 0, 'E', '2022-09-01', 18),
+(136, 5, 4, 4, 0, 'E', '2022-09-01', 18),
+(137, 5, 5, 7, 0, 'E', '2022-09-01', 18),
+(138, 5, 5, 8, 0, 'E', '2022-09-01', 18),
+(139, 5, 6, 9, 0, 'E', '2022-09-01', 18),
+(140, 5, 6, 10, 0, 'E', '2022-09-01', 18);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_kualitas_kerja`
+--
+
+CREATE TABLE `tb_kualitas_kerja` (
+  `id` int(25) NOT NULL,
+  `nama` varchar(25) NOT NULL,
+  `point` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_kualitas_kerja`
+--
+
+INSERT INTO `tb_kualitas_kerja` (`id`, `nama`, `point`) VALUES
+(1, 'prestasi kerja', 20),
+(2, 'kedisiplinan', 15),
+(3, 'peringatan', 5),
+(4, 'kepribadian', 20),
+(5, 'keahlian', 15),
+(6, 'job', 25);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_mahasiswa`
 --
 
 CREATE TABLE `tb_mahasiswa` (
@@ -323,7 +490,7 @@ CREATE TABLE `tb_mahasiswa` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_prodi`
+-- Struktur dari tabel `tb_prodi`
 --
 
 CREATE TABLE `tb_prodi` (
@@ -332,10 +499,39 @@ CREATE TABLE `tb_prodi` (
   `nama_prodi` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `tb_prodi`
+--
+
+INSERT INTO `tb_prodi` (`id_prodi`, `id_fakultas`, `nama_prodi`) VALUES
+(1, 1, 'TI'),
+(2, 1, 'SI'),
+(4, 4, 'Bahasa Inggris');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_thn_masuk`
+-- Struktur dari tabel `tb_role`
+--
+
+CREATE TABLE `tb_role` (
+  `id` int(11) NOT NULL,
+  `role` varchar(225) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_role`
+--
+
+INSERT INTO `tb_role` (`id`, `role`) VALUES
+(1, 'admin'),
+(2, 'staff'),
+(3, 'keuangan');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_thn_masuk`
 --
 
 CREATE TABLE `tb_thn_masuk` (
@@ -344,144 +540,265 @@ CREATE TABLE `tb_thn_masuk` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data untuk tabel `tb_thn_masuk`
+--
+
+INSERT INTO `tb_thn_masuk` (`id_thn_masuk`, `nama_tahun`) VALUES
+(1, '2022');
+
+--
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `tb_absensi`
+-- Indeks untuk tabel `tb_absensi`
 --
 ALTER TABLE `tb_absensi`
   ADD PRIMARY KEY (`id_absensi`);
 
 --
--- Indexes for table `tb_detail_job`
+-- Indeks untuk tabel `tb_admin`
+--
+ALTER TABLE `tb_admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `tb_detail_job`
 --
 ALTER TABLE `tb_detail_job`
   ADD PRIMARY KEY (`id_detail`);
 
 --
--- Indexes for table `tb_dosen`
+-- Indeks untuk tabel `tb_detail_kualitas`
+--
+ALTER TABLE `tb_detail_kualitas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `tb_dosen`
 --
 ALTER TABLE `tb_dosen`
   ADD PRIMARY KEY (`no_id`);
 
 --
--- Indexes for table `tb_dt_absensi`
+-- Indeks untuk tabel `tb_dt_absensi`
 --
 ALTER TABLE `tb_dt_absensi`
   ADD PRIMARY KEY (`id_dt_absen`);
 
 --
--- Indexes for table `tb_dt_gaji`
+-- Indeks untuk tabel `tb_dt_gaji`
 --
 ALTER TABLE `tb_dt_gaji`
   ADD PRIMARY KEY (`id_dt_gaji`);
 
 --
--- Indexes for table `tb_dt_surat`
+-- Indeks untuk tabel `tb_dt_surat`
 --
 ALTER TABLE `tb_dt_surat`
   ADD PRIMARY KEY (`id_dt_surat`);
 
 --
--- Indexes for table `tb_fakultas`
+-- Indeks untuk tabel `tb_fakultas`
 --
 ALTER TABLE `tb_fakultas`
   ADD PRIMARY KEY (`id_fakultas`);
 
 --
--- Indexes for table `tb_jabatan`
+-- Indeks untuk tabel `tb_jabatan`
 --
 ALTER TABLE `tb_jabatan`
   ADD PRIMARY KEY (`id_jabatan`);
 
 --
--- Indexes for table `tb_jn_gaji`
+-- Indeks untuk tabel `tb_jn_gaji`
 --
 ALTER TABLE `tb_jn_gaji`
   ADD PRIMARY KEY (`id_jn_gaji`);
 
 --
--- Indexes for table `tb_jn_job`
+-- Indeks untuk tabel `tb_jn_job`
 --
 ALTER TABLE `tb_jn_job`
   ADD PRIMARY KEY (`id_jn_job`);
 
 --
--- Indexes for table `tb_jn_surat`
+-- Indeks untuk tabel `tb_jn_surat`
 --
 ALTER TABLE `tb_jn_surat`
   ADD PRIMARY KEY (`id_jn_surat`);
 
 --
--- Indexes for table `tb_job`
+-- Indeks untuk tabel `tb_job`
 --
 ALTER TABLE `tb_job`
   ADD PRIMARY KEY (`id_job`);
 
 --
--- Indexes for table `tb_karyawan`
+-- Indeks untuk tabel `tb_karyawan`
 --
 ALTER TABLE `tb_karyawan`
   ADD PRIMARY KEY (`no_id`);
 
 --
--- Indexes for table `tb_mahasiswa`
+-- Indeks untuk tabel `tb_kinerja_pegawai`
+--
+ALTER TABLE `tb_kinerja_pegawai`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `tb_kualitas_kerja`
+--
+ALTER TABLE `tb_kualitas_kerja`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `tb_mahasiswa`
 --
 ALTER TABLE `tb_mahasiswa`
   ADD PRIMARY KEY (`nim`);
 
 --
--- Indexes for table `tb_prodi`
+-- Indeks untuk tabel `tb_prodi`
 --
 ALTER TABLE `tb_prodi`
   ADD PRIMARY KEY (`id_prodi`);
 
 --
--- Indexes for table `tb_thn_masuk`
+-- Indeks untuk tabel `tb_role`
+--
+ALTER TABLE `tb_role`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `tb_thn_masuk`
 --
 ALTER TABLE `tb_thn_masuk`
   ADD PRIMARY KEY (`id_thn_masuk`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `tb_detail_job`
+-- AUTO_INCREMENT untuk tabel `tb_absensi`
+--
+ALTER TABLE `tb_absensi`
+  MODIFY `id_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_admin`
+--
+ALTER TABLE `tb_admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_detail_job`
 --
 ALTER TABLE `tb_detail_job`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
--- AUTO_INCREMENT for table `tb_dt_absensi`
+-- AUTO_INCREMENT untuk tabel `tb_detail_kualitas`
+--
+ALTER TABLE `tb_detail_kualitas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_dosen`
+--
+ALTER TABLE `tb_dosen`
+  MODIFY `no_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_dt_absensi`
 --
 ALTER TABLE `tb_dt_absensi`
-  MODIFY `id_dt_absen` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_dt_absen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `tb_jabatan`
+-- AUTO_INCREMENT untuk tabel `tb_dt_gaji`
+--
+ALTER TABLE `tb_dt_gaji`
+  MODIFY `id_dt_gaji` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_dt_surat`
+--
+ALTER TABLE `tb_dt_surat`
+  MODIFY `id_dt_surat` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_fakultas`
+--
+ALTER TABLE `tb_fakultas`
+  MODIFY `id_fakultas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_jabatan`
 --
 ALTER TABLE `tb_jabatan`
   MODIFY `id_jabatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `tb_jn_job`
+-- AUTO_INCREMENT untuk tabel `tb_jn_gaji`
+--
+ALTER TABLE `tb_jn_gaji`
+  MODIFY `id_jn_gaji` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_jn_job`
 --
 ALTER TABLE `tb_jn_job`
   MODIFY `id_jn_job` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `tb_job`
+-- AUTO_INCREMENT untuk tabel `tb_jn_surat`
 --
-ALTER TABLE `tb_job`
-  MODIFY `id_job` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+ALTER TABLE `tb_jn_surat`
+  MODIFY `id_jn_surat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `tb_karyawan`
+-- AUTO_INCREMENT untuk tabel `tb_job`
+--
+ALTER TABLE `tb_job`
+  MODIFY `id_job` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_karyawan`
 --
 ALTER TABLE `tb_karyawan`
   MODIFY `no_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_kinerja_pegawai`
+--
+ALTER TABLE `tb_kinerja_pegawai`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_kualitas_kerja`
+--
+ALTER TABLE `tb_kualitas_kerja`
+  MODIFY `id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_prodi`
+--
+ALTER TABLE `tb_prodi`
+  MODIFY `id_prodi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_role`
+--
+ALTER TABLE `tb_role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_thn_masuk`
+--
+ALTER TABLE `tb_thn_masuk`
+  MODIFY `id_thn_masuk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

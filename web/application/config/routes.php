@@ -114,6 +114,18 @@ $route['admin/gaji/filter'] = 'admin/GajiController/filter';
 $route['admin/gaji/update'] = 'admin/GajiController/update';
 $route['admin/gaji/destroy'] = 'admin/GajiController/destroy';
 
+// JENIS GAJI//
+$route['admin/jenis-penggajian'] = 'admin/GajiJenisController';
+$route['admin/jenis-penggajian/json'] = 'admin/GajiJenisController/json';
+$route['admin/jenis-penggajian/store'] = 'admin/GajiJenisController/store';
+$route['admin/jenis-penggajian/filter'] = 'admin/GajiJenisController/filter';
+$route['admin/jenis-penggajian/update'] = 'admin/GajiJenisController/update';
+$route['admin/jenis-penggajian/destroy'] = 'admin/GajiJenisController/destroy';
+
+// LAPORAN PENGGAJIAN
+$route['admin/laporan-penggajian'] = 'admin/GajiLaporanController';
+$route['admin/laporan-penggajian/cetak'] = 'admin/GajiLaporanController/cetak';
+
 // JABATAN
 $route['admin/jabatan'] = 'admin/JabatanController';
 $route['admin/jabatan/json'] = 'admin/JabatanController/json';
@@ -154,6 +166,7 @@ $route['karyawan/dashboard'] = 'karyawan/DashboardController';
 // GAJI
 $route['karyawan/gaji'] = 'karyawan/GajiController';
 $route['karyawan/gaji/json'] = 'karyawan/GajiController/json';
+$route['karyawan/gaji/cetak'] = 'karyawan/GajiController/cetak';
 
 
 

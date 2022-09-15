@@ -51,7 +51,7 @@
                         </div>
                       </form>
 
-                      <form id="form-simpan" action="<?= base_url('admin/penilaian-pegawai/store') ?>" method="post">
+                      <form id="form-simpan" method="post">
                         <div class="col-md-12" style="margin-top:30px">
                             <div class="table-responsive">
                                 <table class="table table-bordered">
@@ -283,7 +283,6 @@
           console.log(xhr, status, error)
         }
       });
-      
     }
   </script>
   </body>

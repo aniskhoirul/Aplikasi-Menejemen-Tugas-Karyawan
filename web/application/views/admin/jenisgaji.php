@@ -35,9 +35,7 @@
                                   <thead>
                                       <tr>
                                           <th>No</th>
-                                          <th>Id Jenis Gaji</th>
                                           <th>Nama Jenis Gaji</th>
-                                          <th>Nominal Gaji</th>
                                           <th>Aksi</th>
                                       </tr>
                                   </thead>
@@ -185,7 +183,7 @@
       var tabel = $("#tbl_jgaji").DataTable({
           "responsive": true,
           "autoWidth": false,
-          "ajax": "<?php echo base_url(); ?>json_jgaji",
+          "ajax": "<?php echo base_url(); ?>admin/jenis-penggajian/json",
           "fnDrawCallback": function(oSettings) {
               swal.close();
           }
@@ -218,7 +216,7 @@
           }).then((Hapuss) => {
               if (Hapuss) {
                   $.ajax({
-                      url: "<?php echo base_url(); ?>h_jgaji",
+                      url: "<?php echo base_url(); ?>admin/jenis-penggajian/destroy",
                       method: "POST",
                       data: {
                           id: id
@@ -240,7 +238,7 @@
                               if (y == 90) {
                                   swal({
                                       title: 'Hapus Gagal',
-                                      text: 'Data Level Masih digunakan, Sehingga Tidak Dapat di Hapus Hanya Dapat di Ubah',
+                                      text: 'Data Jenis Gaji Masih digunakan, Sehingga Tidak Dapat di Hapus Hanya Dapat di Ubah',
                                       icon: 'error'
                                   });
                                   // refresh();
@@ -285,7 +283,7 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>tbh_jgaji",
+              url: "<?php echo base_url(); ?>admin/jenis-penggajian/store",
               method: "POST",
               data: {
                   a: a
@@ -300,6 +298,7 @@
                           text: 'Data Berhasil di Tambahkan',
                           icon: 'success'
                       }).then((Refreshh) => {
+                          $('#md_tbh').modal('hide');
                           refresh();
                           tabel.ajax.reload(null, false);
                       });
@@ -330,7 +329,7 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>f_jgaji",
+              url: "<?php echo base_url(); ?>admin/jenis-penggajian/filter",
               method: "POST",
               data: {
                   id: id
@@ -384,7 +383,7 @@
               closeOnEsc: false
           });
           $.ajax({
-              url: "<?php echo base_url(); ?>ub_jgaji",
+              url: "<?php echo base_url(); ?>admin/jenis-penggajian/update",
               method: "POST",
               data: {
                   id: id,

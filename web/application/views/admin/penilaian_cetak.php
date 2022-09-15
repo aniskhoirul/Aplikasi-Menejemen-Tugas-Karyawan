@@ -1,5 +1,5 @@
 <?php
-$pdf = new Pdf('P', 'mm', 'F4', true, 'UTF-8', false);
+$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 $pdf->setPrintHeader(false);
 $pdf->setPrintFooter(false);
 $pdf->SetTitle('PENILAIAN KINERJA KARYAWAN');
@@ -114,7 +114,7 @@ $html='
 $html.= '
 </table>';
 
-$pdf->AddPage('P', 'F4');
+$pdf->AddPage('P', 'A4');
 $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->Output('kinerja_pegawai.pdf', 'I');
 ?>

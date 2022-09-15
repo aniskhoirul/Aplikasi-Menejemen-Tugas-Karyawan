@@ -41,6 +41,7 @@ class PenilaianPegawaiController extends CI_Controller
 		$data['menu']	   		= 'kinerja';
 		$data['id_karyawan']	= $id_karyawan;
 		$data['bulan']	   		= $bulan;
+		// echo json_encode($kualitas);
 		$this->load->view('template/header', $data);
 		$this->load->view('admin/penilaian', $data);
 	}
@@ -119,7 +120,7 @@ class PenilaianPegawaiController extends CI_Controller
 			@$row->hasil 			  = $ambil->hasil;
 
 			## perhitungan kehadiran
-			$hadir = $this->M_Kinerja->get_one_kehadiran(['a.id_absen' => $id_karyawan]);
+			$hadir = $this->M_Kinerja->get_one_kehadiran(['id_absen' => $id_karyawan]);
 			@$row->point_kehadiran = $hadir->persentase;
 
 		}

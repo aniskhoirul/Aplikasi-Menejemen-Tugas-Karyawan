@@ -12,29 +12,74 @@ class GajiController extends CI_Controller
 
     public function index()
     {
+        $data['dtkaryawan'] = $karyawan = $this->M_master->mdata_kr();
+
+		$bulan = $this->input->get('bulan') != '' ? $this->input->get('bulan') : date("Y-m");
+		$id_karyawan = $this->input->get('id_karyawan') != '' ? $this->input->get('id_karyawan') : $karyawan[0]->no_id;
+
+		$jenis_gaji = $this->db->select('*')->from('tb_jn_gaji')->get()->result();
+
+		foreach ($jenis_gaji as $jenis) {
+			$wheredata = [
+				'id_karyawan' => $this->session->userdata('no_id'),
+				'id_jn' => $jenis->id_jn_gaji,
+				'DATE_FORMAT(tanggal, "%Y-%m") =' => $bulan,
+			];
+			$data_gaji = $this->db->select('*')
+				->from('tb_dt_gaji')
+				->join('tb_jn_gaji', 'tb_dt_gaji.id_jn=tb_jn_gaji.id_jn_gaji')
+				->where($wheredata)
+				->get()->row();
+
+			@$jenis->id_dt_gaji = $data_gaji->id_dt_gaji;
+			@$jenis->nama_jn_gaji;
+			@$jenis->nominal_gaji = $data_gaji->nominal_gaji;
+			@$jenis->nama_gaji = $data_gaji->nama_gaji;
+		}
+
+
+		$data['jenis_gaji'] = $jenis_gaji;
+		$data['bulan']	   		= $bulan;
+		$data['id_karyawan']	= $id_karyawan;
+
         $this->load->view('template/header');
-        $this->load->view('karyawan/gaji');
+        $this->load->view('karyawan/gaji', $data);
     }
 
-    public function json()
+    public function cetak()
     {
-        $this->db->select('*');
-        $this->db->from('tb_jn_gaji');
-        $this->db->join('tb_dt_gaji', 'tb_jn_gaji.id_jn_gaji=tb_dt_gaji.id_dt_gaji', 'left');
-        $gaji = $this->db->get();
-        
-        $a = 1;
-		$dtJSON = '{"data": [x]}';
-		$dtisi = "";
-		foreach ($gaji->result() as $k) {
-			$nama_jn_gaji = $k->nama_jn_gaji;
-			$nama_gaji = $k->nama_gaji;
-			$nominal_gaji = $k->nominal_gaji;
-			
-			$dtisi .= '["' . $a++ . '","' . $nama_jn_gaji . '","' . $nama_gaji . '","Rp. ' . number_format($nominal_gaji) . '"],';
+        $this->load->library('Pdf');
+
+        $data['dtkaryawan'] = $karyawan = $this->M_master->mdata_kr();
+
+		$bulan = $this->input->get('bulan') != '' ? $this->input->get('bulan') : date("Y-m");
+		$id_karyawan = $this->input->get('id_karyawan') != '' ? $this->input->get('id_karyawan') : $karyawan[0]->no_id;
+
+		$jenis_gaji = $this->db->select('*')->from('tb_jn_gaji')->get()->result();
+
+		foreach ($jenis_gaji as $jenis) {
+			$wheredata = [
+				'id_karyawan' => $this->session->userdata('no_id'),
+				'id_jn' => $jenis->id_jn_gaji,
+				'DATE_FORMAT(tanggal, "%Y-%m") =' => $bulan,
+			];
+			$data_gaji = $this->db->select('*')
+				->from('tb_dt_gaji')
+				->join('tb_jn_gaji', 'tb_dt_gaji.id_jn=tb_jn_gaji.id_jn_gaji')
+				->where($wheredata)
+				->get()->row();
+
+			@$jenis->id_dt_gaji = $data_gaji->id_dt_gaji;
+			@$jenis->nama_jn_gaji;
+			@$jenis->nominal_gaji = $data_gaji->nominal_gaji;
+			@$jenis->nama_gaji = $data_gaji->nama_gaji;
 		}
-		$dtisifix = rtrim($dtisi, ",");
-		$data = str_replace("x", $dtisifix, $dtJSON);
-		echo $data;
+
+
+		$data['jenis_gaji'] = $jenis_gaji;
+		$data['bulan']	   		= $bulan;
+		$data['id_karyawan']	= $id_karyawan;
+
+        $this->load->view('karyawan/gaji_cetak', $data);
     }
 }

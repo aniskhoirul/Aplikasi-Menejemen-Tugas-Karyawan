@@ -5,12 +5,12 @@
           <div class="container-fluid">
               <div class="row mb-2">
                   <div class="col-sm-6">
-                      <h1 class="m-0 text-dark">Gaji</h1>
+                      <h1 class="m-0 text-dark">Penggajian Karyawan</h1>
                   </div><!-- /.col -->
                   <div class="col-sm-6">
                       <ol class="breadcrumb float-sm-right">
                           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                          <li class="breadcrumb-item active">Gaji</li>
+                          <li class="breadcrumb-item active">Penggajian Karyawan</li>
                       </ol>
                   </div><!-- /.col -->
               </div><!-- /.row -->
@@ -26,120 +26,92 @@
                       <div class="card">
                           <div class="card-header">
                               <h3 class="card-title">
-                                  <button type='button' class='btn btn-success waves-effect waves-light' data-toggle='modal' data-target='#md_tbh'>Tambah</button>
+                                  Input Penggajian per Karyawan
                               </h3>
                           </div>
                           <!-- /.card-header -->
                           <div class="card-body">
-                              <table id="tbl_gaji" class="table table-bordered table-striped">
-                                  <thead>
-                                      <tr>
-                                          <th>No</th>
-                                          <th>Jenis Gaji</th>
-                                          <th>Nama Jenis Gaji</th>
-                                          <th>Nominal Gaji</th>
-                                          <th>Aksi</th>
-                                      </tr>
-                                  </thead>
-
-                              </table>
+                              <form id="myForm" action="" class="form-horizontal" method="get">
+                                  <div class="form-group row">
+                                      <label for="bulan" class="col-sm-2 col-form-label">Pilih Bulan Gajian</label>
+                                      <div class="col-sm-10">
+                                          <input id="inp-search" name="bulan" placeholder="Pencarian bulan tahun" class="form-control" style="padding: 5px; box-sizing: border-box;" type="text" autocomplete="off" value="<?= $bulan ?>">
+                                      </div>
+                                  </div>
+                                  <div class="form-group row">
+                                      <label for="id_karyawan" class="col-sm-2 col-form-label">Pilih Karyawan</label>
+                                      <div class="col-sm-10">
+                                          <select id="id_karyawan" name="id_karyawan" class="form-control select2">
+                                              <?php foreach ($dtkaryawan as $key) {
+                                                    $selected = $key->no_id == @$id_karyawan ? 'selected' : ''; ?>
+                                                  <option value="<?= $key->no_id ?>" <?= $selected ?>><?= $key->nama_karyawan ?></option>
+                                              <?php } ?>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div style="text-align:right">
+                                      <button id="save" type="submit" class="btn btn-success">Cari </button>
+                                  </div>
+                              </form>
                           </div>
                           <!-- /.card-body -->
                       </div>
-                      <!-- /.card -->
+                      <div class="card">
+                          <div class="card-body">
+                              <form id="form-simpan" method="post">
+                                  <table id="tbl_gaji" class="table table-bordered table-striped">
+                                      <thead>
+                                          <tr>
+                                              <th>Jenis Gaji</th>
+                                              <th width="50%">Keterangan Gaji</th>
+                                              <th>Nominal Gaji</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <?php foreach ($jenis_gaji as $jenis) : ?>
+                                              <?php
+                                                $total[] = $jenis->nominal_gaji
+                                              ?>
+                                              <tr>
+                                                  <td><?= $jenis->nama_jn_gaji ?></td>
+                                                  <td>
+                                                      <input type="hidden" name="is_edit" value="<?= $jenis->id_dt_gaji == "" ? 'tambah' : 'edit' ?>">
+                                                      <input type="hidden" name="tanggal" value="<?= $bulan . '-01' ?>">
+                                                      <input type="hidden" name="id_karyawan" value="<?= $id_karyawan ?>">
+                                                      <input type="hidden" name="id_jn[]" value="<?= $jenis->id_jn_gaji ?>">
+                                                      <input type="hidden" name="id_dt_gaji[]" value="<?= $jenis->id_dt_gaji ?>">
+                                                      <textarea name="nama_gaji[]" id="" rows="1" class="form-control" placeholder="Masukkan Keterangan Gaji (Optional)"><?= $jenis->nama_gaji ?></textarea>
+                                                  </td>
+                                                  <td>
+                                                      <div class="input-group mb-2">
+                                                          <div class="input-group-prepend">
+                                                              <div class="input-group-text">Rp.</div>
+                                                          </div>
+                                                          <input type="number" class="form-control" name="nominal_gaji[]" id="inlineFormInputGroup" placeholder="Nominal (Contoh : 600000)" aria-describedby="nominal" value="<?= $jenis->nominal_gaji ?>" required>
+                                                      </div>
+                                                  </td>
+                                              </tr>
+                                          <?php endforeach ?>
+                                          <tr style="background-color: #41baf196">
+                                              <td colspan="2"><b>Total</b></td>
+                                              <td><b>Rp. <?= number_format(array_sum($total)) ?></b></td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                  <div style="text-align:right">
+                                      <button id="save" type="submit" class="btn btn-success">Kirim Gaji</button>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
                   </div>
-                  <!-- /.col -->
               </div>
               <!-- /.row -->
           </div>
           <!-- /.container-fluid -->
       </section>
-      <!-- /.content -->
-
-      <div class="modal fade" id="md_edit">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h4 class="modal-title">Edit Jenis Gaji</h4>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      <form>
-                          <div class="form-group">
-                              <label>Jenis Gaji</label>
-                              <input type="hidden" name="ide" id="ide">
-                              <select name="id_jn_gajie" id="id_jn_gajie" class="form-control">
-                                  <option disabled selected>-- Pilih Jenis Gaji --</option>
-                                  <?php foreach ($jenis_gaji as $value) : ?>
-                                      <option value="<?= $value->id_jn_gaji ?>"><?= $value->nama_jn_gaji ?></option>
-                                  <?php endforeach ?>
-                              </select>
-                          </div>
-                          <div class="form-group">
-                              <label>Nama Gaji</label>
-                              <input type="text" class="form-control" required placeholder="Masukkan Nama Departemen" name="namae" id="namae">
-                          </div>
-                          <div class="form-group">
-                              <label>nominal Gaji</label>
-                              <input type="number" class="form-control" required placeholder="Masukkan Nama Departemen" name="nominale" id="nominale">
-                          </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
-                      <button type="button" class="btn btn-primary waves-effect waves-light" onclick="update()">Update</button>
-                  </div>
-                  </form> <!-- TUTUP FORM -->
-              </div>
-          </div>
-          <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
   </div>
-  <!-- /.modal -->
-  <div class="modal fade" id="md_tbh">
-      <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h4 class="modal-title">Tambah Gaji</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                  <form>
-                      <div class="form-group">
-                          <label>Jenis Gaji</label>
-                          <select name="id_jn_gaji" id="id_jn_gaji" class="form-control">
-                              <option disabled selected>-- Pilih Jenis Gaji --</option>
-                              <?php foreach ($jenis_gaji as $value) : ?>
-                                  <option value="<?= $value->id_jn_gaji ?>"><?= $value->nama_jn_gaji ?></option>
-                              <?php endforeach ?>
-                          </select>
-                      </div>
-                      <div class="form-group">
-                          <label>Nama gaji</label>
-                          <input type="text" class="form-control" required placeholder="Masukkan Nama Gaji" name="nama" id="nama">
-                      </div>
-                      <div class="form-group">
-                          <label>Nominal gaji</label>
-                          <input type="number" class="form-control" required placeholder="Masukkan Nominal Gaji" name="nominal" id="nominal">
-                      </div>
-
-              </div>
-              <div class="modal-footer">
-                  <button type="reset" class="btn btn-secondary waves-effect waves-light">Reset</button>
-                  <button type="button" class="btn btn-primary waves-effect waves-light" onclick="tambah()">Save</button>
-              </div>
-              </form> <!-- TUTUP FORM -->
-          </div>
-      </div>
-      <!-- /.modal-content -->
   </div>
-  <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
 
 
   </div>
@@ -189,6 +161,8 @@
   <script src="<?php echo base_url(); ?>plugins/summernote/summernote-bs4.min.js"></script>
   <!-- overlayScrollbars -->
   <script src="<?php echo base_url(); ?>plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- select2 -->
+  <script src="<?= base_url() ?>plugins/select2/js/select2.full.min.js"></script>
   <!-- AdminLTE App -->
   <script src="<?php echo base_url(); ?>dist/js/adminlte.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -201,273 +175,63 @@
   <script src="<?php echo base_url(); ?>plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
   <script src="<?php echo base_url(); ?>plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
   <script src="<?php echo base_url(); ?>plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
 
 
   <script>
-      swal("Sedang Mengakses Data.....", {
-          button: false,
-          closeOnClickOutside: false,
-          closeOnEsc: false
-      });
-      var tabel = $("#tbl_gaji").DataTable({
-          "responsive": true,
-          "autoWidth": false,
-          "ajax": "<?php echo base_url(); ?>admin/gaji/json",
-          "fnDrawCallback": function(oSettings) {
-              swal.close();
-          }
+      $('#inp-search').datepicker({
+          autoclose: true,
+          format: "yyyy-mm",
+          viewMode: "months",
+          minViewMode: "months",
+
       });
 
-      function hapus(el) {
-          var id = $(el).data("id");
-          // console.log(id);
-          swal("Memproses Data.....", {
-              button: false,
-              closeOnClickOutside: false,
-              closeOnEsc: false
-          });
-          swal({
-              title: 'Hapus Data',
-              text: "Anda Yakin Ingin Menghapus Data Ini ?",
-              icon: 'warning',
-              buttons: {
-                  confirm: {
-                      text: 'Yakin',
-                      className: 'btn btn-success'
-                  },
-                  cancel: {
-                      visible: true,
-                      text: 'Tidak',
-                      className: 'btn btn-danger'
-                  }
-              }
+      $(function() {
+          $('.select2').select2()
+      });
 
-          }).then((Hapuss) => {
-              if (Hapuss) {
-                  $.ajax({
-                      url: "<?php echo base_url(); ?>admin/gaji/destroy",
-                      method: "POST",
-                      data: {
-                          id: id
-                      },
-                      cache: "false",
-                      success: function(x) {
-                          swal.close();
-                          var y = atob(x);
-                          if (y == 1) {
-                              swal({
-                                  title: 'Hapus Berhasil',
-                                  text: 'Data Berhasil di Hapus',
-                                  icon: 'success'
-                              }).then((Refreshh) => {
-                                  // refresh();
-                                  tabel.ajax.reload(null, false);
-                              });
-                          } else {
-                              if (y == 90) {
-                                  swal({
-                                      title: 'Hapus Gagal',
-                                      text: 'Data Level Masih digunakan, Sehingga Tidak Dapat di Hapus Hanya Dapat di Ubah',
-                                      icon: 'error'
-                                  });
-                                  // refresh();
-                              } else {
-                                  swal({
-                                      title: 'Hapus Gagal',
-                                      text: 'Periksa Kembali Data Yang Anda Pilih !',
-                                      icon: 'error'
-                                  });
-                              }
-                          }
-                      },
-                      error: function() {
-                          swal.close();
-                          swal({
-                              title: 'Hapus Gagal',
-                              text: 'Jaringan Anda Bermasalah !',
-                              icon: 'error'
-                          });
-                      }
-                  })
-              } else {
-                  swal.close();
-              }
-          });
-      }
+      const thisform = $('#form-simpan');
 
-      function tambah() {
+      thisform.on('submit', async function(event) {
+          event.preventDefault();
+          var self = $(this)
+          let data_post = new FormData(self[0]);
+          simpan(self, data_post);
+          return false;
 
-          var id_jn_gaji = $("#id_jn_gaji").val();
-          var nama_gaji = $("#nama").val();
-          var nominal_gaji = $("#nominal").val();
-          if (id_jn_gaji == "" || nama_gaji == "" || nominal_gaji == "") {
-              swal({
-                  title: 'Tambah Gagal',
-                  text: 'Nama Belum Anda Isi !',
-                  icon: 'error'
-              });
-              return;
-          }
-          swal("Memproses Data.....", {
-              button: false,
-              closeOnClickOutside: false,
-              closeOnEsc: false
-          });
+      });
+
+      function simpan(self, data_post) {
           $.ajax({
-              url: "<?php echo base_url(); ?>admin/gaji/store",
-              method: "POST",
-              data: {
-                  id_jn_gaji: id_jn_gaji,
-                  nama: nama_gaji,
-                  nominal: nominal_gaji
-              },
-              cache: "false",
-              success: function(x) {
-                  swal.close();
-                  var y = atob(x);
-                  if (y == 1) {
+              type: "POST",
+              url: "<?= base_url('admin/gaji/store') ?>",
+              data: data_post,
+              dataType: "json",
+              processData: false,
+              contentType: false,
+              cache: false,
+              success: function(response) {
+                  if (response.status) {
                       swal({
-                          title: 'Tambah Berhasil',
-                          text: 'Data Berhasil di Tambahkan',
+                          title: 'Informasi',
+                          text: response.msg,
                           icon: 'success'
                       }).then((Refreshh) => {
-                          $('#md_tbh').modal('hide');
-                          refresh();
-                          tabel.ajax.reload(null, false);
+                          location.reload();
                       });
                   } else {
                       swal({
-                          title: 'Tambah Gagal',
-                          text: 'Ada Beberapa Masalah dengan Data yang Anda Isikan !',
+                          title: 'Ops Maaf',
+                          text: response.msg,
                           icon: 'error'
                       });
                   }
               },
-              error: function() {
-                  swal.close();
-                  swal({
-                      title: 'Tambah Gagal',
-                      text: 'Jaringan Anda Bermasalah !',
-                      icon: 'error'
-                  });
+              error: function(xhr, status, error) {
+                  console.log(xhr, status, error)
               }
-          })
-      }
-
-      function filter(el) {
-          var id = $(el).data("id");
-          swal("Memproses Data.....", {
-              button: false,
-              closeOnClickOutside: false,
-              closeOnEsc: false
           });
-          $.ajax({
-              url: "<?php echo base_url(); ?>admin/gaji/filter",
-              method: "POST",
-              data: {
-                  id: id
-              },
-              cache: "false",
-              success: function(x) {
-                  swal.close();
-                  var y = atob(x);
-                  var xx = y.split("|");
-                  if (xx[0] == 1) {
-                      $("#ide").val(xx[1]);
-                      $("#id_jn_gajie").val(xx[2]);
-                      $("#namae").val(xx[3]);
-                      $("#nominale").val(xx[4]);
-                  } else {
-                      swal({
-                          title: 'Update Gagal',
-                          text: 'Data Tidak di Temukan',
-                          icon: 'error'
-                      });
-                      refresh();
-                  }
-              },
-              error: function() {
-                  swal.close();
-                  swal({
-                      title: 'Filter Gagal',
-                      text: 'Jaringan Anda Bermasalah !',
-                      icon: 'error'
-                  });
-              }
-          })
-      }
-
-
-
-      function update() {
-          var id = $("#ide").val();
-          var id_jn_gaji = $("#id_jn_gajie").val();
-          var nama_gaji = $("#namae").val();
-          var nominal_gaji = $("#nominale").val();
-
-
-          if (id == "" || id_jn_gaji == "" || nama_gaji == "" || nominal_gaji == "") {
-              swal({
-                  title: 'Update Gagal',
-                  text: 'Ada Isian yang Belum Anda Isi !',
-                  icon: 'error'
-              });
-              return;
-          }
-
-          swal("Memproses Data.....", {
-              button: false,
-              closeOnClickOutside: false,
-              closeOnEsc: false
-          });
-          $.ajax({
-              url: "<?php echo base_url(); ?>admin/gaji/update",
-              method: "POST",
-              data: {
-                  id: id,
-                  id_jn_gaji: id_jn_gaji,
-                  nama: nama_gaji,
-                  nominal: nominal_gaji
-              },
-              cache: "false",
-              success: function(x) {
-                  swal.close();
-                  var y = atob(x);
-                  if (y == 1) {
-                      swal({
-                          title: 'Update Berhasil',
-                          text: 'Data Berhasil di Update',
-                          icon: 'success'
-                      }).then((Refreshh) => {
-                          refresh();
-                          tabel.ajax.reload(null, false);
-                      });
-                  } else {
-                      swal({
-                          title: 'Update Gagal',
-                          text: 'Ada Beberapa Masalah dengan Data yang Anda Isikan !',
-                          icon: 'error'
-                      });
-                  }
-
-              },
-              error: function() {
-                  swal.close();
-                  swal({
-                      title: 'Update Gagal',
-                      text: 'Jaringan Anda Bermasalah !',
-                      icon: 'error'
-                  });
-              }
-          })
-      }
-
-      function refresh() {
-          $("#ide").val("");
-          $("#id_jn_gajie").val("");
-          $("#namae").val("");
-          $("#nominale").val("");
-          $('#md_edit').modal('hide');
       }
   </script>
 

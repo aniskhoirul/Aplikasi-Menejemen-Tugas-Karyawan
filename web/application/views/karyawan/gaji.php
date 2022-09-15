@@ -1,20 +1,22 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
       <div class="content-header">
           <div class="container-fluid">
               <div class="row mb-2">
                   <div class="col-sm-6">
-                      <h1 class="m-0 text-dark">Gaji</h1>
-                  </div>
+                      <h1 class="m-0 text-dark">Penggajian Karyawan</h1>
+                  </div><!-- /.col -->
                   <div class="col-sm-6">
                       <ol class="breadcrumb float-sm-right">
                           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                          <li class="breadcrumb-item active">Gaji</li>
+                          <li class="breadcrumb-item active">Penggajian Karyawan</li>
                       </ol>
-                  </div>
-              </div>
-          </div>
+                  </div><!-- /.col -->
+              </div><!-- /.row -->
+          </div><!-- /.container-fluid -->
       </div>
+      <!-- /.content-header -->
 
       <!-- Main content -->
       <section class="content">
@@ -24,30 +26,79 @@
                       <div class="card">
                           <div class="card-header">
                               <h3 class="card-title">
-                                  <h2 class="m-0 text-dark">Gaji</h2>
-                                  <!-- <button type='button' class='btn btn-success waves-effect waves-light' data-toggle='modal' data-target='#md_tbh'>Tambah</button> -->
+                                  Gaji Karyawan
                               </h3>
                           </div>
+                          <!-- /.card-header -->
                           <div class="card-body">
-                              <table id="table" class="table table-bordered table-striped">
+                              <form id="myForm" action="" class="form-horizontal" method="get">
+                                  <div class="form-group row">
+                                      <label for="bulan" class="col-sm-2 col-form-label">Pilih Bulan</label>
+                                      <div class="col-sm-10">
+                                          <input id="inp-search" name="bulan" placeholder="Pencarian bulan tahun" class="form-control" style="padding: 5px; box-sizing: border-box;" type="text" autocomplete="off" value="<?= $bulan ?>">
+                                      </div>
+                                  </div>
+                                  <!-- <div class="form-group row">
+                                      <label for="id_karyawan" class="col-sm-2 col-form-label">Pilih Karyawan</label>
+                                      <div class="col-sm-10">
+                                          <select id="id_karyawan" name="id_karyawan" class="form-control select2">
+                                              <?php foreach ($dtkaryawan as $key) {
+                                                    $selected = $key->no_id == @$id_karyawan ? 'selected' : ''; ?>
+                                                  <option value="<?= $key->no_id ?>" <?= $selected ?>><?= $key->nama_karyawan ?></option>
+                                              <?php } ?>
+                                          </select>
+                                      </div>
+                                  </div> -->
+                                  <div style="text-align:right">
+                                      <button id="save" type="submit" class="btn btn-success">Cari Gaji</button>
+                                  </div>
+                              </form>
+                          </div>
+                          <!-- /.card-body -->
+                      </div>
+                      <div class="card">
+                          <div class="card-body">
+                              <table id="tbl_gaji" class="table table-bordered table-striped">
                                   <thead>
                                       <tr>
-                                          <th>No</th>
                                           <th>Jenis Gaji</th>
-                                          <th>Nama Gaji</th>
-                                          <th>Nominal</th>
+                                          <th width="50%">Keterangan Gaji</th>
+                                          <th>Nominal Gaji</th>
                                       </tr>
                                   </thead>
-
+                                  <tbody>
+                                      <?php foreach ($jenis_gaji as $jenis) : ?>
+                                          <?php
+                                            $total[] = $jenis->nominal_gaji
+                                            ?>
+                                          <tr>
+                                              <td><?= $jenis->nama_jn_gaji ?></td>
+                                              <td>
+                                                  <?= $jenis->nama_gaji == "" ? '-' : $jenis->nama_gaji ?>
+                                              </td>
+                                              <td>
+                                                  Rp. <?= number_format($jenis->nominal_gaji) ?>
+                                              </td>
+                                          </tr>
+                                      <?php endforeach ?>
+                                      <tr style="background-color: #41baf196">
+                                          <td colspan="2"><b>Total</b></td>
+                                          <td><b>Rp. <?= number_format(array_sum($total)) ?></b></td>
+                                      </tr>
+                                  </tbody>
                               </table>
+                              <div class="mt-2" style="text-align:right">
+                                  <a target="_blank" class="btn btn-danger pull-right" href="<?= base_url('karyawan/gaji/cetak/?bulan=' . $bulan) ?>"><span class="fa fa-print"></span> CETAK PDF</a>
+                              </div>
                           </div>
                       </div>
                   </div>
               </div>
+              <!-- /.row -->
           </div>
+          <!-- /.container-fluid -->
       </section>
-
-
+  </div>
   </div>
 
 
@@ -87,6 +138,8 @@
   <!-- JQVMap -->
   <script src="<?php echo base_url(); ?>plugins/jqvmap/jquery.vmap.min.js"></script>
   <script src="<?php echo base_url(); ?>plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+  <!-- jQuery Knob Chart -->
+  <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
   <!-- daterangepicker -->
   <script src="<?php echo base_url(); ?>plugins/moment/moment.min.js"></script>
   <script src="<?php echo base_url(); ?>plugins/daterangepicker/daterangepicker.js"></script>
@@ -96,6 +149,8 @@
   <script src="<?php echo base_url(); ?>plugins/summernote/summernote-bs4.min.js"></script>
   <!-- overlayScrollbars -->
   <script src="<?php echo base_url(); ?>plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- select2 -->
+  <script src="<?= base_url() ?>plugins/select2/js/select2.full.min.js"></script>
   <!-- AdminLTE App -->
   <script src="<?php echo base_url(); ?>dist/js/adminlte.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -108,22 +163,64 @@
   <script src="<?php echo base_url(); ?>plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
   <script src="<?php echo base_url(); ?>plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
   <script src="<?php echo base_url(); ?>plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
 
 
   <script>
-      swal("Sedang Mengakses Data.....", {
-          button: false,
-          closeOnClickOutside: false,
-          closeOnEsc: false
+      $('#inp-search').datepicker({
+          autoclose: true,
+          format: "yyyy-mm",
+          viewMode: "months",
+          minViewMode: "months",
+
       });
-      var tabel = $("#table").DataTable({
-          "responsive": true,
-          "autoWidth": false,
-          "ajax": "<?php echo base_url(); ?>karyawan/gaji/json",
-          "fnDrawCallback": function(oSettings) {
-              swal.close();
-          }
+
+      $(function() {
+          $('.select2').select2()
       });
+
+      const thisform = $('#form-simpan');
+
+      thisform.on('submit', async function(event) {
+          event.preventDefault();
+          var self = $(this)
+          let data_post = new FormData(self[0]);
+          simpan(self, data_post);
+          return false;
+
+      });
+
+      function simpan(self, data_post) {
+          $.ajax({
+              type: "POST",
+              url: "<?= base_url('admin/gaji/store') ?>",
+              data: data_post,
+              dataType: "json",
+              processData: false,
+              contentType: false,
+              cache: false,
+              success: function(response) {
+                  if (response.status) {
+                      swal({
+                          title: 'Informasi',
+                          text: response.msg,
+                          icon: 'success'
+                      }).then((Refreshh) => {
+                          location.reload();
+                      });
+                  } else {
+                      swal({
+                          title: 'Ops Maaf',
+                          text: response.msg,
+                          icon: 'error'
+                      });
+                  }
+              },
+              error: function(xhr, status, error) {
+                  console.log(xhr, status, error)
+              }
+          });
+      }
   </script>
 
   </body>

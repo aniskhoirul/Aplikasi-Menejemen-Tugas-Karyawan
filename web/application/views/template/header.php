@@ -228,7 +228,8 @@
                 </li>
               </ul>
             </nav>
-          <?php elseif ($this->session->userdata('role') == 'keuangan') : ?>
+          
+            <?php elseif ($this->session->userdata('role') == 'keuangan') : ?>
             <nav class="mt-2">
               <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item has-treeview">
@@ -240,13 +241,34 @@
                   </a>
                 </li>
 
-                <li class="nav-item has-treeview">
-                  <a href="<?= base_url('admin/gaji') ?>" class="nav-link <?= $this->uri->segment(2) == 'gaji' ? 'active' : '' ?>">
-                    <i class="nav-icon fas fa-money-check-alt"></i>
+                <li class="nav-item <?= $this->uri->segment(2) == 'gaji' || $this->uri->segment(2) == 'jenis-penggajian' || $this->uri->segment(2) == 'laporan-penggajian' ? 'menu-open' : '' ?>">
+                  <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-file-alt"></i>
                     <p>
                       Penggajian
+                      <i class="fas fa-angle-left right"></i>
                     </p>
                   </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="<?php echo base_url();  ?>admin/gaji" class="nav-link <?= $this->uri->segment(2) == 'gaji' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Penggajian Pegawai</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?php echo base_url(); ?>admin/jenis-penggajian" class="nav-link <?= $this->uri->segment(2) == 'jenis-penggajian' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Jenis Penggajian</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="<?php echo base_url(); ?>admin/laporan-penggajian" class="nav-link <?= $this->uri->segment(2) == 'laporan-penggajian' ? 'active' : '' ?>">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Laporan Penggajian</p>
+                      </a>
+                    </li>
+                  </ul>
                 </li>
 
                 <li class="nav-item has-treeview">

@@ -400,13 +400,21 @@ class M_master extends CI_Model
 	}
 	public function mhapus_jgaji($id)
 	{
-		$sql = "DELETE FROM tb_jn_gaji WHERE id_jn_gaji='$id'";
-		$querySQL = $this->db->query($sql);
-		if ($querySQL) {
-			return "1";
-		} else {
-			return "0";
+		$cek = $this->db->get_where('tb_dt_gaji', ['id_jn' => $id]);
+
+		if ($cek->num_rows() > 0) {
+			return "90";
+		}else{
+			$sql = "DELETE FROM tb_jn_gaji WHERE id_jn_gaji='$id'";
+			$querySQL = $this->db->query($sql);
+			if ($querySQL) {
+				return "1";
+			} else {
+				return "0";
+			}
+
 		}
+
 	}
 	public function mtambah_jgaji($a)
 	{
